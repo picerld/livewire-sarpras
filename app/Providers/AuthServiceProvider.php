@@ -35,7 +35,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('isPengawas', function ($user) {
-            return $user->role == 'pengawai';
+            return $user->role == 'pengawas';
         });
     }
 }

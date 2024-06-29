@@ -1,6 +1,3 @@
-import defaultTheme from 'tailwindcss/defaultTheme';
-import forms from '@tailwindcss/forms';
-
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
@@ -9,13 +6,32 @@ export default {
         './resources/views/**/*.blade.php',
     ],
 
+    darkMode: 'class',
+
     theme: {
+        screens: {
+            sm: '480px',
+            md: '768px',
+            lg: '976px',
+            xl: '1440px'
+        },
         extend: {
+            colors: {
+                dark: '#1d232a',
+                accent: 'rgba(153, 102, 255, 0.7)'
+            },
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                // sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                poppins: ['Poppins', 'sans-serif'],
             },
         },
     },
 
-    plugins: [forms],
+    plugins: [
+        require('daisyui'),
+        "prettier-plugin-tailwindcss",
+    ],
+    daisyui: {
+        themes: ["light", "dark"],
+    }
 };

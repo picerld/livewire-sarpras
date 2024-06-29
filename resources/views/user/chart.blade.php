@@ -1,4 +1,14 @@
 <x-app-layout>
+    <style>
+        .apexcharts-title-text {
+            fill: rgb(243 244 246);
+            font-family: 'Sans serif';
+        }
+        .apexcharts-subtitle-text {
+            fill: rgb(243 244 246);
+            font-family: 'Sans serif';
+        }
+    </style>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
             {{ __('Dashboard') }}

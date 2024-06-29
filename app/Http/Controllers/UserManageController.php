@@ -47,7 +47,7 @@ class UserManageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
         
     }
@@ -67,8 +67,8 @@ class UserManageController extends Controller
     { 
         $validated = $request->validate([
             'nama' => 'required|string|max:25',
-            'email' => 'required|string|lowercase|email|max:25|unique:'.User::class,
-            'nomor_induk' => 'required|string|max:10|unique:'.User::class
+            'email' => 'required|string|lowercase|email|max:25',
+            'nomor_induk' => 'required|string|max:10',
         ]);
 
         $user = User::find($id);

@@ -21,6 +21,7 @@ class RedirectRoleController extends Controller
         ];
 
         $user = Auth::user();
+        
         return redirect($redirectMap[$user->role]);
     }
 }
