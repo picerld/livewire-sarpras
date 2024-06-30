@@ -13,7 +13,7 @@ class Table extends Component
     use WithPagination;
 
     public $headers = [
-        ['key' => 'id', 'label' => '#', 'class' => 'dark:text-slate-300', 'sortable' => false],
+        ['key' => 'id', 'label' => 'Id', 'class' => 'dark:text-slate-300', 'sortable' => false],
         ['key' => 'nama', 'label' => 'Nama', 'class' => 'dark:text-slate-300',],
         ['key' => 'email', 'label' => 'Email', 'class' => 'dark:text-slate-300', 'sortable' => false],
         ['key' => 'role', 'label' => 'Role', 'class' => 'dark:text-slate-300', 'sortable' => false]
@@ -22,17 +22,38 @@ class Table extends Component
     public $search = '';
     public $sortBy = ['column' => 'nama', 'direction' => 'asc'];
 
+    public bool $drawerIsOpen = false;
+
+    public function tableDrawer() {
+        $this->drawerIsOpen = true;
+    }
+
     public function users(): LengthAwarePaginator
     {
         return User::query()
             ->when($this->search, fn(Builder $q) => $q->whereAny(['nama', 'email', 'role'], 'LIKE', "%$this->search%"))
-            ->orderBy('id', 'asc')
             ->orderBy(...array_values($this->sortBy))
             ->paginate(5);
     }
 
-    public function render()
-    {
+    public function updated($property): void {
+        if(! is_array($property) && $property != "") {
+            $this->resetPage();
+        }
+    }
+
+    public function clear(): void {
+        $this->reset();
+        $this->resetPage();
+        $this->success('Testing', position: 'toast-bottom');
+    }
+
+    public function delete(User $user): void {
+        $user->delete();
+        $this->waring("$user->nama deleted", 'Good bye!', position: 'toast-bottom');
+    }
+
+    public function render() {
         $users = $this->users();
         // dd($users);
 

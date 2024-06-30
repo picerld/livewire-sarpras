@@ -29,27 +29,27 @@
         </div>
     </x-slot>
 
-    <section id="stats" class="grid grid-cols-1 gap-6 mt-7 lg:grid-cols-4 md:grid-cols-2">
+    <div id="stats" class="grid grid-cols-1 gap-6 mt-7 lg:grid-cols-4 md:grid-cols-2">
         <!-- param 'model' for models -->
         <livewire:stats title="User" model="User" icon="o-user-group" />
         <livewire:stats title="Pengajuan" model="Pengajuan" icon="o-arrow-trending-up" description="Pengajuan model" />
         <livewire:stats title="Permintaan" model="Permintaan" icon="o-arrow-trending-down"
             description="Permintaan model" />
         <livewire:stats title="Sarpras" model="" icon="o-heart" />
-    </section>
+    </div>
 
-    <section id="charts" class="flex flex-wrap w-full gap-4 pt-7 sm:flex-nowrap">
+    <div id="charts" class="flex flex-wrap w-full gap-4 pt-3 sm:flex-nowrap">
         <!-- dinamis chart -->
         <div class="w-full md:w-2/3 lg:w-2/3">
             <!-- 'type' for type chart -->
-            <livewire:utils.charts class="flex items-center min-h-[30vh] w-full h-full" type="bar" />
+            <livewire:utils.charts class="flex items-center my-3 min-h-[30vh] w-full h-full" type="bar" />
         </div>
         <div class="w-full md:w-1/3 lg:w-1/3">
-            <livewire:utils.charts class="flex items-center min-h-[35vh] w-full h-full" type="doughnut" />
+            <livewire:utils.charts class="flex items-center my-3 min-h-[35vh] w-full h-full" type="doughnut" />
         </div>
-    </section>
+    </div>
 
-    <section id="overview" class="grid grid-cols-1 gap-6 mt-7 lg-grid-cols-2 md:grid-cols-2">
+    <div id="overview" class="grid grid-cols-1 gap-6 mt-4 pt-7 lg-grid-cols-2 md:grid-cols-2">
         <x-card title="Our Users" link="users" separator>
             <x-slot:menu>
                 <x-button label="User" link="/user" icon-right="o-arrow-small-right" 
@@ -85,10 +85,9 @@
             @endforeach
 
         </x-card>
-    </section>
+    </div>
 
-    <section id="user-tabel" class="w-full pt-7">
+    <div id="user-tabel" class="w-full py-7">
         <livewire:utils.table />
-    </section>
-
+    </div>
 </x-admin-layout>
