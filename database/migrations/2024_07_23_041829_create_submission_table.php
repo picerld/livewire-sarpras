@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permintaan', function (Blueprint $table) {
+        Schema::create('submission', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('unit_id');
             $table->timestamps();
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permintaan');
+        Schema::dropIfExists('submission');
     }
 };

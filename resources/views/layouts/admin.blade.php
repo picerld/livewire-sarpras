@@ -34,7 +34,7 @@
         </x-slot:content>
     </x-main>
 
-    <x-toast />
+    <x-toast />  
     
 </body>
 </html>

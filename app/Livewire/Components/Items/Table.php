@@ -8,55 +8,65 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Mary\Traits\Toast;
 
 class Table extends Component
 {
-    use WithPagination;
+    use WithPagination, Toast;
 
     public $headers = [
-        ['key' => 'kode', 'label' => 'Kode', 'class' => 'dark:text-slate-300'],
-        ['key' => 'nama', 'label' => 'Nama', 'class' => 'dark:text-slate-300',],
-        ['key' => 'merek', 'label' => 'Merek', 'class' => 'dark:text-slate-300'],
-        ['key' => 'harga', 'label' => 'Harga', 'class' => 'dark:text-slate-300'],
-        ['key' => 'stok', 'label' => 'Stok', 'class' => 'dark:text-slate-300'],
-        ['key' => 'kategori.nama', 'label' => 'Kategori', 'class' => 'dark:text-slate-300'],
+        ['key' => 'code', 'label' => 'Kode', 'class' => 'dark:text-slate-300'],
+        ['key' => 'name', 'label' => 'Nama', 'class' => 'dark:text-slate-300',],
+        ['key' => 'merk', 'label' => 'Merek', 'class' => 'dark:text-slate-300'],
+        ['key' => 'price', 'label' => 'Harga', 'class' => 'dark:text-slate-300'],
+        ['key' => 'stock', 'label' => 'Stok', 'class' => 'dark:text-slate-300'],
+        ['key' => 'category.name', 'label' => 'Kategori', 'class' => 'dark:text-slate-300'],
     ];
 
     public $search = "";
-    public $sortBy = ['column' => 'kode', 'direction' => 'asc'];
+    public $sortBy = ['column' => 'code', 'direction' => 'asc'];
 
+    // drawer
     public bool $drawerIsOpen = false;
+    // modal
+    public bool $deleteModal = false;
 
-    public function tableDrawer() {
+    public function tableDrawer()
+    {
         $this->drawerIsOpen = true;
     }
 
-    public function items(): LengthAwarePaginator {
+    public function items(): LengthAwarePaginator
+    {
         return Item::query()
-            ->withAggregate('kategori', 'nama')
-            ->when($this->search, fn(Builder $q) => $q->whereAny(['kode', 'nama', 'merek', 'harga', 'stok'], 'LIKE', "%$this->search%"))
+            ->withAggregate('category', 'name')
+            ->when($this->search, fn (Builder $q) => $q->whereAny(['code', 'name', 'merk', 'price', 'stock'], 'LIKE', "%$this->search%"))
             ->orderBy(...array_values($this->sortBy))
             ->paginate(5);
     }
 
-    public function updated($property): void {
-        if(! is_array($property) && $property != "") {
+    public function updated($property): void
+    {
+        if (!is_array($property) && $property != "") {
             $this->resetPage();
         }
     }
 
-    public function clear(): void {
+    public function clear(): void
+    {
         $this->reset();
         // $this->resetPage();
         // $this->success('Filters cleared.', position: 'toast-bottom');
     }
 
-    public function delete(Item $item): void {
+    public function delete(Item $item): void
+    {
         $item->delete();
-        // $this->warning("$user->nama deleted", 'Good bye!', position: 'toast-bottom');
+        $this->error("$item->name deleted", 'Good bye!', position: 'toast-bottom');
     }
 
-    public function render() {
+    public function render()
+    {
         $items = $this->items();
         // dd($items);
 
@@ -67,7 +77,8 @@ class Table extends Component
         ]);
     }
 
-    public function with(): array {
+    public function with(): array
+    {
         return [
             "items" => $this->items(),
             "headers" => $this->headers(),

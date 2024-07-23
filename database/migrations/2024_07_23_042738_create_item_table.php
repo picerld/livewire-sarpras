@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('item', function (Blueprint $table) {
             $table->id();
-            $table->string('nama', 100);
-            $table->string('kode', 10);
-            $table->string('merek', 25);
+            $table->string('name', 100);
+            $table->string('code', 10);
+            $table->string('merk', 25);
             $table->string('unit', 10);
-            $table->integer('harga');
-            $table->integer('stok')->default(0);
-            $table->integer('stok_minimum')->default(0);
-            $table->unsignedBigInteger('kategori_id');
+            $table->integer('price');
+            $table->integer('stock')->default(0);
+            $table->integer('minimum_stock')->default(0);
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
 
-            $table->foreign('kategori_id')->references('id')->on('kategori')->cascadeOnDelete();
+            $table->foreign('category_id')->references('id')->on('category')->cascadeOnDelete();
         });
     }
 

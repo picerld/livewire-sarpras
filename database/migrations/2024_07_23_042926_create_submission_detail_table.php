@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detail_permintaan', function (Blueprint $table) {
+        Schema::create('submission_detail', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('permintaan_id');
+            $table->unsignedBigInteger('submission_id');
             $table->unsignedBigInteger('item_id');
-            $table->integer('kuantiti');
-            $table->integer('kuantiti_disetujui');
+            $table->integer('qty');
+            $table->integer('qty_accepted');
             $table->timestamps();
 
-            $table->foreign('permintaan_id')->references('id')->on('permintaan')->onDelete('cascade');
+            $table->foreign('submission_id')->references('id')->on('submission')->onDelete('cascade');
             $table->foreign('item_id')->references('id')->on('item')->onDelete('cascade');
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('detail_permintaan');
+        Schema::dropIfExists('submission_detail');
     }
 };

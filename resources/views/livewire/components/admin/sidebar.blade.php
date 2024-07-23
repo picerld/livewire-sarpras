@@ -5,9 +5,9 @@
                 @csrf
             </form>
 
-            <x-list-item :item="$user" value="nama" no-separator no-hover class="pt-2">
+            <x-list-item :item="$user" value="name" no-separator no-hover class="pt-2">
                 <x-slot:avatar>
-                    <img src="https://picsum.photos/200?x=9987837" width="30" height="30" alt="{{ $user->nama }}"
+                    <img src="https://picsum.photos/200?x=9987837" width="30" height="30" alt="{{ $user->name }}"
                         class="rounded-full w-11 avatar" />
                 </x-slot:avatar>
                 <x-slot name="actions">
@@ -27,12 +27,14 @@
         <x-menu activate-by-route>
             <livewire:utils.navlink title="Dashboard" icon="o-rectangle-group" link="{{ $user->role }}" />
 
-            <x-menu-sub title="Barang" icon="o-cube">
-                <livewire:utils.navlink title="Data Barang" icon="o-document-chart-bar" link="items" />
-                <livewire:utils.navlink title="Barang Masuk" icon="o-arrow-down-on-square-stack" link="barang-masuk" />
-                <livewire:utils.navlink title="Barang Keluar" icon="o-arrow-up-on-square-stack" link="barang-keluar" />
-                <livewire:utils.navlink title="Kategori" icon="o-puzzle-piece" link="kategori" />
-            </x-menu-sub>
+            @can("isAdmin")
+                <x-menu-sub title="Barang" icon="o-cube">
+                    <livewire:utils.navlink title="Data Barang" icon="o-document-chart-bar" link="items" />
+                    <livewire:utils.navlink title="Barang Masuk" icon="o-arrow-down-on-square-stack" link="barang-masuk" />
+                    <livewire:utils.navlink title="Barang Keluar" icon="o-arrow-up-on-square-stack" link="barang-keluar" />
+                    <livewire:utils.navlink title="Kategori" icon="o-puzzle-piece" link="kategori" />
+                </x-menu-sub>
+            @endcan
 
             <livewire:utils.navlink title="Pengajuan" icon="o-clipboard-document-list" link="pengajuan" />
             <livewire:utils.navlink title="Permintaan" icon="o-chat-bubble-bottom-center-text" link="permintaan" />
