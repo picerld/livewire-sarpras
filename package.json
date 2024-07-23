@@ -16,6 +16,7 @@
         "tailwindcss": "^3.4.4",
         "vite": "^5.0"
     },
+    "author": "Picerld",
     "dependencies": {
         "chart.js": "^4.4.3"
     }

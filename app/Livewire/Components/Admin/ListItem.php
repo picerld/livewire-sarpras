@@ -12,7 +12,7 @@ class ListItem extends Component
 
     public function users() {
         $users = User::query()
-            ->when($this->search, fn (Builder $q) => $q->whereAny(['nama', 'email', 'role'], 'LIKE', "%$this->search%"))
+            ->when($this->search, fn (Builder $q) => $q->whereAny(['name', 'email', 'role'], 'LIKE', "%$this->search%"))
             ->paginate(5);
 
         return $users;

@@ -9,7 +9,7 @@
     <!-- SEO Meta Tags -->
     <meta name="description" content="Sarpras - Sistem Informasi Manajemen Sarana dan Prasarana.">
     <meta name="keywords" content="Sarpras, Manajemen, Sarana, Prasarana, Laravel, Livewire">
-    <meta name="author" content="Nama Anda">
+    <meta name="author" content="Picerld">
 
     <title>{{ $title ?? 'Laravel' }} - Sarpras</title>
 

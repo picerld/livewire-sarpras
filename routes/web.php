@@ -27,9 +27,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // items
-    Route::group(['middleware' => ['can:isAdmin']], function() {
-        Route::get('/items', [ItemController::class, 'index'])->name('items');
-    });
+    Route::middleware(['can:isAdmin'])->resource('items', ItemController::class);
 });
 
 

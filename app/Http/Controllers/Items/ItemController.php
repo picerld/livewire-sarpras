@@ -20,7 +20,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
+        return view("pages.item.create");
     }
 
     /**
