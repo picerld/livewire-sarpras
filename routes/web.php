@@ -1,49 +1,36 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Items\ItemController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserChartController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserManageController;
-use App\Http\Controllers\UserPdfController;
+use App\Http\Controllers\Unit\UnitController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view("pages.welcome.index");
 })->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
-    // petugas
-    Route::group(['prefix' => '/petugas', 'middleware' => ['can:isPetugas']], function() {
-        Route::get('/', AdminController::class)->name('petugas');
-    });
-
     // admin
     Route::group(['prefix' => '/admin', 'middleware' => ['can:isAdmin']], function() {
         Route::get('/', AdminController::class)->name('admin');
     });
+
+    // petugas
+    Route::group(['prefix' => '/pengawas', 'middleware' => ['can:isPengawas']], function() {
+        Route::get('/', AdminController::class)->name('petugas');
+    });
+
+    // unit
+    Route::group(['prefix' => '/unit', 'middleware' => ['can:isUnit']], function() {
+        Route::get('/', UnitController::class)->name('unit');
+    });
+
+    // items
+    Route::group(['middleware' => ['can:isAdmin']], function() {
+        Route::get('/items', [ItemController::class, 'index'])->name('items');
+    });
 });
-
-// Route::group(['prefix' => '/petugas', 'middleware' => ['auth', 'can:isPetugas']], function () {
-//     Route::get('/', AdminController::class)->name('petugas');
-
-//     Route::resource('/user', UserManageController::class);
-
-//     Route::get('/chart', UserChartController::class)->name('chart');
-//     Route::get('/user/pdf', UserPdfController::class)->name('pdf');
-// });
-
-Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'can:isAdmin']], function () {
-    Route::get('/', AdminController::class)->name('admin');
-});
-
-Route::group(['prefix' => '/unit', 'middleware' => ['auth', 'can:isUnit']], function () {
-    Route::get('/', UserController::class)->name('unit');
-});
-
-Route::get('/barang', function(){
-    return view('barang');
-})->name('barang');
 
 
 Route::middleware('auth')->group(function () {

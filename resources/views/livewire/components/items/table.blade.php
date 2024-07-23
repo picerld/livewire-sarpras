@@ -1,6 +1,6 @@
 <x-card>
-    <x-header wire:model.live.debounce="search" title="Users" subtitle="Users Model" class="px-3 pt-3"
-        progress-indicator>
+    <x-header wire:model.live.debounce="search" title="Barang" subtitle="Barang Model" class="px-3 pt-3" progress-indicator
+        separator>
         <x-slot:actions>
             <x-input wire:model="search" icon="o-magnifying-glass" class="placeholder:font-bold" placeholder="Search..." />
             <x-button icon="o-funnel" label="Filters" badge="0" wire:click="tableDrawer" responsive />
@@ -8,14 +8,19 @@
     </x-header>
 
     <!-- USING TABLE -->
-    <x-table :headers="$headers" :rows="$users" :sort-by="$sortBy" link="/users/{id}"
+    <x-table :headers="$headers" :rows="$items" :sort-by="$sortBy" link="/items/{id}"
         class="bg-white rounded dark:bg-dark" with-pagination>
-        @scope('cell_role', $users)
-            <x-badge :value="$users->role" class="text-base-100 badge bg-accent" />
+        @scope('actions', $items)
+            <x-button icon="o-trash" wire:click="delete({{ $items->id }})" spinner class="btn-sm" />
         @endscope
-        @scope('actions', $user)
-            <x-button icon="o-trash" wire:click="delete({{ $user->id }})" spinner class="btn-sm" />
-        @endscope
+        @empty($rows)
+            <x-alert title="Nothing here!" description="Try to remove some filters." icon="o-exclamation-triangle"
+                class="border-none bg-base-100">
+                <x-slot:actions>
+                    <x-button label="Clear filters" wire:click="clear" icon="o-x-mark" class="btn-outline" spinner />
+                </x-slot:actions>
+            </x-alert>
+        @endempty
     </x-table>
 
     <x-spotlight />

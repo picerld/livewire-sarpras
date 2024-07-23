@@ -1,26 +1,29 @@
 <?php
 
-namespace App\Livewire\Utils;
+namespace App\Livewire\Components\Items;
 
-use App\Models\User;
+use App\Models\Item;
+use App\Models\Kategori;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Contracts\Database\Eloquent\Builder;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class Table extends Component
 {
     use WithPagination;
 
     public $headers = [
-        ['key' => 'id', 'label' => 'Id', 'class' => 'dark:text-slate-300', 'sortable' => false],
+        ['key' => 'kode', 'label' => 'Kode', 'class' => 'dark:text-slate-300'],
         ['key' => 'nama', 'label' => 'Nama', 'class' => 'dark:text-slate-300',],
-        ['key' => 'email', 'label' => 'Email', 'class' => 'dark:text-slate-300', 'sortable' => false],
-        ['key' => 'role', 'label' => 'Role', 'class' => 'dark:text-slate-300', 'sortable' => false]
+        ['key' => 'merek', 'label' => 'Merek', 'class' => 'dark:text-slate-300'],
+        ['key' => 'harga', 'label' => 'Harga', 'class' => 'dark:text-slate-300'],
+        ['key' => 'stok', 'label' => 'Stok', 'class' => 'dark:text-slate-300'],
+        ['key' => 'kategori.nama', 'label' => 'Kategori', 'class' => 'dark:text-slate-300'],
     ];
 
     public $search = "";
-    public $sortBy = ['column' => 'nama', 'direction' => 'asc'];
+    public $sortBy = ['column' => 'kode', 'direction' => 'asc'];
 
     public bool $drawerIsOpen = false;
 
@@ -28,9 +31,10 @@ class Table extends Component
         $this->drawerIsOpen = true;
     }
 
-    public function users(): LengthAwarePaginator {
-        return User::query()
-            ->when($this->search, fn(Builder $q) => $q->whereAny(['nama', 'email', 'role'], 'LIKE', "%$this->search%"))
+    public function items(): LengthAwarePaginator {
+        return Item::query()
+            ->withAggregate('kategori', 'nama')
+            ->when($this->search, fn(Builder $q) => $q->whereAny(['kode', 'nama', 'merek', 'harga', 'stok'], 'LIKE', "%$this->search%"))
             ->orderBy(...array_values($this->sortBy))
             ->paginate(5);
     }
@@ -47,17 +51,17 @@ class Table extends Component
         // $this->success('Filters cleared.', position: 'toast-bottom');
     }
 
-    public function delete(User $user): void {
-        $user->delete();
+    public function delete(Item $item): void {
+        $item->delete();
         // $this->warning("$user->nama deleted", 'Good bye!', position: 'toast-bottom');
     }
 
     public function render() {
-        $users = $this->users();
-        // dd($users);
+        $items = $this->items();
+        // dd($items);
 
-        return view('livewire.utils.table', [
-            'users' => $users,
+        return view('livewire.components.items.table', [
+            'items' => $items,
             'headers' => $this->headers,
             'sortBy' => $this->sortBy,
         ]);
@@ -65,7 +69,7 @@ class Table extends Component
 
     public function with(): array {
         return [
-            "users" => $this->users(),
+            "items" => $this->items(),
             "headers" => $this->headers(),
         ];
     }

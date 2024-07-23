@@ -16,7 +16,8 @@ class AdminLayout extends Component
         $user = Auth::user();
         
         return view('layouts.admin', [
-            'user' => $user
+            'user' => $user,
+            'title' => "Admin"
         ]);
     }
 }
