@@ -11,16 +11,16 @@
     <x-table :headers="$headers" :rows="$items" :sort-by="$sortBy" link="/items/{id}"
         class="bg-white rounded dark:bg-dark" with-pagination>
         @scope('actions', $items)
-            <x-button icon="o-trash" wire:click="delete({{ $items->id }})" spinner class="btn-sm" />
+            <x-button icon="o-trash" @click="$wire.deleteModal = true" class="btn-sm" />
         @endscope
-        @empty($rows)
+        {{-- @empty($rows)
             <x-alert title="Nothing here!" description="Try to remove some filters." icon="o-exclamation-triangle"
                 class="border-none bg-base-100">
                 <x-slot:actions>
                     <x-button label="Clear filters" wire:click="clear" icon="o-x-mark" class="btn-outline" spinner />
                 </x-slot:actions>
             </x-alert>
-        @endempty
+        @endempty --}}
     </x-table>
 
     <x-spotlight />
@@ -37,4 +37,11 @@
             </x-slot:actions>
         </x-form>
     </x-drawer>
+
+    <x-modal wire:model="deleteModal" title="Are your sure?" subtitle="Livewire example" class="backdrop-blur">
+        <x-slot:actions>
+            <x-button label="Cancel" @click="$wire.deleteModal = false" />
+            <x-button label="Confirm" class="btn-primary" />
+        </x-slot:actions>
+    </x-modal>
 </x-card>

@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\IncomingItemDetail;
+use App\Models\SubmissionDetail;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -16,28 +19,21 @@ class DatabaseSeeder extends Seeder
     {
         // User Seeder
         User::factory()->create([
-            'nama' => 'Admin',
+            'name' => 'Admin',
             'email' => 'admin@localhost',
             'role' => 'admin',
             'password' => Hash::make('password')
         ]);
         
         User::factory()->create([
-            'nama' => 'Unit',
+            'name' => 'Unit',
             'email' => 'unit@localhost',
             'role' => 'unit',
             'password' => Hash::make('password')
         ]);
 
         User::factory()->create([
-            'nama' => 'Petugas',
-            'email' => 'petugas@localhost',
-            'role' => 'petugas',
-            'password' => Hash::make('password')
-        ]);
-
-        User::factory()->create([
-            'nama' => 'Pengawas',
+            'name' => 'Pengawas',
             'email' => 'pengawas@localhost',
             'role' => 'pengawas',
             'password' => Hash::make('password')
@@ -46,16 +42,16 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
 
         $this->call(UnitSeeder::class);
-        $this->call(KategoriSeeder::class);
+        $this->call(CategorySeeder::class);
         $this->call(ItemSeeder::class);
         $this->call(SupplierSeeder::class);
-        $this->call(PengajuanSeeder::class);
-        $this->call(DetailPengajuanSeeder::class);
-        $this->call(PermintaanSeeder::class);
-        $this->call(DetailPermintaanSeeder::class);
-        $this->call(BarangMasukSeeder::class);
-        $this->call(DetailBarangMasukSeeder::class);
-        $this->call(BarangKeluarSeeder::class);
-        $this->call(DetailBarangKeluarSeeder::class);
+        $this->call(SubmissionSeeder::class);
+        $this->call(SubmissionDetailSeeder::class);
+        $this->call(RequestSeeder::class);
+        $this->call(RequestDetailSeeder::class);
+        $this->call(IncomingItemSeeder::class);
+        $this->call(IncomingItemDetailSeeder::class);
+        $this->call(OutgoingItemSeeder::class);
+        $this->call(OutgoingItemDetailSeeder::class);
     }
 }

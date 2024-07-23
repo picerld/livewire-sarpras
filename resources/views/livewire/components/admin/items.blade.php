@@ -10,8 +10,8 @@
                 <img src="https://picsum.photos/200?x=9987836" height="100" width="100" alt="{{ $data->nama }}"
                     class="rounded-full w-11 avatar" />
             </x-slot:avatar>
-            <x-slot:value>{{ $data->nama }}</x-slot:value>
-            <x-slot:sub-value>{{ $data->role ?? $data->stok }}</x-slot:sub-value>
+            <x-slot:value>{{ $data->name }}</x-slot:value>
+            <x-slot:sub-value>{{ $data->role ?? $data->stock }}</x-slot:sub-value>
         </x-list-item>
     @endforeach
 </x-card>

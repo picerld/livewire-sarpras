@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detail_pengajuan', function (Blueprint $table) {
+        Schema::create('incoming_item_detail', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pengajuan_id');
+            $table->unsignedBigInteger('incoming_item_id');
             $table->unsignedBigInteger('item_id');
-            $table->integer('kuantiti');
-            $table->integer('kuantiti_disetujui');
+            $table->integer('qty');
             $table->timestamps();
 
-            $table->foreign('pengajuan_id')->references('id')->on('pengajuan')->onDelete('cascade');
-            $table->foreign('item_id')->references('id')->on('item')->onDelete('cascade');
+            $table->foreign('incoming_item_id')->references('id')->on('incoming_item')->cascadeOnDelete();
+            $table->foreign('item_id')->references('id')->on('item')->cascadeOnDelete();
         });
     }
 
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('detail_pengajuan');
+        Schema::dropIfExists('incoming_item_detail');
     }
 };

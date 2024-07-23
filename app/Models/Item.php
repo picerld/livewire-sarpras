@@ -12,7 +12,7 @@ class Item extends Model
 
     public $table = "item";
 
-    public function kategori(): BelongsTo {
-        return $this->belongsTo(Kategori::class);
+    public function category(): BelongsTo {
+        return $this->belongsTo(Category::class);
     }
 }

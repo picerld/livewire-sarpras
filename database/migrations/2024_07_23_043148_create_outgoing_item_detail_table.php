@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kategori', function (Blueprint $table) {
+        Schema::create('outgoing_item_detail', function (Blueprint $table) {
             $table->id();
-            $table->string('nama', 20);
+            $table->unsignedBigInteger('outgoing_item_id');
+            $table->integer('qty');
             $table->timestamps();
+
+            $table->foreign('outgoing_item_id')->references('id')->on('outgoing_item')->cascadeOnDelete();
+            $table->foreignId('item_id')->constrained('item')->cascadeOnDelete();
         });
     }
 
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kategori');
+        Schema::dropIfExists('outgoing_item_detail');
     }
 };
