@@ -18,7 +18,7 @@ Route::middleware(['auth'])->group(function () {
 
     // petugas
     Route::group(['prefix' => '/pengawas', 'middleware' => ['can:isPengawas']], function() {
-        Route::get('/', AdminController::class)->name('petugas');
+        Route::get('/', AdminController::class)->name('pengawas');
     });
 
     // unit

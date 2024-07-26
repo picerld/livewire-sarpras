@@ -1,5 +1,5 @@
 <div>
-    <x-slot name="header" >
+    <x-slot name="header">
         <livewire:utils.header>
             <div class="text-right">
                 <button class="normal-case btn btn-ghost btn-sm">
@@ -48,4 +48,7 @@
     <div id="user-tabel" class="w-full py-7">
         <livewire:components.admin.list-item />
     </div>
+
+    <!-- Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
 </div>

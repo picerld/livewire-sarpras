@@ -13,10 +13,12 @@
 
     <title>{{ $title ?? 'Laravel' }} - Sarpras</title>
 
-    <!-- Chart -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+    <!-- FOR PERFORMANCE -->
+    <link rel="stylesheet" href="{{ mix('/resources/css/app.css') }}">
+    <script src="{{ mix('/resources/js/app.js') }}"></script>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- BEST PRACTICE -->
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 </head>
 
 <body>

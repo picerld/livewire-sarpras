@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Items;
 
 use App\Http\Controllers\Controller;
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -12,7 +13,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return view("pages.item.index");
+        return view("pages.items.index");
     }
 
     /**
@@ -20,7 +21,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        return view("pages.item.create");
+        
     }
 
     /**
@@ -36,7 +37,9 @@ class ItemController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view("pages.items.show", [
+            "itemID" => $id
+        ]);
     }
 
     /**

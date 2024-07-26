@@ -8,16 +8,6 @@
   box-sizing: border-box;
 }
 
-.image {
-width: 120px;
-height: 120px;
-}
-
-.img-error {
-width: 100%;
-height: 400px;
-}
-
 /* Active page highlight */
 .mary-table-pagination span[aria-current="page"] > span {
   @apply bg-primary text-base-100

@@ -10,7 +10,9 @@ class Item extends Model
 {
     use HasFactory;
 
-    public $table = "item";
+    public $table = "items";
+
+    protected $guarded = ['id'];
 
     public function category(): BelongsTo {
         return $this->belongsTo(Category::class);

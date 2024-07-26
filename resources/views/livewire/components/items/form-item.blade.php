@@ -1,3 +1,0 @@
-<div>
-    items form
-</div>
