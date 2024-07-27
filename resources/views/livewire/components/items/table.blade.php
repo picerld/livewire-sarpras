@@ -28,19 +28,20 @@
     <x-modal wire:model="createItems" class="backdrop-blur" box-class="w-full lg:min-w-[800px] md:min-w-[800px]">
         <div class="mb-5">Press `ESC` or click outside to close.</div>
         <x-card>
-            <x-form id="itemsForm" wire:submit="store" class="space-y-4" autocomplete="off" >
+            <x-form id="itemsForm" wire:submit="store" class="space-y-4" autocomplete="off">
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <x-input wire:model="newItem.name" id="name" label="Name" placeholder="Name" />
-                    <x-input wire:model="newItem.merk" id="merk" label="Merk" placeholder="Name" />
-                    <x-input wire:model="newItem.unit" id="unit" label="Unit" placeholder="Unit" />
-                    <x-input label="Price" wire:model="newItem.price" suffix="Rp" money locale="id-ID" />
-                    <x-input wire:model="newItem.stock" id="stock" type="number" label="Stock"
-                        placeholder="Stock" min="1" />
-                    <x-input wire:model="newItem.minimum_stock" id="minimum_stock" type="number" label="Minimum Stock"
-                        placeholder="Minimum Stock" min="1" />
+                    <x-input wire:model="newItem.name" id="name" label="Name" inline />
+                    <x-input wire:model="newItem.merk" id="merk" label="Merk" inline />
+                    <x-input wire:model="newItem.unit" id="unit" label="Unit" inline />
+                    <x-input label="Price" wire:model="newItem.price" suffix="Rp" money locale="id-ID" inline />
+                    <x-input wire:model="newItem.stock" id="stock" type="number" label="stok" min="1"
+                        inline />
+                    <x-input wire:model="newItem.minimum_stock" id="minimum_stock" label="stok minimum" type="number"
+                        min="1" inline />
                 </div>
                 <x-select wire:model="newItem.category_id" id="category" for="Category" label="Category"
                     :options="$categories" inline />
+                <x-textarea label="Deskripsi" wire:model="newItem.description" placeholder="Type here ..." rows="3" inline />
 
                 <x-slot:actions>
                     <x-button label="Submit!" class="text-white btn-primary" type="submit" spinner="save" />
@@ -66,8 +67,4 @@
         </x-form>
 
     </x-drawer>
-    
-    <!-- cdn for currency -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/robsontenorio/mary@0.44.2/libs/currency/currency.js">
-    </script>
 </x-card>

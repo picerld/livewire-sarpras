@@ -1,3 +1,3 @@
 <div>
-    {{ $item->name }}
+    <livewire:components.items.form-item :itemID="$itemID" />
 </div>

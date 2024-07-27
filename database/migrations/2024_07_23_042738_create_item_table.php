@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('stock')->default(0);
             $table->integer('minimum_stock')->default(0);
             $table->unsignedBigInteger('category_id');
+            $table->text('description');
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('category')->cascadeOnDelete();
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('item');
+        Schema::dropIfExists('items');
     }
 };

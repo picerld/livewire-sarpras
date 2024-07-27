@@ -27,6 +27,7 @@ class Table extends Component
         'stock' => '',
         'minimum_stock' => '',
         'category_id' => '',
+        'description' => ''
     ];
 
     public $headers = [
@@ -36,6 +37,7 @@ class Table extends Component
         ['key' => 'price', 'label' => 'Harga', 'class' => 'dark:text-slate-300'],
         ['key' => 'stock', 'label' => 'Stok', 'class' => 'dark:text-slate-300'],
         ['key' => 'category_name', 'label' => 'Kategori', 'class' => 'dark:text-slate-300'],
+        ['key' => 'description', 'label' => 'Deskripsi', 'class' => 'dark:text-slate-300'],
         ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300'],
     ];
 
@@ -71,7 +73,7 @@ class Table extends Component
             ->when($this->fromDate, fn (Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
             ->when($this->toDate, fn (Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
             ->orderBy(...array_values($this->sortBy))
-            ->paginate(5);
+            ->paginate(5, ['code', 'name', 'merk', 'price', 'stock', 'category->name', 'created_at']);
     }
 
     public function updated($property): void
@@ -109,6 +111,7 @@ class Table extends Component
                     'stock' => 'required|integer|max:999',
                     'minimum_stock' => 'required|integer|max:999',
                     'category_id' => 'required|exists:category,id',
+                    'description' => 'required|string|max:100'
                 ],
             );
             $this->success("Item created!", 'Success!', position: 'toast-bottom');
