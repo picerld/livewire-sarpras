@@ -1,5 +1,5 @@
 <div>
-    <x-slot name="header" >
+    <x-slot name="header">
         <livewire:utils.header>
             <div class="text-right">
                 <button class="normal-case btn btn-ghost btn-sm">

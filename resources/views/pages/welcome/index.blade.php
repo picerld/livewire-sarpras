@@ -28,7 +28,7 @@
                             <nav class="flex justify-end flex-1 -mx-3">
                                 @auth
                                 @php
-                                    $hrefRole = Auth::user()->role == 'unit' ? 'unit' : 'petugas'
+                                    $hrefRole = Auth::user()->role == 'unit' ? 'unit' : 'pengawas'
                                  @endphp
                                  
                                     <a

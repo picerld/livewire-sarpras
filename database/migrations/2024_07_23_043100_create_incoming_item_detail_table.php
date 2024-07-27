@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('incoming_item_id')->references('id')->on('incoming_item')->cascadeOnDelete();
-            $table->foreign('item_id')->references('id')->on('item')->cascadeOnDelete();
+            $table->foreign('item_id')->references('id')->on('items')->cascadeOnDelete();
         });
     }
 

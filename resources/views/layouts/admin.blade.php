@@ -5,18 +5,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
     <!-- SEO Meta Tags -->
     <meta name="description" content="Sarpras - Sistem Informasi Manajemen Sarana dan Prasarana.">
     <meta name="keywords" content="Sarpras, Manajemen, Sarana, Prasarana, Laravel, Livewire">
-    <meta name="author" content="Nama Anda">
+    <meta name="author" content="Picerld">
 
     <title>{{ $title ?? 'Laravel' }} - Sarpras</title>
 
-    <!-- Chart -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+    <!-- cdn for currency -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/robsontenorio/mary@0.44.2/libs/currency/currency.js" defer></script>
+    
+    <!-- FOR PERFORMANCE -->
+    <link rel="stylesheet" href="{{ mix('/resources/css/app.css') }}">
+    <script src="{{ mix('/resources/js/app.js') }}"></script>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- BEST PRACTICE -->
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 </head>
 
 <body>
@@ -34,7 +39,8 @@
         </x-slot:content>
     </x-main>
 
-    <x-toast />  
-    
+    <x-toast />
+
 </body>
+
 </html>
