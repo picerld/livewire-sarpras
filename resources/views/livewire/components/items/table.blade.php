@@ -16,32 +16,29 @@
         @scope('cell_category_name', $item)
             <x-badge :value="$item->category->name" class="text-white badge-primary" />
         @endscope
-
-        @scope('actions', $item)
-            <x-button icon="o-trash" wire:click="delete({{ $item->id }})" class="btn-sm text-error" spinner
-                aria-label="delete item" />
-        @endscope
     </x-table>
 
     <x-spotlight />
 
     <x-modal wire:model="createItems" class="backdrop-blur" box-class="w-full lg:min-w-[800px] md:min-w-[800px]">
-        <div class="mb-5">Press `ESC` or click outside to close.</div>
+        <p class="text-sm">Press `ESC` or click outside to close.</p>
         <x-card>
-            <x-form id="itemsForm" wire:submit="store" class="space-y-4" autocomplete="off">
+            <x-form id="itemsForm" wire:submit="store" class="space-y-4" autocomplete="off" no-separator>
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <x-input wire:model="newItem.name" id="name" label="Name" inline />
                     <x-input wire:model="newItem.merk" id="merk" label="Merk" inline />
-                    <x-input wire:model="newItem.unit" id="unit" label="Unit" inline />
+                    <x-input wire:model="newItem.unit" id="unit" label="Satuan" inline />
                     <x-input label="Price" wire:model="newItem.price" suffix="Rp" money locale="id-ID" inline />
-                    <x-input wire:model="newItem.stock" id="stock" type="number" label="stok" min="1"
+                    <x-input wire:model="newItem.stock" id="stock" type="number" label="Stok" min="1"
                         inline />
-                    <x-input wire:model="newItem.minimum_stock" id="minimum_stock" label="stok minimum" type="number"
+                    <x-input wire:model="newItem.minimum_stock" id="minimum_stock" label="Stok minimum" type="number"
                         min="1" inline />
+                    <x-select wire:model="newItem.category_id" id="category" for="Category" label="Category"
+                        :options="$categories" inline />
+                    <x-file wire:model="newItem.images" accept="image/png" crop-after-change />
                 </div>
-                <x-select wire:model="newItem.category_id" id="category" for="Category" label="Category"
-                    :options="$categories" inline />
-                <x-textarea label="Deskripsi" wire:model="newItem.description" placeholder="Type here ..." rows="3" inline />
+                <x-textarea label="Deskripsi" wire:model="newItem.description" placeholder="Type here ..."
+                    rows="3" inline />
 
                 <x-slot:actions>
                     <x-button label="Submit!" class="text-white btn-primary" type="submit" spinner="save" />
@@ -54,7 +51,7 @@
         close-on-escape>
         <x-form wire:submit="items" no-separator>
             <!-- Category Filter -->
-            <x-choices label="Category" wire:model="selectedCategory" :options="$categories" single />
+            <x-choices label="Category" wire:model="selectedCategory" :options="$categories" inline single />
 
             <!-- Date Range Filter -->
             <x-input type="date" label="From Date" wire:model="fromDate" />

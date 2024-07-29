@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components\Items;
 
+use App\Helpers\ImageHelper;
 use App\Models\Category;
 use App\Models\Item;
 use Livewire\Component;
@@ -11,11 +12,11 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
 use Mary\Traits\Toast;
 use Illuminate\Support\Str;
-use Livewire\Attributes\Lazy;
+use Livewire\WithFileUploads;
 
 class Table extends Component
 {
-    use WithPagination, Toast;
+    use WithPagination, Toast, WithFileUploads;
 
     // create item
     public $newItem = [
@@ -27,7 +28,8 @@ class Table extends Component
         'stock' => '',
         'minimum_stock' => '',
         'category_id' => '',
-        'description' => ''
+        'description' => '',
+        'images' => ''
     ];
 
     public $headers = [
@@ -36,6 +38,7 @@ class Table extends Component
         ['key' => 'merk', 'label' => 'Merek', 'class' => 'dark:text-slate-300'],
         ['key' => 'price', 'label' => 'Harga', 'class' => 'dark:text-slate-300'],
         ['key' => 'stock', 'label' => 'Stok', 'class' => 'dark:text-slate-300'],
+        ['key' => 'minimum_stock', 'label' => 'Stok Min', 'class' => 'dark:text-slate-300 text-center'],
         ['key' => 'category_name', 'label' => 'Kategori', 'class' => 'dark:text-slate-300'],
         ['key' => 'description', 'label' => 'Deskripsi', 'class' => 'dark:text-slate-300'],
         ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300'],
@@ -73,7 +76,7 @@ class Table extends Component
             ->when($this->fromDate, fn (Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
             ->when($this->toDate, fn (Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
             ->orderBy(...array_values($this->sortBy))
-            ->paginate(5, ['code', 'name', 'merk', 'price', 'stock', 'category->name', 'created_at']);
+            ->paginate(5, ['code', 'name', 'merk', 'price', 'stock', 'minimum_stock', 'category->name', 'created_at']);
     }
 
     public function updated($property): void
@@ -91,6 +94,7 @@ class Table extends Component
     }
 
     // CRUD
+    // func for generate value of random code
     protected function generateCode()
     {
         return substr(hash('sha256', STR::random(40) . time()), 0, 10);
@@ -111,28 +115,28 @@ class Table extends Component
                     'stock' => 'required|integer|max:999',
                     'minimum_stock' => 'required|integer|max:999',
                     'category_id' => 'required|exists:category,id',
-                    'description' => 'required|string|max:100'
-                ],
+                    'description' => 'required|string|max:100',
+                    'images' => 'nullable|image|max:1024'
+                ]
             );
+    
+            $data = $validator->validated();
+            $data['images'] = ImageHelper::handleImage($this->newItem['images']);
+    
+            Item::create($data);
             $this->success("Item created!", 'Success!', position: 'toast-bottom');
-            Item::create($validator->validated());
-        } catch (\Throwable $e) {
-            $this->warning($validator->errors()->first(), 'Warning!!', position: 'toast-bottom');
+        } catch (\Throwable $th) {            
+            $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
         }
+
         $this->reset('newItem');
         $this->createItems = false;
     }
 
-    public function delete(Item $item): void
-    {
-        $item->delete();
-        $this->success("Item $item->name deleted", 'Good bye!', position: 'toast-bottom');
-    }
 
     public function render()
     {
         $items = $this->items();
-        // dd($items);
         $categories = Category::all();
 
         return view('livewire.components.items.table', [

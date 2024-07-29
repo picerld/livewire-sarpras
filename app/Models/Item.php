@@ -14,6 +14,10 @@ class Item extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'images' => 'array'
+    ];
+
     public function category(): BelongsTo {
         return $this->belongsTo(Category::class);
     }

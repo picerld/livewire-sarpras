@@ -14,14 +14,37 @@
     <title>{{ $title ?? 'Laravel' }} - Sarpras</title>
 
     <!-- cdn for currency -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/robsontenorio/mary@0.44.2/libs/currency/currency.js" defer></script>
-    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/robsontenorio/mary@0.44.2/libs/currency/currency.js"
+        defer></script>
+
     <!-- FOR PERFORMANCE -->
     <link rel="stylesheet" href="{{ mix('/resources/css/app.css') }}">
     <script src="{{ mix('/resources/js/app.js') }}"></script>
 
     <!-- BEST PRACTICE -->
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+
+    <style>
+        .cropper-point {
+            width: 10px !important;
+            height: 10px !important;
+        }
+
+        /* Active page highlight */
+        .mary-table-pagination span[aria-current="page"]>span {
+            @apply bg-primary text-base-100
+        }
+
+        /* For dark mode*/
+        .mary-table-pagination span[aria-disabled="true"] span {
+            @apply bg-inherit
+        }
+
+        /* For dark mode*/
+        .mary-table-pagination button {
+            @apply bg-base-100
+        }
+    </style>
 </head>
 
 <body>
