@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('code', 10);
             $table->string('merk', 25);
             $table->string('unit', 10);
+            $table->string('images')->nullable();
             $table->integer('price');
             $table->integer('stock')->default(0);
             $table->integer('minimum_stock')->default(0);

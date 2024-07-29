@@ -21,6 +21,7 @@ class ItemFactory extends Factory
             'code' => 'item-' . $this->faker->numberBetween(1, 10),
             'merk' => $this->faker->word(),
             'unit' => 'unit',
+            'images' => $this->faker->imageUrl(640, 480, 'items', true),
             'price' => $this->faker->numberBetween(2000, 5000),
             'category_id' => $this->faker->numberBetween(1, 10),
             'stock' => $this->faker->numberBetween(10, 100),
