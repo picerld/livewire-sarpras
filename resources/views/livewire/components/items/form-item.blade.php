@@ -60,7 +60,7 @@
         <!-- Actions Section -->
         <div class="flex justify-end mt-4 space-x-4">
             <x-button label="Cancel" class="btn-outline" link="/items" />
-            <x-button label="Save" icon="o-paper-airplane" spinner="save" type="submit"
+            <x-button label="Save" icon="c-paper-airplane" spinner="save" type="submit"
                 class="text-white dark:text-slate-200 hover:opacity-80 btn-primary" />
         </div>
     </x-form>

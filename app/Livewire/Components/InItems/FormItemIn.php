@@ -14,12 +14,13 @@ class FormItemIn extends Component
 {
     use Toast;
 
+    public Item $item;
+
     // Default value for inputs
     public $inputs = [['item_id' => '', 'qty' => 1]];
     public $items = [];
     public $supplier_id;
     public $i = 1;
-
 
     public function mount()
     {
@@ -52,34 +53,35 @@ class FormItemIn extends Component
             $incomingItem = IncomingItem::create([
                 'user_id' => Auth::id(),
                 'supplier_id' => $this->supplier_id,
-                'total_items' => 0,
                 'total_items' => 0, // Default value
             ]);
 
-            // Store to incoming_item_detail table from data incoming_item table
+            // Initialize total items counter
+            $totalItems = 0;
+
+            // Store to incoming_item_detail table and update item quantities
             foreach ($this->inputs as $input) {
                 IncomingItemDetail::create([
                     'incoming_item_id' => $incomingItem->id,
                     'item_id' => $input['item_id'],
                     'qty' => $input['qty'],
                 ]);
+
+                $item = Item::find($input['item_id']);
+                $item->update(['stock' => $item->stock + $input['qty']]);
+                $totalItems += $input['qty'];
             }
 
+            // Update total_items in incoming_item table
             $incomingItem->update([
-                'total_items' => $incomingItem->incomingItemDetail->sum('qty'),
+                'total_items' => $totalItems,
             ]);
 
-            // Update total_items in incoming_item table
-            $totalItems = IncomingItemDetail::where('incoming_item_id', $incomingItem->id)
-                ->sum('qty');
+            $this->success("Item Successfully Added", "Success!!", position: 'toast-bottom', redirectTo: '/in-items');
+            $this->reset(['inputs', 'supplier_id']);
 
-            $incomingItem->update(['total_items' => $totalItems]);
-
-            $this->success("Item Successfully Added", "Success!!", position: 'toast-bottom');
-            $this->reset(['inputs', 'supplier_id', 'item_id', 'qty']);
-            
         } catch (\Throwable $th) {
-            $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
+            $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom', redirectTo: '/in-items');
         }
     }
 
@@ -91,7 +93,7 @@ class FormItemIn extends Component
         return view('livewire.components.in-items.form-item-in', [
             'suppliers' => $suppliers,
             'items' => $items,
-            "suppliers" => $suppliers
+            "suppliers" => $suppliers,
         ]);
     }
 }
