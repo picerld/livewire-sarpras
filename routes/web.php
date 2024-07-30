@@ -6,6 +6,7 @@ use App\Http\Controllers\Items\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Unit\UnitController;
 use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
 Route::get('/', function () {
     return view("pages.welcome.index");
@@ -34,6 +35,17 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
+// Users will be redirected to this route if not logged in
+Volt::route('/login', 'login')->name('login');
+ 
+// Define the logout
+Route::get('/logout', function () {
+    auth()->logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+ 
+    return redirect('/');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
