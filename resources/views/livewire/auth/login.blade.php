@@ -52,7 +52,7 @@ new #[Title('Login')] class extends Component {
 
 <div class="mx-auto md:w-96">
     <div class="mb-8 hidden-when-collapsed">
-        <div class="flex gap-2">
+        <div class="flex gap-1">
             {{-- <img src="{{ asset('img/logo.svg') }}" width="30" class="mt-1" width="200" height="50" alt="Sarpras"> --}}
             <svg class="inline text-primary w-9 h-9" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke-width="1.5" stroke="currentColor" aria-hidden="true">
