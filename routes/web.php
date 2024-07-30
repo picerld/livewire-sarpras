@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Items\InItemController;
 use App\Http\Controllers\Items\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Unit\UnitController;
@@ -27,7 +28,10 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // items
-    Route::middleware(['can:isAdmin'])->resource('items', ItemController::class);
+    Route::middleware(['can:isAdmin'])->group(function () {
+        Route::resource('items', ItemController::class);
+        Route::resource('in-items', InItemController::class);
+    });
 });
 
 

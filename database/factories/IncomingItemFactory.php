@@ -17,8 +17,9 @@ class IncomingItemFactory extends Factory
     public function definition(): array
     {
         return [
-            'unit_id' => $this->faker->numberBetween(1, 10),
+            'user_id' => $this->faker->numberBetween(1, 10),
             'supplier_id' => $this->faker->numberBetween(1, 10),
+            'total_items' => $this->faker->numberBetween(1, 20),
         ];
     }
 }
