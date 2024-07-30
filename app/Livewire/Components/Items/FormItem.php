@@ -67,6 +67,11 @@ class FormItem extends Component
             );
         
             $validated = $validator->validated();
+
+            if($validator->fails()) {
+                $this->warning($validator->errors()->first(), 'Warning!!', position: 'toast-bottom');
+                return;
+            }
         
             if (!empty($this->newItem['images'])) {
                 // Handle the image upload and get the URL or path

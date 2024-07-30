@@ -119,6 +119,12 @@ class Table extends Component
                     'images' => 'nullable|image|max:1024'
                 ]
             );
+
+            if($validator->fails()) {
+                $this->warning($validator->errors()->first(), 'Warning!!', position: 'toast-bottom');
+                $this->createItems = false;
+                return;
+            }
     
             $data = $validator->validated();
             $data['images'] = ImageHelper::handleImage($this->newItem['images']);

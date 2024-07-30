@@ -29,21 +29,6 @@
             width: 10px !important;
             height: 10px !important;
         }
-
-        /* Active page highlight */
-        .mary-table-pagination span[aria-current="page"]>span {
-            @apply bg-primary text-base-100
-        }
-
-        /* For dark mode*/
-        .mary-table-pagination span[aria-disabled="true"] span {
-            @apply bg-inherit
-        }
-
-        /* For dark mode*/
-        .mary-table-pagination button {
-            @apply bg-base-100
-        }
     </style>
 </head>
 
