@@ -30,7 +30,7 @@
             @can("isAdmin")
                 <x-menu-sub title="Barang" icon="o-cube">
                     <livewire:utils.navlink title="Data Barang" icon="o-document-chart-bar" link="{{ route('items.index') }}" />
-                    <livewire:utils.navlink title="Barang Masuk" icon="o-arrow-down-on-square-stack" link="barang-masuk" />
+                    <livewire:utils.navlink title="Barang Masuk" icon="o-arrow-down-on-square-stack" link="{{ route('in-items.index') }}" />
                     <livewire:utils.navlink title="Barang Keluar" icon="o-arrow-up-on-square-stack" link="barang-keluar" />
                     <livewire:utils.navlink title="Kategori" icon="o-puzzle-piece" link="kategori" />
                 </x-menu-sub>

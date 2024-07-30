@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('incoming_item', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('unit_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('supplier_id');
+            $table->integer('total_items')->default(0);
             $table->timestamps();
 
-            $table->foreign('unit_id')->references('id')->on('unit')->cascadeOnDelete();
-            $table->foreign('supplier_id')->references('id')->on('supplier')->cascadeOnDelete();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('supplier_id')->references('id')->on('suppliers')->cascadeOnDelete();
         });
     }
 

@@ -24,14 +24,13 @@
                     <x-textarea label="Description" wire:model="newItem.description" rows="3" inline />
                 </div>
             </div>
-
-            <!-- Cover Section -->
+            
             <div class="grid content-start gap-8">
                 <div class="bg-white rounded-lg dark:bg-dark">
                     <h2 class="p-5 text-lg font-semibold ">Images</h2>
                     <div class="flex items-center justify-center h-full">
                         <!-- Placeholder for image -->
-                        <div class="flex items-center gap-5 flex-col justify-start w-full h-[40vh]">
+                        <div class="flex items-center gap-5 flex-col justify-start w-full h-[50vh]">
                             <x-file wire:model="newItem.images" accept="image/png, image/jpeg, image/jpg"
                                 crop-after-change>
                                 <img src="{{ asset('/storage/' . $item->images) }}"
