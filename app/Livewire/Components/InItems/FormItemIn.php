@@ -14,6 +14,8 @@ class FormItemIn extends Component
 {
     use Toast;
 
+    public Item $item;
+
     // Default value for inputs
     public $inputs = [['item_id' => '', 'qty' => 1]];
     public $items = [];
@@ -40,47 +42,48 @@ class FormItemIn extends Component
 
     public function store()
     {
-        try {
-            // Validate input data
-            $this->validate([
-                'supplier_id' => 'required|exists:suppliers,id',
-                'inputs.*.item_id' => 'required|exists:items,id',
-                'inputs.*.qty' => 'required|integer|min:1',
+        // try {
+        // Validate input data
+        $this->validate([
+            'supplier_id' => 'required|exists:suppliers,id',
+            'inputs.*.item_id' => 'required|exists:items,id',
+            'inputs.*.qty' => 'required|integer|min:1',
+        ]);
+
+        // Store to incoming_item table
+        $incomingItem = IncomingItem::create([
+            'user_id' => Auth::id(),
+            'supplier_id' => $this->supplier_id,
+            'total_items' => 0, // Default value
+        ]);
+
+        // Initialize total items counter
+        $totalItems = 0;
+
+        // Store to incoming_item_detail table and update item quantities
+        foreach ($this->inputs as $input) {
+            IncomingItemDetail::create([
+                'incoming_item_id' => $incomingItem->id,
+                'item_id' => $input['item_id'],
+                'qty' => $input['qty'],
             ]);
 
-            // Store to incoming_item table
-            $incomingItem = IncomingItem::create([
-                'user_id' => Auth::id(),
-                'supplier_id' => $this->supplier_id,
-                'total_items' => 0,
-                'total_items' => 0, // Default value
-            ]);
-
-            // Store to incoming_item_detail table from data incoming_item table
-            foreach ($this->inputs as $input) {
-                IncomingItemDetail::create([
-                    'incoming_item_id' => $incomingItem->id,
-                    'item_id' => $input['item_id'],
-                    'qty' => $input['qty'],
-                ]);
-            }
-
-            $incomingItem->update([
-                'total_items' => $incomingItem->incomingItemDetail->sum('qty'),
-            ]);
-
-            // Update total_items in incoming_item table
-            $totalItems = IncomingItemDetail::where('incoming_item_id', $incomingItem->id)
-                ->sum('qty');
-
-            $incomingItem->update(['total_items' => $totalItems]);
-
-            $this->success("Item Successfully Added", "Success!!", position: 'toast-bottom');
-            $this->reset(['inputs', 'supplier_id', 'item_id', 'qty']);
-            
-        } catch (\Throwable $th) {
-            $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
+            $item = Item::find($input['item_id']);
+            $item->update(['stock' => $item->stock + $input['qty']]);
+            $totalItems += $input['qty'];
         }
+
+        // Update total_items in incoming_item table
+        $incomingItem->update([
+            'total_items' => $totalItems,
+        ]);
+
+        $this->success("Item Successfully Added", "Success!!", position: 'toast-bottom');
+        $this->reset(['inputs', 'supplier_id']);
+
+        // } catch (\Throwable $th) {
+        //     $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
+        // }
     }
 
     public function render()
