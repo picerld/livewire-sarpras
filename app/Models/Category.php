@@ -12,6 +12,8 @@ class Category extends Model
 
     public $table = "category";
 
+    protected $guarded = ['id'];
+
     public function item(): Hasmany {
         return $this->hasMany(Category::class);
     }

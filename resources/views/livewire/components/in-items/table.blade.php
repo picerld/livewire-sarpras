@@ -11,7 +11,7 @@
     </x-header>
 
     <!-- USING TABLE -->
-    <x-table :headers="$headers" :rows="$itemsIn" :sort-by="$sortBy" link="/inItems/{id}"
+    <x-table :headers="$headers" :rows="$itemsIn" :sort-by="$sortBy" link="/in-items/{id}"
         class="bg-white rounded dark:bg-dark" with-pagination>
         @scope('actions', $itemsIn)
             <x-button icon="o-trash" wire:click="delete({{ $itemsIn->id }})" class="btn-sm btn-error btn-outline" 
