@@ -82,15 +82,30 @@ class Table extends Component
 
     public function delete(IncomingItem $incomingItem, IncomingItemDetail $incomingItemDetail): void
     {
-        $incomingItem->delete();
         $incomingItemDetail->delete();
+        $incomingItem->delete();
         $this->success("Item $incomingItem->name deleted", 'Good bye!', redirectTo: '/in-items', position: 'toast-bottom');
     }
 
     public function render()
     {
         $itemsIn = $this->itemsIn();
-        $users = User::whereNot('role', 'unit')->get();
+        // manualy option role
+        $users = [
+            [
+                'id' => '1',
+                'name' => 'Admin'
+            ],
+            [
+                'id' => '2',
+                'name' => 'Pengawas'
+            ],
+            [
+                'id' => '3',
+                'name' => 'Unit'
+            ]
+
+        ];
 
         return view('livewire.components.in-items.table', [
             'itemsIn' => $itemsIn,

@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Items;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class InItemController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('pages.inItems.index');
+        return view('pages.accounts.index');
     }
 
     /**
@@ -36,9 +36,7 @@ class InItemController extends Controller
      */
     public function show(string $id)
     {
-        return view("pages.inItems.show", [
-            "incomingItemID" => $id
-        ]);
+        //
     }
 
     /**

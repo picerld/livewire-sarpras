@@ -23,7 +23,7 @@ class Item extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function incomingItems(): HasMany {
-        return $this->hasMany(IncomingItem::class, 'item_id');
+    public function incomingItemsDetail(): HasMany {
+        return $this->hasMany(IncomingItemDetail::class, 'item_id');
     }
 }

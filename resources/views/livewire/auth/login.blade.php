@@ -67,8 +67,8 @@ new #[Title('Login')] class extends Component {
         </div>
     </div>
 
-    <x-form wire:submit="login">
-        <x-input label="E-mail" wire:model="email" icon="o-envelope" class="text-slate-300" inline />
+    <x-form wire:submit="login" autoComplete="off">
+        <x-input label="Email" wire:model="email" icon="o-envelope" class="text-slate-300" inline />
         <x-input label="Password" wire:model="password" type="password" class="text-slate-300" icon="o-key" inline />
 
         <x-slot:actions>

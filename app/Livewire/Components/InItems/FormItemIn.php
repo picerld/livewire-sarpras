@@ -20,6 +20,8 @@ class FormItemIn extends Component
     public $inputs = [['item_id' => '', 'qty' => 1]];
     public $items = [];
     public $supplier_id;
+
+    // Index for loop input
     public $i = 1;
 
     public function mount()
