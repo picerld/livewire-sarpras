@@ -82,8 +82,8 @@ class Table extends Component
 
     public function delete(IncomingItem $incomingItem, IncomingItemDetail $incomingItemDetail): void
     {
-        $incomingItem->delete();
         $incomingItemDetail->delete();
+        $incomingItem->delete();
         $this->success("Item $incomingItem->name deleted", 'Good bye!', redirectTo: '/in-items', position: 'toast-bottom');
     }
 

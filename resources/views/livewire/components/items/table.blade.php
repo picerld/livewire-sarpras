@@ -41,7 +41,7 @@
                     rows="3" inline />
 
                 <x-slot:actions>
-                    <x-button label="Submit!" icon="c-paper-airplane" class="text-white btn-primary" type="submit" spinner="save" />
+                    <x-button label="Submit!" icon="c-paper-airplane" class="text-white btn-primary" type="submit" spinner="store" />
                 </x-slot:actions>
             </x-form>
         </x-card>
@@ -59,7 +59,7 @@
 
             <x-slot:actions>
                 <x-button label="Clear" wire:click="clear" class="btn btn-ghost btn-outline" />
-                <x-button label="Save" class="text-white btn-primary" type="submit" icon="c-paper-airplane" spinner="save" />
+                <x-button label="Save" class="text-white btn-primary" type="submit" icon="c-paper-airplane" spinner="items" />
             </x-slot:actions>
         </x-form>
 

@@ -1,5 +1,4 @@
 <div>
-
     <div class="flex flex-col justify-between w-full md:flex-row">
         <x-header title="{{ $item->name }}" size="text-3xl" />
         <x-button icon="o-trash" wire:click="delete({{ $item->id }})" label="Delete" class="btn-error" spinner
