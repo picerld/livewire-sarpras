@@ -54,14 +54,14 @@ class FormItem extends Component
             $validator = Validator::make(
                 $this->newItem,
                 [
-                    'name' => 'required|string|max:255',
-                    'merk' => 'required|string|max:255',
-                    'unit' => 'required|string|max:50',
+                    'name' => 'required|string|max:255|min:5',
+                    'merk' => 'required|string|max:255|min:5',
+                    'unit' => 'required|string|max:50|min:2',
                     'price' => 'required|numeric|min:0',
                     'stock' => 'required|integer|min:1',
                     'minimum_stock' => 'required|integer|min:1',
                     'category_id' => 'required|exists:category,id',
-                    'description' => 'required|string|max:400',
+                    'description' => 'required|string|max:400|min:10',
                     'images' => 'nullable|max:1024',
                 ]
             );

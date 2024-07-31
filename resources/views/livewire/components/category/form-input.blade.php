@@ -1,6 +1,6 @@
 <x-card class="w-full md:w-1/2 lg:w-1/2">
     <x-header title="Category" subtitle="Add your own category" size="text-2xl" separator />
-    <x-form wire:submit="store" no-separator>
+    <x-form wire:submit="store" autoComplete="false" no-separator>
         <x-input label="Name" wire:model="newCategory.name" inline />
 
         <x-slot:actions>

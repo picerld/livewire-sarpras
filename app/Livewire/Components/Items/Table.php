@@ -107,10 +107,10 @@ class Table extends Component
             $validator = Validator::make(
                 $this->newItem,
                 [
-                    'name' => 'required|string|max:50',
-                    'code' => 'required|string|max:10|unique:items,code',
-                    'unit' => 'required|string|max:20',
-                    'merk' => 'required|string|max:20',
+                    'name' => 'required|string|max:50|min:5',
+                    'code' => 'required|string|max:10|unique:items,code|min:5',
+                    'unit' => 'required|string|max:20|min:5',
+                    'merk' => 'required|string|max:20|min:5',
                     'price' => 'required|numeric',
                     'stock' => 'required|integer|max:999',
                     'minimum_stock' => 'required|integer|max:999',

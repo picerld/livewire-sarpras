@@ -48,10 +48,7 @@ class Detail extends Component
 
         $this->success("Item $item->name deleted", 'Good bye!', redirectTo: "/in-items/{$this->incomingItemID}", position: 'toast-bottom');
     }
-
-
-
-
+    
     public function render()
     {
         return view('livewire.components.in-items.detail');

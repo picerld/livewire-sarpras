@@ -21,12 +21,12 @@ class FormInput extends Component
         $validator = Validator::make(
             $this->newCategory,
             [
-                'name' => 'required|string|max:50|min:2|unique:category,name'
+                'name' => 'required|string|max:50|min:5|unique:category,name'
             ]
         );
 
         if ($validator->fails()) {
-            $this->warning($validator->errors()->first(), 'Warning!!', redirectTo: '/category', position: 'toast-bottom');
+            $this->warning($validator->errors()->first(), 'Warning!!', position: 'toast-bottom');
             return;
         }
 

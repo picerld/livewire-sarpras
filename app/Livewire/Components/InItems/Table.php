@@ -90,7 +90,22 @@ class Table extends Component
     public function render()
     {
         $itemsIn = $this->itemsIn();
-        $users = User::whereNot('role', 'unit')->get();
+        // manualy option role
+        $users = [
+            [
+                'id' => '1',
+                'name' => 'Admin'
+            ],
+            [
+                'id' => '2',
+                'name' => 'Pengawas'
+            ],
+            [
+                'id' => '3',
+                'name' => 'Unit'
+            ]
+
+        ];
 
         return view('livewire.components.in-items.table', [
             'itemsIn' => $itemsIn,

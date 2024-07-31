@@ -27,10 +27,12 @@
         <x-menu activate-by-route>
             <livewire:utils.navlink title="Dashboard" icon="o-rectangle-group" link="/{{ $user->role }}" />
 
-            @can("isAdmin")
+            @can('isAdmin')
                 <x-menu-sub title="Barang" icon="o-cube">
-                    <livewire:utils.navlink title="Data Barang" icon="o-document-chart-bar" link="{{ route('items.index') }}" />
-                    <livewire:utils.navlink title="Barang Masuk" icon="o-arrow-down-on-square-stack" link="{{ route('in-items.index') }}" />
+                    <livewire:utils.navlink title="Data Barang" icon="o-document-chart-bar"
+                        link="{{ route('items.index') }}" />
+                    <livewire:utils.navlink title="Barang Masuk" icon="o-arrow-down-on-square-stack"
+                        link="{{ route('in-items.index') }}" />
                     <livewire:utils.navlink title="Barang Keluar" icon="o-arrow-up-on-square-stack" link="barang-keluar" />
                     <livewire:utils.navlink title="Kategori" icon="o-puzzle-piece" link="{{ route('category.index') }}" />
                 </x-menu-sub>
@@ -43,6 +45,10 @@
                 <livewire:utils.navlink title="Laporan" icon="o-arrows-right-left" link="stok" />
                 <livewire:utils.navlink title="Opname" icon="o-chart-bar-square" link="opname" />
             </x-menu-sub>
+
+            @can('isAdmin')
+                <livewire:utils.navlink title="Akun" icon="o-newspaper" link="{{ route('users.index') }}" />
+            @endcan
         </x-menu>
     </x-slot:sidebar>
 </div>
