@@ -6,6 +6,7 @@ use Livewire\Component;
 
 class Navbar extends Component
 {
+    // navbar
     public $brandName = 'Sarpras';
     public $notificationCount = 5;
 

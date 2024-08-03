@@ -32,6 +32,7 @@ class Table extends Component
         'images' => ''
     ];
 
+    // Table headers
     public $headers = [
         ['key' => 'code', 'label' => 'Kode', 'class' => 'dark:text-slate-300'],
         ['key' => 'name', 'label' => 'Nama', 'class' => 'dark:text-slate-300',],
@@ -109,7 +110,7 @@ class Table extends Component
                 [
                     'name' => 'required|string|max:50|min:5',
                     'code' => 'required|string|max:10|unique:items,code|min:5',
-                    'unit' => 'required|string|max:20|min:5',
+                    'unit' => 'required|string|max:20|min:2',
                     'merk' => 'required|string|max:20|min:5',
                     'price' => 'required|numeric',
                     'stock' => 'required|integer|max:999',

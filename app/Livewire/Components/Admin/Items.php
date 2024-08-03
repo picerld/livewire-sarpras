@@ -19,8 +19,10 @@ class Items extends Component
 
     public function datas()
     {
+        // generate model from param
         $modelClass = '\\App\\Models\\' . $this->model;
         if (class_exists($modelClass)) {
+            // data random
             return $modelClass::inRandomOrder();
         } else {
             return collect();
