@@ -55,7 +55,7 @@
             </x-menu-sub>
 
             @can('isAdmin')
-                <livewire:utils.navlink title="Akun" icon="o-newspaper" link="{{ route('users.index') }}" />
+                <livewire:utils.navlink title="Akun" icon="o-identification" link="{{ route('users.index') }}" />
             @endcan
         </x-menu>
     </x-slot:sidebar>

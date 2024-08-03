@@ -65,7 +65,7 @@ class FormItem extends Component
                     'minimum_stock' => 'required|integer|min:1',
                     'category_id' => 'required|exists:category,id',
                     'description' => 'required|string|max:300|min:10',
-                    'images' => 'nullable|max:1024|image',
+                    'images' => 'nullable|max:1024',
                 ]
             );
         

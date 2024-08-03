@@ -17,12 +17,13 @@
             </x-slot:avatar>
             <x-slot:value>
                 {{ $user->name }}
+                <x-badge value="{{ $user->role }}" class="btn-ghost btn-outline btn-xs" />
             </x-slot:value>
             <x-slot:sub-value>
-                {{ $user->role }}
+                {{ $user->email }}
             </x-slot:sub-value>
             <x-slot:actions>
-                <x-button icon="o-trash" class="btn-error btn-outline" wire:click="delete({{ $user->id }})" spinner
+                <x-button icon="o-bookmark-slash" label="Remove" class="btn-ghost btn-outline btn-sm" wire:click="delete({{ $user->id }})" spinner
                     aria-label="delete user" />
             </x-slot:actions>
         </x-list-item>

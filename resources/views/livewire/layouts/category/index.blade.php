@@ -24,4 +24,6 @@
         <livewire:components.category.form-input />
         <livewire:components.category.table />
     </div>
+
+    <livewire:utils.footer />
 </div>

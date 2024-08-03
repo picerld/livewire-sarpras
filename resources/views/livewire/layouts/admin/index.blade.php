@@ -49,6 +49,8 @@
         <livewire:components.admin.list-item />
     </div>
 
+    <livewire:utils.footer />
+
     <!-- Chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
 </div>
