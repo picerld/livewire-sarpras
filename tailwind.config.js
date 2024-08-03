@@ -17,6 +17,7 @@ export default {
         },
         extend: {
             colors: {
+                // #09090b',
                 dark: '#1d232a',
                 accent: 'rgba(153, 102, 255, 0.7)'
             },

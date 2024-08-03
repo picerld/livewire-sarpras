@@ -10,7 +10,7 @@
 
 /* Active page highlight */
 .mary-table-pagination span[aria-current="page"]>span {
-  @apply bg-primary text-base-100
+  @apply bg-black dark:bg-slate-200 text-base-100
 }
 
 /* For dark mode*/
@@ -20,5 +20,5 @@
 
 /* For dark mode*/
 .mary-table-pagination button {
-  @apply bg-base-100
+  @apply bg-inherit
 }

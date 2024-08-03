@@ -41,8 +41,8 @@
 
     <div id="overview" class="grid grid-cols-1 gap-6 mt-4 pt-7 lg-grid-cols-2 md:grid-cols-2">
         <!-- param 'model' for models -->
-        <livewire:components.admin.items title="Users" link="users" model="User" />
         <livewire:components.admin.items title="Items" link="items" model="Item" />
+        <livewire:components.admin.items title="Users" link="users" model="User" />
     </div>
 
     <div id="user-tabel" class="w-full py-7">

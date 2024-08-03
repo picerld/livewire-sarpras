@@ -12,7 +12,7 @@
     @forelse ($users as $user)
         <x-list-item :item="$user" no-separator link="/users/{{ $user->id }}">
             <x-slot:avatar>
-                <img src="https://picsum.photos/200?x=9987834" width="30" height="30" alt="{{ $user->nama }}"
+                <img src="https://ui.shadcn.com/avatars/01.png" width="30" height="30" alt="{{ $user->nama }}"
                     class="rounded-full w-11 avatar" />
             </x-slot:avatar>
             <x-slot:value>

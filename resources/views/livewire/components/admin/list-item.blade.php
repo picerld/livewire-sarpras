@@ -1,5 +1,6 @@
 <x-card>
-    <x-header wire:model.live.debounce="search" title="Users" subtitle="Users Model" class="px-3 pt-3" separator progress-indicator>
+    <x-header wire:model.live.debounce="search" title="Users" subtitle="Users Model" class="px-3 pt-3" separator
+        progress-indicator>
         <x-slot:actions>
             <x-input wire:model="search" icon="o-magnifying-glass" class="placeholder:font-bold" placeholder="Search..." />
         </x-slot:actions>
@@ -8,13 +9,17 @@
         @forelse ($users as $user)
             <x-list-item :item="$user" :link="url('/users/' . $user->id)">
                 <x-slot:avatar>
-                    <img src="https://picsum.photos/200?x=9987834" width="44" height="44" alt="{{ $user->nama }}"
+                    <img src="{{ asset($user->avatar) }}" width="44" height="44" alt="{{ $user->nama }}"
                         class="rounded-full w-11 avatar" />
                 </x-slot:avatar>
                 <x-slot:value>{{ $user->nama }}
-                    <x-badge :value="$user->role" class="text-base-100 badge badge-primary dark:badge-outline" />
+                    <x-badge :value="$user->role" class="btn-ghost btn-outline" />
                 </x-slot:value>
-                <x-slot:sub-value>{{ $user->email }}</x-slot:sub-value>
+                <x-slot:sub-value>
+                    <p class="text-black dark:text-slate-300">
+                        {{ $user->email }}
+                    </p>
+                </x-slot:sub-value>
             </x-list-item>
         @empty
             <x-alert title="Nothing here!" description="Try to remove some filters." icon="o-exclamation-triangle"
