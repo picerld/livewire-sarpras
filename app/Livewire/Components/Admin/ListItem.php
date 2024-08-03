@@ -8,6 +8,7 @@ use Livewire\Component;
 
 class ListItem extends Component
 {
+    // search
     public $search = "";
 
     public function users() {
@@ -24,8 +25,7 @@ class ListItem extends Component
 
     public function render() {
         $users = $this->users();
-        // dd($users);
-
+        
         return view('livewire.components.admin.list-item', [
             'users' => $users,
         ]);

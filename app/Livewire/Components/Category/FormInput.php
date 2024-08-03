@@ -11,6 +11,7 @@ class FormInput extends Component
 {
     use Toast;
 
+    // data category
     public $newCategory = [
         'name' => '',
     ];

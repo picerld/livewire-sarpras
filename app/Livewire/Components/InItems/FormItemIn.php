@@ -17,8 +17,11 @@ class FormItemIn extends Component
     public Item $item;
 
     // Default value for inputs
+    // it will be
+    // [0 => ['item_id' => '', 'qty' => 1], 
+    // 1 => ['item_id' => '', 'qty' => 1]] ...
     public $inputs = [['item_id' => '', 'qty' => 1]];
-    public $items = [];
+    public $items;
     public $supplier_id;
 
     // Index for loop input
@@ -26,17 +29,18 @@ class FormItemIn extends Component
 
     public function mount()
     {
-        $this->inputs = [['item_id' => '', 'qty' => 1]];
         $this->items = Item::all();
     }
 
     public function addInput()
     {
+        // Add new input field on object
         $this->inputs[] = ['item_id' => '', 'qty' => 1];
     }
 
     public function removeInput($i)
     {
+        // Remove input field on object based on index
         unset($this->inputs[$i]);
         $this->inputs = array_values($this->inputs);
     }

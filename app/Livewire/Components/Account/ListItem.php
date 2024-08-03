@@ -18,6 +18,9 @@ class ListItem extends Component
     // modal
     public bool $createUsers = false;
 
+    //filters
+    public $selectedRole = null;
+
     public function drawerList()
     {
         $this->drawerIsOpen = true;
@@ -32,7 +35,14 @@ class ListItem extends Component
     {
         return User::query()
             ->when($this->search, fn (Builder $q) => $q->whereAny(['name', 'email', 'role'], 'LIKE', "%$this->search%"))
+            ->when($this->selectedRole, fn (Builder $q) => $q->where('role', $this->selectedRole))
             ->get();
+    }
+
+    public function clear(): void
+    {
+        $this->reset();
+        $this->success('Filters cleared.', position: 'toast-bottom');
     }
 
     public function delete(User $user): void
@@ -51,15 +61,14 @@ class ListItem extends Component
             ],
             [
                 'id' => '2',
-                'name' => 'Pengawas'
+                'name' => 'Unit'
             ],
             [
                 'id' => '3',
-                'name' => 'Unit'
-            ]
+                'name' => 'Pengawas'
+            ],
 
         ];
-
 
         return view('livewire.components.account.list-item', [
             'users' => $this->users(),

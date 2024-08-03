@@ -23,7 +23,7 @@
     <div id="stats" class="grid grid-cols-1 gap-6 mt-7 lg:grid-cols-4 md:grid-cols-2">
         <!-- param 'model' for models -->
         <livewire:utils.stats title="User" model="User" icon="o-user-group" />
-        <livewire:utils.stats title="Pengajuan" model="Submission" icon="o-arrow-trending-up" />
+        <livewire:utils.stats title="Barang Masuk" model="IncomingItemDetail" icon="o-arrow-trending-up" />
         <livewire:utils.stats title="Permintaan" model="Request" icon="o-arrow-trending-down" />
         <livewire:utils.stats title="Sarpras" model="" icon="o-heart" />
     </div>
