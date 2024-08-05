@@ -1,4 +1,4 @@
-<x-card>
+<x-card class="shadow">
     <x-header wire:model.live.debounce="search" title="Users" subtitle="Users Model" class="px-3 pt-3" separator
         progress-indicator>
         <x-slot:actions>
@@ -9,7 +9,7 @@
         @forelse ($users as $user)
             <x-list-item :item="$user" :link="url('/users/' . $user->id)">
                 <x-slot:avatar>
-                    <img src="{{ asset($user->avatar) }}" width="44" height="44" alt="{{ $user->nama }}"
+                    <img src="{{ asset($user->employee->avatar) }}" width="44" height="44" alt="{{ $user->nama }}"
                         class="rounded-full w-11 avatar" />
                 </x-slot:avatar>
                 <x-slot:value>{{ $user->nama }}

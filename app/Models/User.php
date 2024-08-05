@@ -5,7 +5,6 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -22,12 +21,7 @@ class User extends Authenticatable
 
     public $table = "users";
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'nomor_induk',
-    ];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -52,11 +46,11 @@ class User extends Authenticatable
         ];
     }
 
-    public function unit(): BelongsTo {
-        return $this->belongsTo(Unit::class, 'unit_id');
+    public function employee(): BelongsTo {
+        return $this->belongsTo(Employee::class, 'pegawai_id');
     }
 
-    public function IncomingItems(): HasMany {
-        return $this->hasMany(IncomingItem::class, 'user_id');
-    }
+    // public function IncomingItems(): HasMany {
+    //     return $this->hasMany(IncomingItem::class, 'user_id');
+    // }
 }

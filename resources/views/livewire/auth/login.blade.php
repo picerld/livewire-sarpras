@@ -32,6 +32,7 @@ new #[Title('Login')] class extends Component {
         }
 
         $this->addError('email', 'The provided credentials do not match our records.');
+        $this->addError('password', 'The provided credentials do not match our records.');
     }
 
     private function redirectBasedOnRole($user)

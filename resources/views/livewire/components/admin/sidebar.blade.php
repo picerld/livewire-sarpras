@@ -4,14 +4,14 @@
             <form id="logout-form" class="hidden" action="{{ route('logout') }}" method="POST">
                 @csrf
             </form>
-
+            
             <x-list-item :item="$user" no-separator no-hover class="pt-2 text-black dark:text-slate-100">
                 <x-slot:avatar>
-                    <img src="{{ asset($user->avatar) }}" width="30" height="30" alt="{{ $user->name }}"
+                    <img src="{{ asset($user->employee->avatar) }}" width="30" height="30" alt="{{ $user->name }}"
                         class="rounded-full w-11 avatar" />
                 </x-slot:avatar>
                 <x-slot:value>
-                    {{ $user->name }}
+                    {{ $user->employee->name }}
                 </x-slot:value>
                 <x-slot:sub-value>
                     <p class="text-black dark:text-slate-300">

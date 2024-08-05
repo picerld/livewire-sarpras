@@ -16,7 +16,7 @@
                     class="rounded-full w-11 avatar" />
             </x-slot:avatar>
             <x-slot:value>
-                {{ $user->name }}
+                {{ $user->employee->name }}
                 <x-badge value="{{ $user->role }}" class="btn-ghost btn-outline btn-xs" />
             </x-slot:value>
             <x-slot:sub-value>
@@ -41,27 +41,7 @@
     <x-modal wire:model="createUsers" class="backdrop-blur">
         <p class="text-sm">Press `ESC` or click outside to close.</p>
         <x-card>
-            {{-- <x-form id="itemsForm" wire:submit="store" class="space-y-4" autocomplete="off" no-separator>
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <x-input wire:model="newItem.name" id="name" label="Name" inline />
-                    <x-input wire:model="newItem.merk" id="merk" label="Merk" inline />
-                    <x-input wire:model="newItem.unit" id="unit" label="Satuan" inline />
-                    <x-input label="Price" wire:model="newItem.price" suffix="Rp" money locale="id-ID" inline />
-                    <x-input wire:model="newItem.stock" id="stock" type="number" label="Stok" min="1"
-                        inline />
-                    <x-input wire:model="newItem.minimum_stock" id="minimum_stock" label="Stok minimum" type="number"
-                        min="1" inline />
-                    <x-select wire:model="newItem.category_id" id="category" for="Category" label="Category"
-                        :options="$categories" inline />
-                    <x-file wire:model="newItem.images" accept="image/png" crop-after-change />
-                </div>
-                <x-textarea label="Deskripsi" wire:model="newItem.description" placeholder="Type here ..."
-                    rows="3" inline />
-
-                <x-slot:actions>
-                    <x-button label="Submit!" icon="c-paper-airplane" class="text-white btn-primary" type="submit" spinner="store" />
-                </x-slot:actions>
-            </x-form> --}}
+            <livewire:components.account.form-input />
         </x-card>
     </x-modal>
 

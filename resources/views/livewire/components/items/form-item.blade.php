@@ -21,6 +21,8 @@
                     <x-input wire:model="newItem.minimum_stock" id="minimum_stock" type="number" label="Minimum Stock"
                         min="1" inline />
                     <x-textarea label="Description" wire:model="newItem.description" rows="3" inline />
+                    <!-- OPTIONAL -->
+                    {{-- <x-editor wire:model="newItem.description" label="Description" hint="Description of the item" /> --}}
                 </div>
             </div>
             
