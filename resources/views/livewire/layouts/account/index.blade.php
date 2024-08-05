@@ -22,4 +22,6 @@
     <div id="list user" class="w-full py-7">
         <livewire:components.account.list-item />
     </div>
+
+    <livewire:utils.footer />
 </div>

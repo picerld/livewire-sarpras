@@ -17,6 +17,7 @@ class FormItem extends Component
 
     public Item $item;
 
+    // Default value for inputs
     public $newItem = [
         'name' => '',
         'code' => '',
@@ -31,15 +32,17 @@ class FormItem extends Component
     ];
     public $itemID;
 
-    public function mount($itemID): void
+    public function mount($itemID)
     {
         $this->itemID = $itemID;
         $this->item = Item::findOrFail($this->itemID);
+        // Fill recent value from table
         $this->fillItem();
     }
 
     public function fillItem(): void
     {
+        // Fill item
         $this->newItem = $this->item->only([
             'name', 'code', 'unit', 'merk', 'price', 'stock',
             'minimum_stock', 'category_id', 'description', 'images'
@@ -61,7 +64,7 @@ class FormItem extends Component
                     'stock' => 'required|integer|min:1',
                     'minimum_stock' => 'required|integer|min:1',
                     'category_id' => 'required|exists:category,id',
-                    'description' => 'required|string|max:400|min:10',
+                    'description' => 'required|string|max:300|min:10',
                     'images' => 'nullable|max:1024',
                 ]
             );
@@ -106,6 +109,7 @@ class FormItem extends Component
 
     public function delete(Item $item): void
     {
+        // Delete image from storage/public ...
         if ($item->images) {
             Storage::delete('public/' . $item->images);
         }

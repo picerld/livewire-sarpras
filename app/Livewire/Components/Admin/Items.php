@@ -19,8 +19,10 @@ class Items extends Component
 
     public function datas()
     {
+        // generate model from param
         $modelClass = '\\App\\Models\\' . $this->model;
         if (class_exists($modelClass)) {
+            // data random
             return $modelClass::inRandomOrder();
         } else {
             return collect();
@@ -32,7 +34,7 @@ class Items extends Component
         $datas = $this->datas();
 
         return view('livewire.components.admin.items', [
-            "datas" => $datas->paginate(3)
+            "datas" => $datas->paginate(4)
         ]);
     }
 }

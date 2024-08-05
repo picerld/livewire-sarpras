@@ -18,7 +18,7 @@
                         min="1" />
                 </div>
                 <div class="col-span-2">
-                    <x-button type="button" label="Remove?" wire:click.prevent="removeInput({{ $key }})"
+                    <x-button type="button" label="Remove" wire:click.prevent="removeInput({{ $key }})"
                         class="flex w-full btn-ghost btn-outline" icon="o-document-minus" />
                 </div>
             </div>

@@ -17,13 +17,15 @@ class Table extends Component
 {
     use WithPagination, Toast;
 
+    // header table
     public $headers = [
-        ['key' => 'users_name', 'label' => 'User', 'class' => 'dark:text-slate-300'],
-        ['key' => 'suppliers_name', 'label' => 'Supplier', 'class' => 'dark:text-slate-300'],
-        ['key' => 'total_items', 'label' => 'Total Item', 'class' => 'dark:text-slate-300 text-center'],
-        ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300'],
+        ['key' => 'users_name', 'label' => 'User', 'class' => 'dark:text-slate-300 text-sm'],
+        ['key' => 'suppliers_name', 'label' => 'Supplier', 'class' => 'dark:text-slate-300 text-sm'],
+        ['key' => 'total_items', 'label' => 'Total Item', 'class' => 'dark:text-slate-300 text-center text-sm'],
+        ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300 text-sm'],
     ];
 
+    // search
     public $search = "";
     public $sortBy = ['column' => 'created_at', 'direction' => 'desc'];
 
@@ -100,11 +102,6 @@ class Table extends Component
                 'id' => '2',
                 'name' => 'Pengawas'
             ],
-            [
-                'id' => '3',
-                'name' => 'Unit'
-            ]
-
         ];
 
         return view('livewire.components.in-items.table', [

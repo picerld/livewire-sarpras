@@ -14,11 +14,13 @@ class Table extends Component
 {
     use WithPagination, Toast;
 
+    // header table
     public $headers = [
-        ['key' => 'name', 'label' => 'Nama', 'class' => 'dark:text-slate-300'],
-        ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300'],
+        ['key' => 'name', 'label' => 'Nama', 'class' => 'dark:text-slate-300 text-sm'],
+        ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300 text-sm'],
     ];
 
+    // filters
     public $search = "";
     public $sortBy = ['column' => 'created_at', 'direction' => 'desc'];
 
@@ -46,6 +48,7 @@ class Table extends Component
     public function render()
     {
         $category = $this->category();
+        
         return view('livewire.components.category.table', [
             'category' => $category
         ]);

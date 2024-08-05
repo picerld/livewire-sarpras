@@ -47,7 +47,8 @@ class Charts extends Component
                             'rgba(75, 192, 192, 1)',
                             'rgba(201, 203, 207, 1)'
                         ],
-                        'borderWidth' => 3
+                        'borderWidth' => 2,
+                        'borderRadius' => 4,
                     ]
                 ]
             ],
@@ -66,9 +67,10 @@ class Charts extends Component
                         'duration' => 1000,
                         'easing' => 'easeInOutBounce'
                     ]
-                ]
+                ],
             ]
         ];
+        
     }
 
     public function render()

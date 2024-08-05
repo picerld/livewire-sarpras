@@ -12,6 +12,7 @@ class Detail extends Component
 {
     use Toast;
 
+    // params
     public $incomingItemID;
     public $items;
 
@@ -28,6 +29,7 @@ class Detail extends Component
             ->where('incoming_item_id', $incomingItemID)
             ->sum('qty');
 
+        // search for item on item table from param
         $item = Item::find($itemID);
 
         if ($item) {

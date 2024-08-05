@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Unit;
+use App\Models\Employee;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +13,6 @@ class UnitSeeder extends Seeder
      */
     public function run(): void
     {
-        Unit::factory(10)->create();
+        Employee::factory(10)->create();
     }
 }
