@@ -34,7 +34,7 @@ class Items extends Component
         $datas = $this->datas();
 
         return view('livewire.components.admin.items', [
-            "datas" => $datas->paginate(3)
+            "datas" => $datas->paginate(4)
         ]);
     }
 }

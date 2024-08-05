@@ -23,4 +23,6 @@
     <div id="item-table" class="w-full py-7">
         <livewire:components.in-items.table />
     </div>
+
+    <livewire:utils.footer />
 </div>

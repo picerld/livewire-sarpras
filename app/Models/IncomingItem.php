@@ -15,7 +15,7 @@ class IncomingItem extends Model
     protected $guarded = ['id'];
 
     public function users(): BelongsTo {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Employee::class, 'user_id');
     }
 
     public function suppliers(): BelongsTo {

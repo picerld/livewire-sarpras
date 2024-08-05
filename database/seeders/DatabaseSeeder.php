@@ -4,8 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\IncomingItemDetail;
-use App\Models\SubmissionDetail;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -18,30 +17,46 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User Seeder
+        Employee::factory()->create([
+            'avatar' => 'avatars/01.png',
+            'name' => 'Admin'
+        ]);
+
+        Employee::factory()->create([
+            'avatar' => 'avatars/01.png',
+            'name' => 'pengawas'
+        ]);
+
+        Employee::factory()->create([
+            'avatar' => 'avatars/01.png',
+            'name' => 'Unit'
+        ]);
+
         User::factory()->create([
-            'name' => 'Admin',
             'email' => 'admin@localhost',
+            'password' => Hash::make('password'),
             'role' => 'admin',
-            'password' => Hash::make('password')
-        ]);
-        
-        User::factory()->create([
-            'name' => 'Unit',
-            'email' => 'unit@localhost',
-            'role' => 'unit',
-            'password' => Hash::make('password')
+            'employee_id' => 1
         ]);
 
         User::factory()->create([
-            'name' => 'Pengawas',
             'email' => 'pengawas@localhost',
+            'password' => Hash::make('password'),
             'role' => 'pengawas',
-            'password' => Hash::make('password')
+            'employee_id' => 2
         ]);
 
+        User::factory()->create([
+            'email' => 'unit@localhost',
+            'password' => Hash::make('password'),
+            'role' => 'unit',
+            'employee_id' => 3
+        ]);
+
+        Employee::factory(10)->create();
         User::factory(10)->create();
 
-        $this->call(UnitSeeder::class);
+        // $this->call(UnitSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(ItemSeeder::class);
         $this->call(SupplierSeeder::class);

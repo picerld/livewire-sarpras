@@ -30,24 +30,26 @@
 
     <div id="charts" class="flex flex-wrap w-full gap-4 pt-3 sm:flex-nowrap">
         <!-- dinamis chart -->
-        <div class="w-full md:w-2/3 lg:w-2/3">
+        <div class="w-full shadow md:w-2/3 lg:w-2/3">
             <!-- 'type' for type chart -->
-            <livewire:utils.charts class="flex items-center my-3 min-h-[30vh] w-full h-full" type="bar" />
+            <livewire:utils.charts class="flex items-center w-full h-full" type="bar" />
         </div>
-        <div class="w-full md:w-1/3 lg:w-1/3">
-            <livewire:utils.charts class="flex items-center my-3 min-h-[35vh] w-full h-full" type="doughnut" />
+        <div class="w-full shadow md:w-1/3 lg:w-1/3">
+            <livewire:utils.charts class="flex items-center w-full h-full" type="pie" />
         </div>
     </div>
 
-    <div id="overview" class="grid grid-cols-1 gap-6 mt-4 pt-7 lg-grid-cols-2 md:grid-cols-2">
+    <div id="overview" class="grid grid-cols-1 gap-3 mt-4 lg-grid-cols-2 md:grid-cols-2">
         <!-- param 'model' for models -->
-        <livewire:components.admin.items title="Users" link="users" model="User" />
         <livewire:components.admin.items title="Items" link="items" model="Item" />
+        <livewire:components.admin.items title="Users" link="users" model="User" />
     </div>
 
-    <div id="user-tabel" class="w-full py-7">
+    <div id="user-tabel" class="w-full py-3">
         <livewire:components.admin.list-item />
     </div>
+
+    <livewire:utils.footer />
 
     <!-- Chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>

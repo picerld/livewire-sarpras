@@ -2,11 +2,12 @@
     <x-header wire:model.live.debounce="search" title="Barang" class="px-3 pt-3" size="text-2xl" subtitle="Items Table"
         progress-indicator separator>
         <x-slot:actions>
-            <x-input wire:model="search" id="search" icon="o-magnifying-glass" class="placeholder:font-bold"
+            <x-input wire:model="search" id="search" icon="o-magnifying-glass" class="placeholder:font-semibold"
                 placeholder="Search..." autocomplete="off" />
-            <x-button icon="o-funnel" label="Filters" badge="0" wire:click="tableDrawer" responsive />
+            <x-button icon="o-funnel" class="text-black dark:text-white/80" wire:click="tableDrawer" aria-label="filter item" responsive />
             <x-button icon-right="m-plus" label="Add" wire:click="createItemsModal"
-                class="text-white btn-primary hover:opacity-80" responsive aria-label="create item" />
+                class="text-white bg-dark dark:bg-slate-100 hover:bg-dark hover:opacity-90 dark:text-black" responsive 
+                aria-label="create item" />
         </x-slot:actions>
     </x-header>
 
@@ -14,7 +15,7 @@
     <x-table :headers="$headers" :rows="$items" :sort-by="$sortBy" link="/items/{id}"
         class="bg-white rounded dark:bg-dark" with-pagination>
         @scope('cell_category_name', $item)
-            <x-badge :value="$item->category->name" class="text-white badge-primary" />
+            <x-badge :value="$item->category->name" class="btn-ghost btn-outline" />
         @endscope
     </x-table>
 

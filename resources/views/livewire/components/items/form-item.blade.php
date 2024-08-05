@@ -1,7 +1,7 @@
 <div>
     <div class="flex flex-col justify-between w-full md:flex-row">
         <x-header title="{{ $item->name }}" size="text-3xl" />
-        <x-button icon="o-trash" wire:click="delete({{ $item->id }})" label="Delete" class="btn-error" spinner
+        <x-button icon="o-document-minus" wire:click="delete({{ $item->id }})" label="Remove" class="btn-ghost btn-outline" spinner
             aria-label="delete item" />
     </div>
     <x-form id="updateItemForm" wire:submit="save" class="space-y-4" autocomplete="off"
@@ -21,6 +21,8 @@
                     <x-input wire:model="newItem.minimum_stock" id="minimum_stock" type="number" label="Minimum Stock"
                         min="1" inline />
                     <x-textarea label="Description" wire:model="newItem.description" rows="3" inline />
+                    <!-- OPTIONAL -->
+                    {{-- <x-editor wire:model="newItem.description" label="Description" hint="Description of the item" /> --}}
                 </div>
             </div>
             

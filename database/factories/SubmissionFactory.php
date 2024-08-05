@@ -17,7 +17,7 @@ class SubmissionFactory extends Factory
     public function definition(): array
     {
         return [
-            'unit_id' => $this->faker->numberBetween(1, 10),
+            'user_id' => fake()->numberBetween(1, 10),
         ];
     }
 }
