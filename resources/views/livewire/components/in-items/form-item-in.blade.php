@@ -30,6 +30,6 @@
 
     <x-slot:actions>
         <x-button label="Submit" icon="c-paper-airplane" class="w-full text-white btn-primary md:w-auto lg:w-auto"
-            type="submit" spinner="save" />
+            type="submit" spinner="store" />
     </x-slot:actions>
 </x-form>

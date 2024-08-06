@@ -11,7 +11,7 @@
     <x-table :headers="$headers" :rows="$category" :sort-by="$sortBy" link="/category/{id}"
         class="bg-white rounded dark:bg-dark" with-pagination>
         @scope('actions', $category)
-            <x-button icon="o-trash" wire:click="delete({{ $category->id }})" aria-label="delete category" spinner class="btn-sm btn-error btn-outline" />
+            <x-button icon="o-trash" wire:click="delete({{ $category->id }})" aria-label="delete category" spinner class="btn-sm btn-ghost btn-outline" />
         @endscope
     </x-table>
 </x-card>

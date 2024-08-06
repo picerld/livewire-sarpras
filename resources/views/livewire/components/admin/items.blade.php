@@ -10,7 +10,7 @@
                 <img src="{{ $data->images ? asset('storage/' . $data->images) : $data->employee->avatar }}" height="100"
                     width="100" alt="{{ $data->name }}" class="rounded-full w-11 avatar" />
             </x-slot:avatar>
-            <x-slot:value>{{ $data->name ? $data->name : $data->employee->name }}</x-slot:value>
+            <x-slot:value>{{ $data->name ?? $data->email }}</x-slot:value>
             <x-slot:sub-value>
                 <p class="text-black dark:text-slate-300">
                     {{ $data->role ?? $data->stock }}
