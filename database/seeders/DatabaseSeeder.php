@@ -19,38 +19,41 @@ class DatabaseSeeder extends Seeder
         // User Seeder
         Employee::factory()->create([
             'avatar' => 'avatars/01.png',
-            'name' => 'Admin'
+            'name' => 'Rafi',
+            'nip' => '111'
         ]);
 
         Employee::factory()->create([
-            'avatar' => 'avatars/01.png',
-            'name' => 'pengawas'
+            'avatar' => 'avatars/02.png',
+            'name' => 'Pice',
+            'nip' => '222'
         ]);
 
         Employee::factory()->create([
-            'avatar' => 'avatars/01.png',
-            'name' => 'Unit'
+            'avatar' => 'avatars/03.png',
+            'name' => 'Picerld',
+            'nip' => '333'
         ]);
 
         User::factory()->create([
-            'email' => 'admin@localhost',
+            'username' => 'admin@localhost',
             'password' => Hash::make('password'),
             'role' => 'admin',
-            'employee_id' => 1
+            'nip' => '111'
         ]);
 
         User::factory()->create([
-            'email' => 'pengawas@localhost',
+            'username' => 'pengawas@localhost',
             'password' => Hash::make('password'),
             'role' => 'pengawas',
-            'employee_id' => 2
+            'nip' => '222'
         ]);
 
         User::factory()->create([
-            'email' => 'unit@localhost',
+            'username' => 'unit@localhost',
             'password' => Hash::make('password'),
             'role' => 'unit',
-            'employee_id' => 3
+            'nip' => '333'
         ]);
 
         Employee::factory(10)->create();

@@ -12,9 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('outgoing_item', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->increments('id');
+            $table->string('nip', 20)->unique();
+            $table->string('code', 20)->unique();
+            $table->integer('total_items')->default(0);
             $table->timestamps();
+
+            $table->foreign('nip')->references('nip')->on('employees')->cascadeOnDelete();
         });
     }
 

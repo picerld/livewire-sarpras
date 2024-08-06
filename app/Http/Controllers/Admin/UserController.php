@@ -36,7 +36,9 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view("pages.accounts.show", [
+            "userID" => $id
+        ]);
     }
 
     /**

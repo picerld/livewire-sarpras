@@ -51,7 +51,7 @@ class User extends Authenticatable
         return $this->belongsTo(Employee::class, 'employee_id');
     }
 
-    public function IncomingItems(): HasMany {
+    public function incomingItems(): HasMany {
         return $this->hasMany(IncomingItem::class, 'user_id');
     }
 }
