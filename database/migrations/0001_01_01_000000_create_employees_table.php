@@ -12,8 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employees', function (Blueprint $table) {
+<<<<<<< Updated upstream
             $table->id();
             $table->string('nip', 20)->unique();
+=======
+            $table->string('nip')->primary();
+            $table->string('email', 50)->unique();
+>>>>>>> Stashed changes
             $table->string('avatar')->nullable();
             $table->string('name', 50);
             $table->rememberToken();

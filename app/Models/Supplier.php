@@ -15,6 +15,6 @@ class Supplier extends Model
     protected $guarded = ['id'];
 
     public function incomingItems(): HasMany {
-        return $this->hasMany(IncomingItem::class, 'supplier_id');
+        return $this->hasMany(IncomingItem::class, 'supplier_code');
     }
 }

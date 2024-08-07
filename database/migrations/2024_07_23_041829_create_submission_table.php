@@ -12,8 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('submission', function (Blueprint $table) {
+<<<<<<< Updated upstream
             $table->id();
             $table->unsignedBigInteger('user_id');
+=======
+            $table->string('code', 20)->primary();
+            $table->string('nip');
+            $table->integer('total_items')->default(0);
+>>>>>>> Stashed changes
             $table->timestamps();
             
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();

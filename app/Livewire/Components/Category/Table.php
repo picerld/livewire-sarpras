@@ -17,6 +17,7 @@ class Table extends Component
     // header table
     public $headers = [
         ['key' => 'name', 'label' => 'Nama', 'class' => 'dark:text-slate-300 text-sm'],
+        ['key' => 'aliases', 'label' => 'Alias', 'class' => 'dark:text-slate-300 text-sm'],
         ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300 text-sm'],
     ];
 
@@ -29,7 +30,7 @@ class Table extends Component
         return Category::query()
             ->when($this->search, fn (Builder $query) => $query->where('name', 'like', '%' . $this->search . '%'))
             ->orderBy(...array_values($this->sortBy))
-            ->paginate(5, ['id', 'name', 'created_at']);
+            ->paginate(5, ['id', 'name', 'aliases', 'created_at']);
     }
 
     public function updated($property): void

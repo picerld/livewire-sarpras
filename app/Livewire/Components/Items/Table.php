@@ -102,6 +102,7 @@ class Table extends Component
     public function store(): void
     {
         try {
+<<<<<<< Updated upstream
             $this->newItem['code'] = $this->generateCode();
             $validator = Validator::make(
                 $this->newItem,
@@ -118,18 +119,36 @@ class Table extends Component
                     'images' => 'nullable|image|max:1024'
                 ]
             );
+=======
+        $this->newItem['code'] = GenerateCodeHelper::handleGenerateCode($this->newItem['category_id']);
+        $validator = Validator::make(
+            $this->newItem,
+            [
+                'name' => 'required|string|max:50|min:5',
+                'code' => 'required|string|max:20|unique:items,code|min:5',
+                'unit' => 'required|string|max:20|min:2',
+                'merk' => 'required|string|max:20|min:5',
+                'price' => 'required|numeric',
+                'stock' => 'required|integer|max:999',
+                'minimum_stock' => 'required|integer|max:999',
+                'category_id' => 'required|exists:category,id',
+                'description' => 'required|string|max:100',
+                'images' => 'nullable|image|max:1024'
+            ]
+        );
+>>>>>>> Stashed changes
 
-            if($validator->fails()) {
-                $this->warning($validator->errors()->first(), 'Warning!!', position: 'toast-bottom');
-                $this->createItems = false;
-                return;
-            }
-    
-            $data = $validator->validated();
-            $data['images'] = ImageHelper::handleImage($this->newItem['images']);
-    
-            Item::create($data);
-            $this->success("Item created!", 'Success!', position: 'toast-bottom');
+        if ($validator->fails()) {
+            $this->warning($validator->errors()->first(), 'Warning!!', position: 'toast-bottom');
+            $this->createItems = false;
+            return;
+        }
+
+        $data = $validator->validated();
+        $data['images'] = ImageHelper::handleImage($this->newItem['images']);
+
+        Item::create($data);
+        $this->success("Item created!", 'Success!', position: 'toast-bottom');
         } catch (\Throwable $th) {            
             $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
         }

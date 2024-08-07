@@ -14,37 +14,40 @@ use Mary\Traits\Toast;
 class FormItem extends Component
 {
     use Toast, WithFileUploads;
-
+    
     public Item $item;
-
+    
     // Default value for inputs
     public $newItem = [
-        'name' => '',
         'code' => '',
-        'unit' => '',
+        'name' => '',
         'merk' => '',
+        'unit' => '',
         'price' => '',
         'stock' => '',
         'minimum_stock' => '',
         'category_id' => '',
         'description' => '',
-        'images' => ''
+        'images' => '',
     ];
-    public $itemID;
+    
+    public $itemCode;
 
-    public function mount($itemID)
+    public function mount($itemCode)
     {
-        $this->itemID = $itemID;
-        $this->item = Item::findOrFail($this->itemID);
+        $this->itemCode = $itemCode;
+        $this->item = Item::findorfail($this->itemCode);
+
         // Fill recent value from table
         $this->fillItem();
     }
+
 
     public function fillItem(): void
     {
         // Fill item
         $this->newItem = $this->item->only([
-            'name', 'code', 'unit', 'merk', 'price', 'stock',
+            'code', 'name', 'unit', 'merk', 'price', 'stock',
             'minimum_stock', 'category_id', 'description', 'images'
         ]);
     }
@@ -88,7 +91,6 @@ class FormItem extends Component
                             Storage::delete($oldImagePath);
                         }
                     }
-        
                     // Update the item with the new image URL or path
                     $validated['images'] = $url;
                 }
@@ -109,6 +111,8 @@ class FormItem extends Component
 
     public function delete(Item $item): void
     {
+        $item = Item::where('code', $this->newItem['code'])->first();
+
         // Delete image from storage/public ...
         if ($item->images) {
             Storage::delete('public/' . $item->images);

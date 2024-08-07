@@ -11,10 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
+<<<<<<< Updated upstream
         Schema::create('incoming_item', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('supplier_id');
+=======
+        Schema::create('incoming_items', function (Blueprint $table) {
+            $table->string('code', 20)->primary();
+            $table->string('nip');
+            $table->string('supplier_code', 20)->unique();
+>>>>>>> Stashed changes
             $table->integer('total_items')->default(0);
             $table->timestamps();
 

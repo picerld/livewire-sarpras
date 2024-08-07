@@ -12,8 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+<<<<<<< Updated upstream
             $table->id();
             $table->string('email', 50);
+=======
+            $table->string('nip', 20)->primary();
+            $table->string('username', 50);
+>>>>>>> Stashed changes
             $table->string('password');
             $table->enum('role', ['admin', 'unit', 'pengawas'])->default('unit');
             $table->unsignedBigInteger('employee_id');
