@@ -15,7 +15,7 @@
                 </x-slot:value>
                 <x-slot:sub-value>
                     <p class="text-black dark:text-slate-300">
-                        {{ $user->email }}
+                        {{ $user->username }}
                     </p>
                 </x-slot:sub-value>
                 <x-slot name="actions">

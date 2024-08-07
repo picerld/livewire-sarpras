@@ -13,7 +13,7 @@
                     <x-icon name="o-identification" label="{{ $user->employee->nip }}" />
                     <x-icon name="o-key" label="{{ $user->role }}" />
                 </div>
-                <x-icon name="o-at-symbol" label="{{ $user->email }}" />
+                <x-icon name="o-at-symbol" label="{{ $user->username }}" />
             </x-slot:subtitle>
 
         </x-avatar>

@@ -25,7 +25,7 @@
                 <x-badge value="{{ $user->role }}" class="btn-ghost btn-outline btn-xs" />
             </x-slot:value>
             <x-slot:sub-value>
-                {{ $user->email }}
+                {{ $user->username }}
             </x-slot:sub-value>
             <x-slot:actions>
                 <x-button icon="o-bookmark-slash" label="Remove" class="btn-ghost btn-outline btn-sm"

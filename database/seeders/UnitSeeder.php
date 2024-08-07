@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Livewire\Layouts\Account\User;
 use App\Models\Employee;
 use Illuminate\Database\Seeder;
 

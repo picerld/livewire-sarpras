@@ -22,7 +22,14 @@ class User extends Authenticatable
 
     public $table = "users";
 
-    protected $guarded = ['id'];
+    protected $guarded = ['nip'];
+    protected $primaryKey = 'nip';
+    protected $keyType = 'string';
+
+    public function getRouteKeyName()
+    {
+        return 'nip';
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -48,10 +55,10 @@ class User extends Authenticatable
     }
 
     public function employee(): BelongsTo {
-        return $this->belongsTo(Employee::class, 'employee_id');
+        return $this->belongsTo(Employee::class, 'nip');
     }
 
     public function incomingItems(): HasMany {
-        return $this->hasMany(IncomingItem::class, 'user_id');
+        return $this->hasMany(IncomingItem::class, 'nip');
     }
 }

@@ -19,18 +19,21 @@ class DatabaseSeeder extends Seeder
         // User Seeder
         Employee::factory()->create([
             'avatar' => 'avatars/01.png',
+            'email' => 'rafi@localhost',
             'name' => 'Rafi',
             'nip' => '111'
         ]);
 
         Employee::factory()->create([
             'avatar' => 'avatars/02.png',
+            'email' => 'pice@localhost',
             'name' => 'Pice',
             'nip' => '222'
         ]);
 
         Employee::factory()->create([
             'avatar' => 'avatars/03.png',
+            'email' => 'picerld@localhost',
             'name' => 'Picerld',
             'nip' => '333'
         ]);
@@ -56,20 +59,24 @@ class DatabaseSeeder extends Seeder
             'nip' => '333'
         ]);
 
-        Employee::factory(10)->create();
-        User::factory(10)->create();
+        $employees = Employee::factory(10)->create();
 
-        // $this->call(UnitSeeder::class);
-        $this->call(CategorySeeder::class);
-        $this->call(ItemSeeder::class);
-        $this->call(SupplierSeeder::class);
-        $this->call(SubmissionSeeder::class);
-        $this->call(SubmissionDetailSeeder::class);
-        $this->call(RequestSeeder::class);
-        $this->call(RequestDetailSeeder::class);
-        $this->call(IncomingItemSeeder::class);
-        $this->call(IncomingItemDetailSeeder::class);
-        $this->call(OutgoingItemSeeder::class);
-        $this->call(OutgoingItemDetailSeeder::class);
+        // foreach ($employees as $employee) {
+        //     User::factory()->create([
+        //         'nip' => $employee->nip,
+        //     ]);
+        // }
+
+        // $this->call(CategorySeeder::class);
+        // $this->call(ItemSeeder::class);
+        // $this->call(SupplierSeeder::class);
+        // $this->call(SubmissionSeeder::class);
+        // $this->call(SubmissionDetailSeeder::class);
+        // $this->call(RequestSeeder::class);
+        // $this->call(RequestDetailSeeder::class);
+        // $this->call(IncomingItemSeeder::class);
+        // $this->call(IncomingItemDetailSeeder::class);
+        // $this->call(OutgoingItemSeeder::class);
+        // $this->call(OutgoingItemDetailSeeder::class);
     }
 }

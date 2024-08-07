@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('outgoing_item_code', 20)->unique();
             $table->string('item_code', 20)->unique();
-            $table->integer('qty');
+            $table->integer('qty')->default(0);
             $table->timestamps();
 
-            $table->foreign('outgoing_item_code')->references('code')->on('outgoing_item')->cascadeOnDelete();
+            $table->foreign('outgoing_item_code')->references('code')->on('outgoing_items')->cascadeOnDelete();
             $table->foreign('item_code')->references('code')->on('items')->cascadeOnDelete();
         });
     }

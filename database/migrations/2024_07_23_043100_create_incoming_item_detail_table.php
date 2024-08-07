@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('qty')->default(0);
             $table->timestamps();
 
-            $table->foreign('incoming_item_code')->references('code')->on('incoming_item')->cascadeOnDelete();
+            $table->foreign('incoming_item_code')->references('code')->on('incoming_items')->cascadeOnDelete();
             $table->foreign('item_code')->references('code')->on('items')->cascadeOnDelete();
         });
     }

@@ -12,9 +12,17 @@ class Employee extends Model
 
     public $table = "employees";
 
-    protected $guarded = ['id'];
+    protected $guarded = ['nip'];
+    
+    protected $primaryKey = 'nip';
+    protected $keyType = 'string';
+
+    public function getRouteKeyName()
+    {
+        return 'nip';
+    }
 
     public function user(): HasOne {
-        return $this->hasOne(User::class, 'employee_id');
+        return $this->hasOne(User::class, 'nip');
     }
 }
