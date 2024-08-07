@@ -1,5 +1,5 @@
 <x-card>
-    <x-header wire:model.live.debounce="search" title="Barang" class="px-3 pt-3" size="text-2xl" subtitle="Items Table"
+    <x-header wire:model.live.debounce="search" title="Barang Masuk" class="px-3 pt-3" size="text-3xl" subtitle="Items Table"
         progress-indicator separator>
         <x-slot:actions>
             <x-input wire:model="search" id="search" icon="o-magnifying-glass" class="placeholder:font-semibold"

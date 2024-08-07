@@ -87,7 +87,8 @@ class Table extends Component
         $items = Item::whereIn('id', $incomingItemDetail->pluck('item_id'))->get();
 
         foreach ($items as $item) {
-            $item->update(['stock' => $item->stock - $incomingItemDetail->where('incoming_item_id', $incomingItem->id)->where('item_id', $item->id)->sum('qty')]);
+            $item->update(['stock' => $item->stock - $incomingItemDetail->where('incoming_item_id', $incomingItem->id)
+                ->where('item_id', $item->id)->sum('qty')]);
         }
 
         $incomingItemDetail->delete();

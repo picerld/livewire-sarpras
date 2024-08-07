@@ -11,7 +11,7 @@ class IncomingItem extends Model
 {
     use HasFactory;
 
-    public $table = "incoming_item";
+    public $table = "incoming_items";
     protected $guarded = ['id'];
 
     public function users(): BelongsTo {

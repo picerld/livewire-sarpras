@@ -11,21 +11,31 @@ class ListItem extends Component
     // search
     public $search = "";
 
-    public function users() {
+    public function users()
+    {
         $users = User::query()
-            ->when($this->search, fn (Builder $q) => $q->whereAny(['name', 'email', 'role'], 'LIKE', "%$this->search%"))
+            ->withAggregate('employee', 'name')
+            ->when($this->search, function (Builder $query) {
+                $query->whereHas('employee', function (Builder $query) {
+                    $query->where('name', 'LIKE', "%$this->search%");
+                })
+                    ->orWhere('username', 'LIKE', "%$this->search%")
+                    ->orWhere('role', 'LIKE', "%$this->search%");
+            })
             ->paginate(5);
 
         return $users;
     }
 
-    public function clear(): void {
+    public function clear(): void
+    {
         $this->reset();
     }
 
-    public function render() {
+    public function render()
+    {
         $users = $this->users();
-        
+
         return view('livewire.components.admin.list-item', [
             'users' => $users,
         ]);
