@@ -1,7 +1,8 @@
 <div>
     <!-- FIX THIS UI!!!!! -->
 
-    <x-button label="Go back!" link="/in-items" icon="c-arrow-left-start-on-rectangle" class="w-32 btn-outline" spinner />
+    <x-button label="Go back!" link="/in-items" icon="c-arrow-left-start-on-rectangle"
+        class="w-28 btn-outline btn-sm" spinner />
     <div class="flex flex-wrap w-full mt-6">
         @forelse ($items as $item)
             <div class="flex w-full p-2 md:w-1/3 lg:1/4">
@@ -26,8 +27,8 @@
                     </x-slot:menu>
                     <div class="mt-3">
                         <x-button icon="o-document-minus"
-                            wire:click="delete({{ $item->item->id }}, {{ $item->incoming_item_id }})" label="Remove Item"
-                            class="btn-outline btn-ghost btn-sm" spinner aria-label="delete item" />
+                            wire:click="delete({{ $item->item->id }}, {{ $item->incoming_item_id }})"
+                            label="Remove Item" class="btn-outline btn-ghost btn-sm" spinner aria-label="delete item" />
                     </div>
                 </x-card>
             </div>

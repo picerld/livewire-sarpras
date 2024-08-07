@@ -24,7 +24,7 @@
             <img class="mx-auto img-error" src="{{ asset('img/error-403.svg') }}" alt="Forbidden">
             <h1 class="text-4xl font-extrabold">Forbidden</h1>
             <p class="text-lg text-gray-600">You are unauthorized to see this page.</p>
-            <a href="/petugas" class="mt-3 text-white btn btn-primary hover:opacity-80">Go Home</a>
+            <a href="/admin" class="mt-3 text-white btn btn-primary hover:opacity-80">Go Home</a>
         </div>
     </div>
 

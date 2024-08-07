@@ -19,54 +19,64 @@ class DatabaseSeeder extends Seeder
         // User Seeder
         Employee::factory()->create([
             'avatar' => 'avatars/01.png',
-            'name' => 'Admin'
+            'email' => 'rafi@localhost',
+            'name' => 'Rafi',
+            'nip' => '111'
         ]);
 
         Employee::factory()->create([
-            'avatar' => 'avatars/01.png',
-            'name' => 'pengawas'
+            'avatar' => 'avatars/02.png',
+            'email' => 'pice@localhost',
+            'name' => 'Pice',
+            'nip' => '222'
         ]);
 
         Employee::factory()->create([
-            'avatar' => 'avatars/01.png',
-            'name' => 'Unit'
+            'avatar' => 'avatars/03.png',
+            'email' => 'picerld@localhost',
+            'name' => 'Picerld',
+            'nip' => '333'
         ]);
 
         User::factory()->create([
-            'email' => 'admin@localhost',
+            'username' => 'admin@localhost',
             'password' => Hash::make('password'),
             'role' => 'admin',
-            'employee_id' => 1
+            'nip' => '111'
         ]);
 
         User::factory()->create([
-            'email' => 'pengawas@localhost',
+            'username' => 'pengawas@localhost',
             'password' => Hash::make('password'),
             'role' => 'pengawas',
-            'employee_id' => 2
+            'nip' => '222'
         ]);
 
         User::factory()->create([
-            'email' => 'unit@localhost',
+            'username' => 'unit@localhost',
             'password' => Hash::make('password'),
             'role' => 'unit',
-            'employee_id' => 3
+            'nip' => '333'
         ]);
 
-        Employee::factory(10)->create();
-        User::factory(10)->create();
+        $employees = Employee::factory(10)->create();
 
-        // $this->call(UnitSeeder::class);
-        $this->call(CategorySeeder::class);
-        $this->call(ItemSeeder::class);
-        $this->call(SupplierSeeder::class);
-        $this->call(SubmissionSeeder::class);
-        $this->call(SubmissionDetailSeeder::class);
-        $this->call(RequestSeeder::class);
-        $this->call(RequestDetailSeeder::class);
-        $this->call(IncomingItemSeeder::class);
-        $this->call(IncomingItemDetailSeeder::class);
-        $this->call(OutgoingItemSeeder::class);
-        $this->call(OutgoingItemDetailSeeder::class);
+        // foreach ($employees as $employee) {
+        //     User::factory()->create([
+        //         'nip' => $employee->nip,
+        //     ]);
+        // }
+
+        // $this->call(CategorySeeder::class);
+        // $this->call(ItemSeeder::class);
+        // $this->call(SupplierSeeder::class);
+        // $this->call(SubmissionSeeder::class);
+        // $this->call(SubmissionDetailSeeder::class);
+        // $this->call(RequestSeeder::class);
+        // $this->call(RequestDetailSeeder::class);
+        // $this->call(IncomingItemSeeder::class);
+        // $this->call(IncomingItemDetailSeeder::class);
+        // $this->call(OutgoingItemSeeder::class);
+        // $this->call(OutgoingItemDetailSeeder::class);
     }
 }

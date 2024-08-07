@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         Schema::create('outgoing_item', function (Blueprint $table) {
             $table->id();
@@ -21,7 +22,18 @@ return new class extends Migration
             $table->string('nip');
             $table->integer('total_items')->default(0);
 >>>>>>> Stashed changes
+=======
+        Schema::create('outgoing_items', function (Blueprint $table) {
+            $table->string('code', 20)->primary();
+            $table->unsignedBigInteger('nip');
+            $table->integer('total_items')->default(0);
+>>>>>>> faa95b83bec67b4ce7b381a422654c3e64f2496c
             $table->timestamps();
+
+            $table->foreign('nip', 'employee_nips')
+                ->references('nip')
+                ->on('employees')
+                ->onDelete('cascade');
         });
     }
 
@@ -30,6 +42,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('outgoing_item');
+        Schema::dropIfExists('outgoing_items');
     }
 };

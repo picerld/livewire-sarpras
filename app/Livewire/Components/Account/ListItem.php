@@ -20,6 +20,8 @@ class ListItem extends Component
 
     //filters
     public $selectedRole = null;
+    public $fromDate = null;
+    public $toDate = null;
 
     public function drawerList()
     {
@@ -34,8 +36,17 @@ class ListItem extends Component
     public function users()
     {
         return User::query()
-            ->when($this->search, fn (Builder $q) => $q->whereAny(['name', 'email', 'role'], 'LIKE', "%$this->search%"))
+            ->withAggregate('employee', 'name')
+            ->when($this->search, function (Builder $query) {
+                $query->whereHas('employee', function (Builder $query) {
+                    $query->where('name', 'LIKE', "%$this->search%");
+                })
+                    ->orWhere('email', 'LIKE', "%$this->search%")
+                    ->orWhere('role', 'LIKE', "%$this->search%");
+            })
             ->when($this->selectedRole, fn (Builder $q) => $q->where('role', $this->selectedRole))
+            ->when($this->fromDate, fn (Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
+            ->when($this->toDate, fn (Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
             ->get();
     }
 

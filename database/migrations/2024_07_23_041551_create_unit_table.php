@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+<<<<<<< HEAD
 <<<<<<< Updated upstream
             $table->id();
             $table->string('email', 50);
@@ -19,14 +20,18 @@ return new class extends Migration
             $table->string('nip', 20)->primary();
             $table->string('username', 50);
 >>>>>>> Stashed changes
+=======
+            $table->unsignedBigInteger('nip', 20)->primary();
+            $table->string('username', 50);
+>>>>>>> faa95b83bec67b4ce7b381a422654c3e64f2496c
             $table->string('password');
             $table->enum('role', ['admin', 'unit', 'pengawas'])->default('unit');
-            $table->unsignedBigInteger('employee_id');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('nip')->references('nip')->on('employees')->onDelete('cascade');
             
-            $table->foreign('employee_id')->references('id')->on('employees')->cascadeOnDelete();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

@@ -12,13 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('items', function (Blueprint $table) {
+<<<<<<< HEAD
 <<<<<<< Updated upstream
             $table->id();
 =======
             $table->string('code', 20)->primary();
 >>>>>>> Stashed changes
+=======
+            $table->string('code', 10)->primary();
+>>>>>>> faa95b83bec67b4ce7b381a422654c3e64f2496c
             $table->string('name', 100);
-            $table->string('code', 10);
             $table->string('merk', 25);
             $table->string('unit', 25);
             $table->string('images')->nullable();

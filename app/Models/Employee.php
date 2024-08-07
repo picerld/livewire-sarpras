@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Employee extends Model
 {
@@ -12,14 +12,8 @@ class Employee extends Model
     
     public $table = "employees";
 
-<<<<<<< Updated upstream
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
-    public function user(): HasMany {
-        return $this->hasMany(User::class);
-=======
-    protected $guarded = ['nip'];
-    
     protected $primaryKey = 'nip';
     protected $keyType = 'integer';
 
@@ -35,6 +29,5 @@ class Employee extends Model
 
     public function user(): HasOne {
         return $this->hasOne(User::class, 'nip');
->>>>>>> Stashed changes
     }
 }

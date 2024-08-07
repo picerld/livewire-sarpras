@@ -12,7 +12,7 @@ class IncomingItem extends Model
 <<<<<<< Updated upstream
     use HasFactory;
 
-    public $table = "incoming_item";
+    public $table = "incoming_items";
     protected $guarded = ['id'];
 =======
     public $table = "incoming_items";

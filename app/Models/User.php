@@ -23,11 +23,15 @@ class User extends Authenticatable
 
     public $table = "users";
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     protected $guarded = ['id'];
 =======
     protected $guarded = ['nip'];
 
+=======
+    protected $guarded = ['nip'];
+>>>>>>> faa95b83bec67b4ce7b381a422654c3e64f2496c
     protected $primaryKey = 'nip';
     protected $keyType = 'string';
 
@@ -35,7 +39,10 @@ class User extends Authenticatable
     {
         return 'nip';
     }
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> faa95b83bec67b4ce7b381a422654c3e64f2496c
 
     /**
      * The attributes that should be hidden for serialization.
@@ -61,10 +68,10 @@ class User extends Authenticatable
     }
 
     public function employee(): BelongsTo {
-        return $this->belongsTo(Employee::class, 'employee_id');
+        return $this->belongsTo(Employee::class, 'nip');
     }
 
-    public function IncomingItems(): HasMany {
-        return $this->hasMany(IncomingItem::class, 'user_id');
+    public function incomingItems(): HasMany {
+        return $this->hasMany(IncomingItem::class, 'nip');
     }
 }

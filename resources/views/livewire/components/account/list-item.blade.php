@@ -1,10 +1,14 @@
 <x-card>
-    <x-header wire:model.live.debounce="search" title="Users" subtitle="Users Data" class="px-3 pt-3" separator
-        progress-indicator>
+    <x-header wire:model.live.debounce="search" title="Users" size="text-3xl" subtitle="Users Data" class="px-3 pt-3"
+        separator progress-indicator>
         <x-slot:actions>
-            <x-input wire:model="search" id="search" icon="o-magnifying-glass" class="placeholder:font-bold"
+            
+            <x-input wire:model="search" id="search" icon="o-magnifying-glass" class="border-dark focus:outline-black placeholder:font-semibold"
                 placeholder="Search..." autocomplete="off" />
-            <x-button icon="o-funnel" class="text-black dark:text-white/80" wire:click="drawerList" responsive />
+
+
+            <x-button icon="o-funnel" class="text-black dark:text-white/80" wire:click="drawerList"
+                aria-label="filter user" responsive />
             <x-button icon-right="m-plus" label="Add" wire:click="userModal"
                 class="text-white bg-dark dark:bg-slate-100 hover:bg-dark hover:opacity-90 dark:text-black" responsive
                 aria-label="create users" />
@@ -13,7 +17,7 @@
     @forelse ($users as $user)
         <x-list-item :item="$user" no-separator link="/users/{{ $user->id }}">
             <x-slot:avatar>
-                <img src="https://ui.shadcn.com/avatars/01.png" width="30" height="30" alt="{{ $user->nama }}"
+                <img src="{{ asset($user->employee->avatar) }}" width="30" height="30" alt="{{ $user->email }}"
                     class="rounded-full w-11 avatar" />
             </x-slot:avatar>
             <x-slot:value>
@@ -21,7 +25,7 @@
                 <x-badge value="{{ $user->role }}" class="btn-ghost btn-outline btn-xs" />
             </x-slot:value>
             <x-slot:sub-value>
-                {{ $user->email }}
+                {{ $user->username }}
             </x-slot:sub-value>
             <x-slot:actions>
                 <x-button icon="o-bookmark-slash" label="Remove" class="btn-ghost btn-outline btn-sm"

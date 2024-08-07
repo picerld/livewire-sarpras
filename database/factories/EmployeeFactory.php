@@ -25,7 +25,8 @@ class EmployeeFactory extends Factory
         ];
 
         return [
-            'nip' => fake()->randomNumber(5),
+            'nip' => fake()->unique()->randomNumber(5),
+            'email' => fake()->unique()->safeEmail(),
             'avatar' => fake()->randomElement($images),
             'name' => fake()->name() ,
         ];

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components\Items;
 
+use App\Helpers\GenerateCodeHelper;
 use App\Helpers\ImageHelper;
 use App\Models\Category;
 use App\Models\Item;
@@ -94,16 +95,15 @@ class Table extends Component
 
     // CRUD
     // func for generate value of random code
-    protected function generateCode()
-    {
-        return substr(hash('sha256', STR::random(40) . time()), 0, 10);
-    }
-
     public function store(): void
     {
         try {
+<<<<<<< HEAD
 <<<<<<< Updated upstream
             $this->newItem['code'] = $this->generateCode();
+=======
+        $this->newItem['code'] = GenerateCodeHelper::handleGenerateCode($this->newItem['name'], 10);
+>>>>>>> faa95b83bec67b4ce7b381a422654c3e64f2496c
             $validator = Validator::make(
                 $this->newItem,
                 [

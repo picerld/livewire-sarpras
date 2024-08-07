@@ -4,13 +4,13 @@ use Livewire\Volt\Component;
 
 new #[Title('Login')] class extends Component {
     #[Rule('required|email')]
-    public string $email = '';
+    public string $username = '';
 
     #[Rule('required')]
     public string $password = '';
 
     protected array $rules = [
-        'email' => 'required|email',
+        'username' => 'required',
         'password' => 'required',
     ];
 
@@ -69,7 +69,7 @@ new #[Title('Login')] class extends Component {
         </div>
 
         <x-form wire:submit="login" no-separator>
-            <x-input label="Email" wire:model="email" icon="o-envelope" placeholder="me@example.com"
+            <x-input label="Username" wire:model="username" icon="o-envelope" placeholder="me@example.com"
                 class="text-white border-white outline-none focus:border-white active:border-white focus:outline-none active:outline-none bg-base-300" />
             <x-input label="Password" wire:model="password" type="password"
                 class="text-white border-white outline-none focus:border-white active:border-white focus:outline-none active:outline-none bg-base-300"
