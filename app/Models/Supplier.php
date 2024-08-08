@@ -16,6 +16,6 @@ class Supplier extends Model
     protected $keyType = "string";
 
     public function incomingItems(): HasMany {
-        return $this->hasMany(IncomingItem::class, 'supplier_id');
+        return $this->hasMany(IncomingItem::class, 'supplier_code');
     }
 }

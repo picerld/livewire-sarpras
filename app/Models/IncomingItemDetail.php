@@ -8,16 +8,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class IncomingItemDetail extends Model
 {
-    use HasFactory;
-
     public $table = "incoming_item_detail";
+
     protected $guarded = ['id'];
 
     public function incomingItem(): BelongsTo {
-        return $this->belongsTo(IncomingItem::class, 'incoming_item_id');
+        return $this->belongsTo(IncomingItem::class, 'code');
     }
 
     public function item(): BelongsTo {
-        return $this->belongsTo(Item::class, 'item_id');
+        return $this->belongsTo(Item::class, 'item_code');
     }
 }

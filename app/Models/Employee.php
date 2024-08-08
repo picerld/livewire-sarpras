@@ -9,22 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Employee extends Model
 {
     use HasFactory;
-
-    public $table = "employees";
-
-<<<<<<< Updated upstream
-    protected $guarded = ['nip'];
     
-    protected $primaryKey = 'nip';
-    protected $keyType = 'string';
-
-    public function getRouteKeyName()
-    {
-        return 'nip';
-    }
-=======
+    public $table = "employees";
+  
     protected $guarded = [];
->>>>>>> Stashed changes
 
     public function user(): HasOne {
         return $this->hasOne(User::class, 'nip');

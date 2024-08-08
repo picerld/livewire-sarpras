@@ -13,17 +13,27 @@ class Item extends Model
 
     public $table = "items";
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
-    protected $casts = [
-        'images' => 'array'
-    ];
+    protected $primaryKey = 'code';
+    protected $keyType = 'string';
 
-    public function category(): BelongsTo {
+    public function getRouteKeyName()
+    {
+        return 'code';
+    }
+    public function getKeyName()
+    {
+        return 'code';
+    }
+
+    public function category(): BelongsTo
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function incomingItemsDetail(): HasMany {
-        return $this->hasMany(IncomingItemDetail::class, 'item_id');
+    public function incomingItemsDetail(): HasMany
+    {
+        return $this->hasMany(IncomingItemDetail::class, 'item_code');
     }
 }

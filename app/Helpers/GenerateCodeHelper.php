@@ -2,10 +2,15 @@
 
 namespace App\Helpers;
 
+use App\Models\Category;
+
 class GenerateCodeHelper
 {
-    public static function handleGenerateCode($aliases, $id)
+    public static function handleGenerateCode($categoryID)
     {
-        return substr(hash('sha256', $aliases . time()), 0, $id);
+        $category =  Category::find($categoryID);
+        $aliases = $category->aliases;
+
+        return $aliases . time();
     }
 }

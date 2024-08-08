@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,18 +23,7 @@ class User extends Authenticatable
 
     public $table = "users";
 
-<<<<<<< Updated upstream
-    protected $guarded = ['nip'];
-    protected $primaryKey = 'nip';
-    protected $keyType = 'string';
-
-    public function getRouteKeyName()
-    {
-        return 'nip';
-    }
-=======
     protected $guarded = [];
->>>>>>> Stashed changes
 
     /**
      * The attributes that should be hidden for serialization.

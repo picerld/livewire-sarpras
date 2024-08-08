@@ -2,7 +2,8 @@
     <x-header title="Category" subtitle="Add your own category" size="text-2xl" separator />
     <x-form wire:submit="store" autoComplete="false" no-separator>
         <x-input label="Name" wire:model="newCategory.name" inline />
-
+        <x-input label="Alias" wire:model="newCategory.aliases" inline />
+        
         <x-slot:actions>
             <x-button label="Submit" class="text-white btn-primary hover:opacity-80" type="submit" icon="c-paper-airplane"
                 spinner="store" />
