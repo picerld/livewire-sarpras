@@ -11,29 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-        Schema::create('outgoing_item', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-=======
         Schema::create('outgoing_items', function (Blueprint $table) {
-            $table->string('code', 20)->primary();
-            $table->string('nip');
+            $table->string('id', 20)->primary();
+            $table->string('nip', 20);
             $table->integer('total_items')->default(0);
->>>>>>> Stashed changes
-=======
-        Schema::create('outgoing_items', function (Blueprint $table) {
-            $table->string('code', 20)->primary();
-            $table->unsignedBigInteger('nip');
-            $table->integer('total_items')->default(0);
->>>>>>> faa95b83bec67b4ce7b381a422654c3e64f2496c
             $table->timestamps();
-
-            $table->foreign('nip', 'employee_nips')
-                ->references('nip')
-                ->on('employees')
-                ->onDelete('cascade');
+            
+            $table->foreign('nip')->references('id')->on('employees')->onDelete('cascade');
         });
     }
 

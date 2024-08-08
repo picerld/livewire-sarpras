@@ -12,18 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employees', function (Blueprint $table) {
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-            $table->id();
-            $table->string('nip', 20)->unique();
-=======
-            $table->string('nip')->primary();
+            $table->string('id', 20)->primary();
             $table->string('email', 50)->unique();
->>>>>>> Stashed changes
-=======
-            $table->unsignedBigInteger('nip')->primary();
-            $table->string('email', 50)->unique();
->>>>>>> faa95b83bec67b4ce7b381a422654c3e64f2496c
             $table->string('avatar')->nullable();
             $table->string('name', 50);
             $table->rememberToken();

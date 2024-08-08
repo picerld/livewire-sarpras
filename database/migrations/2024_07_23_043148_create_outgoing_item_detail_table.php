@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('outgoing_item_detail', function (Blueprint $table) {
             $table->id();
             $table->string('outgoing_item_code', 20)->unique();
-            $table->string('item_code', 20)->unique();
+            $table->string('item_code', 20);
             $table->integer('qty')->default(0);
             $table->timestamps();
 
-            $table->foreign('outgoing_item_code')->references('code')->on('outgoing_items')->cascadeOnDelete();
-            $table->foreign('item_code')->references('code')->on('items')->cascadeOnDelete();
+            $table->foreign('outgoing_item_code')->references('id')->on('outgoing_items')->cascadeOnDelete();
+            $table->foreign('item_code')->references('id')->on('items')->cascadeOnDelete();
         });
     }
 

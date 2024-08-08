@@ -71,10 +71,10 @@ class Table extends Component
     {
         return Item::query()
             ->withAggregate('category', 'name')
-            ->when($this->search, fn (Builder $q) => $q->whereAny(['code', 'name', 'merk', 'price', 'stock'], 'LIKE', "%$this->search%"))
-            ->when($this->selectedCategory, fn (Builder $q) => $q->where('category_id', $this->selectedCategory))
-            ->when($this->fromDate, fn (Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
-            ->when($this->toDate, fn (Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
+            ->when($this->search, fn(Builder $q) => $q->whereAny(['code', 'name', 'merk', 'price', 'stock'], 'LIKE', "%$this->search%"))
+            ->when($this->selectedCategory, fn(Builder $q) => $q->where('category_id', $this->selectedCategory))
+            ->when($this->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
+            ->when($this->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
             ->orderBy(...array_values($this->sortBy))
             ->paginate(5, ['code', 'name', 'price', 'stock', 'minimum_stock', 'category->name', 'created_at']);
     }
@@ -98,17 +98,12 @@ class Table extends Component
     public function store(): void
     {
         try {
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-            $this->newItem['code'] = $this->generateCode();
-=======
-        $this->newItem['code'] = GenerateCodeHelper::handleGenerateCode($this->newItem['name'], 10);
->>>>>>> faa95b83bec67b4ce7b381a422654c3e64f2496c
+            $this->newItem['code'] = GenerateCodeHelper::handleGenerateCode($this->newItem['category_id']);
             $validator = Validator::make(
                 $this->newItem,
                 [
                     'name' => 'required|string|max:50|min:5',
-                    'code' => 'required|string|max:10|unique:items,code|min:5',
+                    'code' => 'required|string|max:20|unique:items,code|min:5',
                     'unit' => 'required|string|max:20|min:2',
                     'merk' => 'required|string|max:20|min:5',
                     'price' => 'required|numeric',
@@ -119,37 +114,19 @@ class Table extends Component
                     'images' => 'nullable|image|max:1024'
                 ]
             );
-=======
-        $this->newItem['code'] = GenerateCodeHelper::handleGenerateCode($this->newItem['category_id']);
-        $validator = Validator::make(
-            $this->newItem,
-            [
-                'name' => 'required|string|max:50|min:5',
-                'code' => 'required|string|max:20|unique:items,code|min:5',
-                'unit' => 'required|string|max:20|min:2',
-                'merk' => 'required|string|max:20|min:5',
-                'price' => 'required|numeric',
-                'stock' => 'required|integer|max:999',
-                'minimum_stock' => 'required|integer|max:999',
-                'category_id' => 'required|exists:category,id',
-                'description' => 'required|string|max:100',
-                'images' => 'nullable|image|max:1024'
-            ]
-        );
->>>>>>> Stashed changes
 
-        if ($validator->fails()) {
-            $this->warning($validator->errors()->first(), 'Warning!!', position: 'toast-bottom');
-            $this->createItems = false;
-            return;
-        }
+            if ($validator->fails()) {
+                $this->warning($validator->errors()->first(), 'Warning!!', position: 'toast-bottom');
+                $this->createItems = false;
+                return;
+            }
 
-        $data = $validator->validated();
-        $data['images'] = ImageHelper::handleImage($this->newItem['images']);
+            $data = $validator->validated();
+            $data['images'] = ImageHelper::handleImage($this->newItem['images']);
 
-        Item::create($data);
-        $this->success("Item created!", 'Success!', position: 'toast-bottom');
-        } catch (\Throwable $th) {            
+            Item::create($data);
+            $this->success("Item created!", 'Success!', position: 'toast-bottom');
+        } catch (\Throwable $th) {
             $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
         }
 

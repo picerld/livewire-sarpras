@@ -18,27 +18,28 @@ class DatabaseSeeder extends Seeder
     {
         // User Seeder
         Employee::factory()->create([
+            'id' => '111',
             'avatar' => 'avatars/01.png',
-            'email' => 'rafi@localhost',
+            // 'email' => 'rafi@localhost',
             'name' => 'Rafi',
-            'nip' => '111'
         ]);
 
         Employee::factory()->create([
+            'id' => '222',
             'avatar' => 'avatars/02.png',
-            'email' => 'pice@localhost',
+            // 'email' => 'pice@localhost',
             'name' => 'Pice',
-            'nip' => '222'
         ]);
 
         Employee::factory()->create([
+            'id' => '333',
             'avatar' => 'avatars/03.png',
-            'email' => 'picerld@localhost',
+            // 'email' => 'picerld@localhost',
             'name' => 'Picerld',
-            'nip' => '333'
         ]);
 
         User::factory()->create([
+            'id' => '111',
             'username' => 'admin@localhost',
             'password' => Hash::make('password'),
             'role' => 'admin',
@@ -46,6 +47,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory()->create([
+            'id' => '222',
             'username' => 'pengawas@localhost',
             'password' => Hash::make('password'),
             'role' => 'pengawas',
@@ -53,6 +55,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory()->create([
+            'id' => '333',
             'username' => 'unit@localhost',
             'password' => Hash::make('password'),
             'role' => 'unit',

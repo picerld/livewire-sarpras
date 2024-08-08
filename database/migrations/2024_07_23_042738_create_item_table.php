@@ -12,15 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('items', function (Blueprint $table) {
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-            $table->id();
-=======
-            $table->string('code', 20)->primary();
->>>>>>> Stashed changes
-=======
-            $table->string('code', 10)->primary();
->>>>>>> faa95b83bec67b4ce7b381a422654c3e64f2496c
+            $table->string('id', 20)->primary();
             $table->string('name', 100);
             $table->string('merk', 25);
             $table->string('unit', 25);
@@ -28,11 +20,9 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('stock')->default(0);
             $table->integer('minimum_stock')->default(0);
-            $table->unsignedBigInteger('category_id');
+            $table->foreignId('category_id')->constrained('category')->cascadeOnDelete();
             $table->text('description');
             $table->timestamps();
-        
-            $table->foreign('category_id')->references('id')->on('category')->cascadeOnDelete();
         });
         
     }

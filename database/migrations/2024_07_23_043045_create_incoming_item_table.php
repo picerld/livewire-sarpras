@@ -11,33 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-        Schema::create('incoming_item', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('supplier_id');
-=======
         Schema::create('incoming_items', function (Blueprint $table) {
-            $table->string('code', 20)->primary();
-            $table->string('nip');
-            $table->string('supplier_code', 20)->unique();
->>>>>>> Stashed changes
-=======
-        Schema::create('incoming_items', function (Blueprint $table) {
-            $table->string('code', 20)->primary();
-            $table->unsignedBigInteger('nip');
-            $table->string('supplier_code', 20)->unique();
->>>>>>> faa95b83bec67b4ce7b381a422654c3e64f2496c
+            $table->string('id', 20)->primary();
+            $table->string('nip', 20);
+            $table->string('supplier_code', 20);
             $table->integer('total_items')->default(0);
             $table->timestamps();
-
-            $table->foreign('nip', 'employee_nip')
-                ->references('nip')
-                ->on('employees')
-                ->onDelete('cascade');
-
-            $table->foreign('supplier_code')->references('code')->on('suppliers')->cascadeOnDelete();
+            
+            $table->foreign('nip')->references('id')->on('employees')->onDelete('cascade');
+            $table->foreign('supplier_code')->references('id')->on('suppliers')->onDelete('cascade');
         });
     }
 
