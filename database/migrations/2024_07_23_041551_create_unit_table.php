@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+<<<<<<< Updated upstream
             $table->unsignedBigInteger('nip', 20)->primary();
+=======
+            $table->string('id', 20)->primary();
+            $table->string('nip', 20)->unique();
+>>>>>>> Stashed changes
             $table->string('username', 50);
             $table->string('password');
             $table->enum('role', ['admin', 'unit', 'pengawas'])->default('unit');
@@ -20,8 +25,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('nip')->references('nip')->on('employees')->onDelete('cascade');
-            
+            $table->foreign('nip')->references('id')->on('employees')->onDelete('cascade');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

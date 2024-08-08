@@ -16,6 +16,7 @@
     <!-- cdn for currency -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/robsontenorio/mary@0.44.2/libs/currency/currency.js"
         defer></script>
+        
     <!-- cdn for rich text TinyMCE -->
     <!-- NEW FEATURE!! -->
     {{-- <script src="https://cdn.tiny.cloud/1/YOUR-KEY-HERE/tinymce/6/tinymce.min.js" referrerpolicy="origin" defer></script> --}}
@@ -26,13 +27,6 @@
 
     <!-- BEST PRACTICE -->
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-
-    <style>
-        .cropper-point {
-            width: 10px !important;
-            height: 10px !important;
-        }
-    </style>
 </head>
 
 <body>
@@ -51,7 +45,6 @@
     </x-main>
 
     <x-toast />
-
+    
 </body>
-
 </html>

@@ -12,15 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('submission', function (Blueprint $table) {
+<<<<<<< Updated upstream
             $table->string('code', 20)->primary();
             $table->unsignedBigInteger('nip');
+=======
+            $table->string('id', 20)->primary();
+            $table->string('nip', 20);
+>>>>>>> Stashed changes
             $table->integer('total_items')->default(0);
             $table->timestamps();
 
-            $table->foreign('nip', 'nip_employee')
-                ->references('nip')
-                ->on('employees')
-                ->onDelete('cascade');
+            $table->foreign('nip')->references('id')->on('employees')->onDelete('cascade');
         });
     }
 

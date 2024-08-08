@@ -12,6 +12,7 @@ class Employee extends Model
 
     public $table = "employees";
 
+<<<<<<< Updated upstream
     protected $guarded = ['nip'];
     
     protected $primaryKey = 'nip';
@@ -21,6 +22,9 @@ class Employee extends Model
     {
         return 'nip';
     }
+=======
+    protected $guarded = [];
+>>>>>>> Stashed changes
 
     public function user(): HasOne {
         return $this->hasOne(User::class, 'nip');

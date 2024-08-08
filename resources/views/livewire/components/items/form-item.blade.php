@@ -32,16 +32,19 @@
                     <div class="flex items-center justify-center h-full">
                         <!-- Placeholder for image -->
                         <div class="flex items-center gap-5 flex-col justify-start w-full h-[50vh]">
+<<<<<<< Updated upstream
                             <x-file wire:model="newItem.images" accept="image/png, image/jpeg, image/jpg"
                                 crop-after-change>
                                 <img src="{{ asset('/storage/' . $item->images) }}"
                                     height="200" width="230" aria-labelledby="{{ $item->id }}"
                                     alt="{{ $item->name }}" />
 
+=======
+                            <x-file wire:model="newItem.images" accept="image/png, image/jpeg, image/jpg">
+                                <img src="{{ asset('storage/' . $item->images) }}" height="200" width="230"
+                                    aria-labelledby="{{ $item->id }}" alt="{{ $item->name }}" />
+>>>>>>> Stashed changes
                             </x-file>
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js?v=20240729" defer></script>
-                            <link rel="stylesheet"
-                                href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" />
                             <span class="text-xs">Click to change | Max 1MB</span>
                         </div>
                     </div>

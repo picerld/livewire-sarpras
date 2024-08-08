@@ -2,11 +2,9 @@
     <x-header wire:model.live.debounce="search" title="Users" size="text-3xl" subtitle="Users Data" class="px-3 pt-3"
         separator progress-indicator>
         <x-slot:actions>
-            
-            <x-input wire:model="search" id="search" icon="o-magnifying-glass" class="border-dark focus:outline-black placeholder:font-semibold"
-                placeholder="Search..." autocomplete="off" />
-
-
+            <x-input wire:model="search" id="search" icon="o-magnifying-glass"
+                class="border-dark focus:outline-black placeholder:font-semibold" placeholder="Search..."
+                autocomplete="off" />
             <x-button icon="o-funnel" class="text-black dark:text-white/80" wire:click="drawerList"
                 aria-label="filter user" responsive />
             <x-button icon-right="m-plus" label="Add" wire:click="userModal"
@@ -54,7 +52,7 @@
         close-on-escape>
         <x-form wire:submit="users" no-separator>
             <!-- User Filter -->
-            <x-choices label="User" wire:model="selectedRole" :options="$roles" inline single />
+            <x-choices label="User" wire:model="selectedRole" :options="$roles" searchable single />
 
             <!-- Date Range Filter -->
             <x-input type="date" label="From Date" wire:model="fromDate" />
