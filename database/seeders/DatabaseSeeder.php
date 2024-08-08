@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Employee;
+use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
             'avatar' => 'avatars/01.png',
             // 'email' => 'rafi@localhost',
             'name' => 'Rafi',
+            'id' => '111',
         ]);
 
         Employee::factory()->create([
@@ -29,6 +31,7 @@ class DatabaseSeeder extends Seeder
             'avatar' => 'avatars/02.png',
             // 'email' => 'pice@localhost',
             'name' => 'Pice',
+            'id' => '222',
         ]);
 
         Employee::factory()->create([
@@ -36,6 +39,7 @@ class DatabaseSeeder extends Seeder
             'avatar' => 'avatars/03.png',
             // 'email' => 'picerld@localhost',
             'name' => 'Picerld',
+            'id' => '333',
         ]);
 
         User::factory()->create([
@@ -43,7 +47,8 @@ class DatabaseSeeder extends Seeder
             'username' => 'admin@localhost',
             'password' => Hash::make('password'),
             'role' => 'admin',
-            'nip' => '111'
+            'nip' => '111',
+            'id' => '111'
         ]);
 
         User::factory()->create([
@@ -51,7 +56,8 @@ class DatabaseSeeder extends Seeder
             'username' => 'pengawas@localhost',
             'password' => Hash::make('password'),
             'role' => 'pengawas',
-            'nip' => '222'
+            'nip' => '222',
+            'id' => '222'
         ]);
 
         User::factory()->create([
@@ -59,10 +65,11 @@ class DatabaseSeeder extends Seeder
             'username' => 'unit@localhost',
             'password' => Hash::make('password'),
             'role' => 'unit',
-            'nip' => '333'
+            'nip' => '333',
+            'id' => '333'
         ]);
 
-        $employees = Employee::factory(10)->create();
+        Employee::factory(10)->create();
 
         // foreach ($employees as $employee) {
         //     User::factory()->create([

@@ -23,7 +23,7 @@ class User extends Authenticatable
 
     public $table = "users";
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -49,7 +49,7 @@ class User extends Authenticatable
     }
 
     public function employee(): BelongsTo {
-        return $this->belongsTo(Employee::class, 'nip');
+        return $this->belongsTo(Employee::class, 'id');
     }
 
     public function incomingItems(): HasMany {

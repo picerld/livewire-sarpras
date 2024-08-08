@@ -22,7 +22,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('nip')->references('id')->on('employees')->onDelete('cascade');
-            
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

@@ -30,8 +30,7 @@ class FormItem extends Component
         'description' => '',
         'images' => '',
     ];
-    
-    public $itemCode;
+    public $itemID;
 
     public function mount($itemCode)
     {
@@ -68,7 +67,7 @@ class FormItem extends Component
                     'minimum_stock' => 'required|integer|min:1',
                     'category_id' => 'required|exists:category,id',
                     'description' => 'required|string|max:300|min:10',
-                    'images' => 'nullable|max:1024',
+                    'images' => 'nullable',
                 ]
             );
         
@@ -105,8 +104,7 @@ class FormItem extends Component
             $this->success("Item {$this->item->name} updated!", "Success!!", position: 'toast-bottom');
         } catch (\Throwable $th) {            
             $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
-        }
-        
+        }   
     }
 
     public function delete(Item $item): void
