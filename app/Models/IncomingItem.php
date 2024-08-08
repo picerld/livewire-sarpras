@@ -9,30 +9,23 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class IncomingItem extends Model
 {
-<<<<<<< Updated upstream
     use HasFactory;
 
     public $table = "incoming_items";
+  
     protected $guarded = ['id'];
-=======
-    public $table = "incoming_items";
-
-    protected $guarded = [];
-
-    protected $primaryKey = 'code';
-    protected $keyType = 'string';
->>>>>>> Stashed changes
 
     public function users(): BelongsTo {
         return $this->belongsTo(Employee::class, 'nip');
     }
 
     public function suppliers(): BelongsTo {
-        return $this->belongsTo(Supplier::class, 'supplier_code');
+        return $this->belongsTo(Supplier::class, 'id');
     }
 
     public function incomingItemDetail(): HasMany
     {
-        return $this->hasMany(IncomingItemDetail::class, 'incoming_item_code');
+        return $this->hasMany(IncomingItemDetail::class, 'id');
+
     }
 }

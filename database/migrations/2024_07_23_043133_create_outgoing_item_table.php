@@ -24,16 +24,18 @@ return new class extends Migration
 >>>>>>> Stashed changes
 =======
         Schema::create('outgoing_items', function (Blueprint $table) {
+<<<<<<< Updated upstream
             $table->string('code', 20)->primary();
             $table->unsignedBigInteger('nip');
+=======
+            $table->string('id', 20)->primary();
+            $table->string('nip', 20);
+>>>>>>> Stashed changes
             $table->integer('total_items')->default(0);
 >>>>>>> faa95b83bec67b4ce7b381a422654c3e64f2496c
             $table->timestamps();
 
-            $table->foreign('nip', 'employee_nips')
-                ->references('nip')
-                ->on('employees')
-                ->onDelete('cascade');
+            $table->foreign('nip')->references('id')->on('employees')->onDelete('cascade');
         });
     }
 

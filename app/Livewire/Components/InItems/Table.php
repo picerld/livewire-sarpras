@@ -52,8 +52,8 @@ class Table extends Component
     public function itemsIn(): LengthAwarePaginator
     {
         return IncomingItem::query()
-            ->withAggregate('users', 'name')
-            ->withAggregate('suppliers', 'name')
+            // ->withAggregate('users', 'name')
+            // ->withAggregate('suppliers', 'name')
             ->when($this->search, function (Builder $query) {
                 $query->whereHas('users', function (Builder $query) {
                     $query->where('name', 'LIKE', "%$this->search%");

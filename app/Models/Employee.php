@@ -11,21 +11,8 @@ class Employee extends Model
     use HasFactory;
     
     public $table = "employees";
-
+  
     protected $guarded = [];
-
-    protected $primaryKey = 'nip';
-    protected $keyType = 'integer';
-
-    public function getRouteKeyName()
-    {
-        return 'nip';
-    }
-
-    public function getKeyName()
-    {
-        return 'nip';
-    }
 
     public function user(): HasOne {
         return $this->hasOne(User::class, 'nip');
