@@ -14,12 +14,11 @@ return new class extends Migration
         Schema::create('incoming_items', function (Blueprint $table) {
             $table->string('id', 20)->primary();
             $table->string('nip', 20);
-            $table->string('supplier_code', 20);
+            $table->foreignId('supplier_id')->constrained('suppliers')->onDelete('cascade');
             $table->integer('total_items')->default(0);
             $table->timestamps();
             
             $table->foreign('nip')->references('id')->on('employees')->onDelete('cascade');
-            $table->foreign('supplier_code')->references('id')->on('suppliers')->onDelete('cascade');
         });
     }
 

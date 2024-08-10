@@ -15,6 +15,6 @@ class Employee extends Model
     protected $guarded = [];
 
     public function user(): HasOne {
-        return $this->hasOne(User::class, 'nip');
+        return $this->hasOne(User::class);
     }
 }

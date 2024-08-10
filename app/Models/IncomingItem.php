@@ -13,19 +13,21 @@ class IncomingItem extends Model
 
     public $table = "incoming_items";
   
-    protected $guarded = ['id'];
+    protected $guarded = [];
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     public function users(): BelongsTo {
         return $this->belongsTo(Employee::class, 'nip');
     }
 
     public function suppliers(): BelongsTo {
-        return $this->belongsTo(Supplier::class, 'id');
+        return $this->belongsTo(Supplier::class, 'supplier_id');
     }
 
     public function incomingItemDetail(): HasMany
     {
-        return $this->hasMany(IncomingItemDetail::class, 'id');
+        return $this->hasMany(IncomingItemDetail::class);
 
     }
 }

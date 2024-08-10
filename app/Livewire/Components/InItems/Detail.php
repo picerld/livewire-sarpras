@@ -19,14 +19,14 @@ class Detail extends Component
     public function mount($incomingItemID): void
     {
         $this->incomingItemID = $incomingItemID;
-        $this->items = IncomingItemDetail::where('incoming_item_id', $this->incomingItemID)->get();
+        $this->items = IncomingItemDetail::where('incoming_item_code', $this->incomingItemID)->get();
     }
 
     public function delete($itemID, $incomingItemID): void
     {
         // search for qty item on incoming_item_detail
-        $totalQty = IncomingItemDetail::where('item_id', $itemID)
-            ->where('incoming_item_id', $incomingItemID)
+        $totalQty = IncomingItemDetail::where('item_code', $itemID)
+            ->where('incoming_item_code', $incomingItemID)
             ->sum('qty');
 
         // search for item on item table from param
@@ -36,12 +36,12 @@ class Detail extends Component
             // Update item stock on item table
             $item->update(['stock' => $item->stock - $totalQty]);
 
-            IncomingItemDetail::where('item_id', $itemID)
-                ->where('incoming_item_id', $incomingItemID)
+            IncomingItemDetail::where('item_code', $itemID)
+                ->where('incoming_item_code', $incomingItemID)
                 ->delete();
 
             // Update total item on incoming_item
-            $totalItems = IncomingItemDetail::where('incoming_item_id', $incomingItemID)
+            $totalItems = IncomingItemDetail::where('incoming_item_code', $incomingItemID)
                 ->sum('qty');
 
             IncomingItem::where('id', $incomingItemID)

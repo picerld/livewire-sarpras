@@ -49,10 +49,10 @@ class User extends Authenticatable
     }
 
     public function employee(): BelongsTo {
-        return $this->belongsTo(Employee::class, 'id');
+        return $this->belongsTo(Employee::class, 'nip');
     }
 
     public function incomingItems(): HasMany {
-        return $this->hasMany(IncomingItem::class, 'nip');
+        return $this->hasMany(IncomingItem::class);
     }
 }

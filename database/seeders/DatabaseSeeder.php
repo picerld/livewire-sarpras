@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Category;
 use App\Models\Employee;
 use App\Models\Supplier;
 use App\Models\User;
@@ -23,7 +24,6 @@ class DatabaseSeeder extends Seeder
             'avatar' => 'avatars/01.png',
             // 'email' => 'rafi@localhost',
             'name' => 'Rafi',
-            'id' => '111',
         ]);
 
         Employee::factory()->create([
@@ -31,7 +31,6 @@ class DatabaseSeeder extends Seeder
             'avatar' => 'avatars/02.png',
             // 'email' => 'pice@localhost',
             'name' => 'Pice',
-            'id' => '222',
         ]);
 
         Employee::factory()->create([
@@ -39,7 +38,6 @@ class DatabaseSeeder extends Seeder
             'avatar' => 'avatars/03.png',
             // 'email' => 'picerld@localhost',
             'name' => 'Picerld',
-            'id' => '333',
         ]);
 
         User::factory()->create([
@@ -69,6 +67,11 @@ class DatabaseSeeder extends Seeder
             'id' => '333'
         ]);
 
+        Category::factory()->create([
+            'name' => 'Alat Tulis Kantor',
+            'aliases' => 'ATK'
+        ]);
+
         Employee::factory(10)->create();
 
         // foreach ($employees as $employee) {
@@ -77,9 +80,9 @@ class DatabaseSeeder extends Seeder
         //     ]);
         // }
 
-        // $this->call(CategorySeeder::class);
+        $this->call(CategorySeeder::class);
         // $this->call(ItemSeeder::class);
-        // $this->call(SupplierSeeder::class);
+        $this->call(SupplierSeeder::class);
         // $this->call(SubmissionSeeder::class);
         // $this->call(SubmissionDetailSeeder::class);
         // $this->call(RequestSeeder::class);

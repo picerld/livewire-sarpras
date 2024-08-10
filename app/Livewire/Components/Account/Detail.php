@@ -8,12 +8,12 @@ use Livewire\Component;
 class Detail extends Component
 {
     public $user;
-    public $userID;
+    public $userId;
 
-    public function mount($userID)
+    public function mount($userId)
     {
-        $this->userID = $userID;
-        $this->user = User::findOrFail($this->userID);
+        $this->userId = $userId;
+        $this->user = User::findOrFail($this->userId);
     }
     public function render()
     {

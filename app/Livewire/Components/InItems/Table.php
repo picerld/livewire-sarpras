@@ -52,8 +52,8 @@ class Table extends Component
     public function itemsIn(): LengthAwarePaginator
     {
         return IncomingItem::query()
-            // ->withAggregate('users', 'name')
-            // ->withAggregate('suppliers', 'name')
+            ->withAggregate('users', 'name')
+            ->withAggregate('suppliers', 'name')
             ->when($this->search, function (Builder $query) {
                 $query->whereHas('users', function (Builder $query) {
                     $query->where('name', 'LIKE', "%$this->search%");
@@ -61,9 +61,9 @@ class Table extends Component
                     ->orWhere('supplier_id', 'LIKE', '%' . $this->search . '%')
                     ->orWhere('total_items', 'LIKE', '%' . $this->search . '%');
             })
-            ->when($this->selectedUser, fn (Builder $q) => $q->where('user_id', $this->selectedUser))
-            ->when($this->fromDate, fn (Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
-            ->when($this->toDate, fn (Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
+            ->when($this->selectedUser, fn(Builder $q) => $q->where('user_id', $this->selectedUser))
+            ->when($this->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
+            ->when($this->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
             ->orderBy(...array_values($this->sortBy))
             ->paginate(5);
     }
@@ -84,11 +84,11 @@ class Table extends Component
 
     public function delete(IncomingItem $incomingItem, IncomingItemDetail $incomingItemDetail): void
     {
-        $items = Item::whereIn('id', $incomingItemDetail->pluck('item_id'))->get();
+        $items = Item::whereIn('id', $incomingItemDetail->pluck('item_code'))->get();
 
         foreach ($items as $item) {
-            $item->update(['stock' => $item->stock - $incomingItemDetail->where('incoming_item_id', $incomingItem->id)
-                ->where('item_id', $item->id)->sum('qty')]);
+            $item->update(['stock' => $item->stock - $incomingItemDetail->where('incoming_item_code', $incomingItem->id)
+                ->where('item_code', $item->id)->sum('qty')]);
         }
 
         $incomingItemDetail->delete();

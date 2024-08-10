@@ -20,8 +20,8 @@ class Table extends Component
 
     // create item
     public $newItem = [
+        'id' => '',
         'name' => '',
-        'code' => '',
         'unit' => '',
         'merk' => '',
         'price' => '',
@@ -34,9 +34,9 @@ class Table extends Component
 
     // Table headers
     public $headers = [
-        ['key' => 'code', 'label' => 'Kode', 'class' => 'dark:text-slate-300'],
+        ['key' => 'id', 'label' => 'Kode', 'class' => 'dark:text-slate-300'],
         ['key' => 'name', 'label' => 'Nama', 'class' => 'dark:text-slate-300',],
-        ['key' => 'category_name', 'label' => 'Kategori', 'class' => 'dark:text-slate-300'],
+        ['key' => 'category_aliases', 'label' => 'Kategori', 'class' => 'dark:text-slate-300'],
         ['key' => 'price', 'label' => 'Harga', 'class' => 'dark:text-slate-300'],
         ['key' => 'stock', 'label' => 'Stok', 'class' => 'dark:text-slate-300'],
         ['key' => 'minimum_stock', 'label' => 'Stok Min', 'class' => 'dark:text-slate-300 text-center'],
@@ -69,13 +69,13 @@ class Table extends Component
     public function items(): LengthAwarePaginator
     {
         return Item::query()
-            ->withAggregate('category', 'name')
-            ->when($this->search, fn(Builder $q) => $q->whereAny(['code', 'name', 'merk', 'price', 'stock'], 'LIKE', "%$this->search%"))
+            ->withAggregate('category', 'aliases')
+            ->when($this->search, fn(Builder $q) => $q->whereAny(['id', 'name', 'merk', 'price', 'stock'], 'LIKE', "%$this->search%"))
             ->when($this->selectedCategory, fn(Builder $q) => $q->where('category_id', $this->selectedCategory))
             ->when($this->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
             ->when($this->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
             ->orderBy(...array_values($this->sortBy))
-            ->paginate(5, ['code', 'name', 'price', 'stock', 'minimum_stock', 'category->name', 'created_at']);
+            ->paginate(5, ['id', 'name', 'price', 'stock', 'minimum_stock', 'category->name', 'created_at']);
     }
 
     public function updated($property): void
@@ -97,12 +97,12 @@ class Table extends Component
     public function store(): void
     {
         try {
-        $this->newItem['code'] = GenerateCodeHelper::handleGenerateCode($this->newItem['category_id']);
+        $this->newItem['id'] = GenerateCodeHelper::handleGenerateCode($this->newItem['category_id']);
         $validator = Validator::make(
             $this->newItem,
             [
+                'id' => 'required|max:20|unique:items,id|min:5',
                 'name' => 'required|string|max:50|min:5',
-                'code' => 'required|string|max:20|unique:items,code|min:5',
                 'unit' => 'required|string|max:20|min:2',
                 'merk' => 'required|string|max:20|min:5',
                 'price' => 'required|numeric',

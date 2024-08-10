@@ -35,10 +35,10 @@ class ItemController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $itemCode)
+    public function show(string $id)
     {
         return view("pages.items.show", [
-            "itemCode" => $itemCode
+            "itemId" => $id
         ]);
     }
 

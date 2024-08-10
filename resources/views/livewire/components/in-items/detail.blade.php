@@ -1,21 +1,29 @@
-<div>
+<div class="min-h-[85vh]">
     <!-- FIX THIS UI!!!!! -->
 
-    <x-button label="Go back!" link="/in-items" icon="c-arrow-left-start-on-rectangle"
-        class="w-28 btn-outline btn-sm" spinner />
-    <div class="flex flex-wrap w-full mt-6">
+    <x-button label="See all items" link="/in-items" icon="c-chevron-left" class="text-sm btn-outline btn-sm" spinner />
+    <div class="flex flex-wrap w-full gap-2 py-5 lg:gap-2 md:gap-3 md:flex-nowrap lg:flex-nowrap">
         @forelse ($items as $item)
-            <div class="flex w-full p-2 md:w-1/3 lg:1/4">
+            <div class="flex w-full md:w-1/3 lg:1/4">
                 <x-card title="{{ $item->item->name }}">
-                    <h3 class="text-lg font-semibold">
+                    <h3 class="text-base font-semibold">
                         ({{ $item->qty }} {{ $item->item->unit }})
                     </h3>
-                    <div class="overflow-y-auto max-h-20 min-h-20 text-balance">
-                        {{ $item->item->description }}
+                    <div class="mb-5">
+                        @if (Str::length($item->item->description) > 20)
+                            <!-- handle for too long description -->
+                            {{ Str::limit($item->item->description, 20) }}
+                        @else
+                            {{ $item->item->description }}
+                        @endif
                     </div>
                     <p class="text-sm font-semibold">
-                        {{ $item->created_at }}
+                        {{ $item->created_at->format('H:i:s d/m/Y') }}
                     </p>
+                    <p class="text-sm font-normal">
+                        {{ $item->created_at->diffForHumans() }}
+                    </p>
+
 
                     <x-slot:figure>
                         <img src="{{ asset('/storage/' . $item->item->images) }}" height="200" width="230"
@@ -23,12 +31,13 @@
                             alt="{{ $item->item->name }}" />
                     </x-slot:figure>
                     <x-slot:menu>
-                        <x-badge value="{{ $item->item->category->name }}" class="text-white badge-primary badge-lg" />
+                        <x-badge value="{{ $item->item->category->aliases }}"
+                            class="btn-ghost btn-outline" />
                     </x-slot:menu>
-                    <div class="mt-3">
-                        <x-button icon="o-document-minus"
-                            wire:click="delete({{ $item->item->id }}, {{ $item->incoming_item_id }})"
-                            label="Remove Item" class="btn-outline btn-ghost btn-sm" spinner aria-label="delete item" />
+                    <div class="w-full mt-3">
+                        <x-button icon="o-wrench-screwdriver"
+                            wire:click="delete({{ $item->item->id }}, {{ $item->incoming_item_code }})" label="Remove"
+                            class="w-full btn-outline btn-ghost btn-sm" spinner aria-label="delete item" />
                     </div>
                 </x-card>
             </div>

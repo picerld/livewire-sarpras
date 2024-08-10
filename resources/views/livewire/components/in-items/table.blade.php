@@ -4,7 +4,8 @@
         <x-slot:actions>
             <x-input wire:model="search" id="search" icon="o-magnifying-glass" class="placeholder:font-semibold"
                 placeholder="Search..." autocomplete="off" />
-            <x-button icon="o-funnel" class="text-black dark:text-white/80" wire:click="tableDrawer" responsive />
+            <x-button icon="o-funnel" class="text-black dark:text-white/80" wire:click="tableDrawer"
+                aria-label="filter item" responsive />
             <x-button icon-right="m-plus" label="Add" wire:click="createItemsModal"
             class="text-white bg-dark dark:bg-slate-100 hover:bg-dark hover:opacity-90 dark:text-black" responsive 
             aria-label="create item" />

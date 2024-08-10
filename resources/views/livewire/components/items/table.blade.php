@@ -14,10 +14,10 @@
     </x-header>
 
     <!-- USING TABLE -->
-    <x-table :headers="$headers" :rows="$items" :sort-by="$sortBy" link="/items/{code}"
+    <x-table :headers="$headers" :rows="$items" :sort-by="$sortBy" link="/items/{id}"
         class="bg-white rounded dark:bg-dark" with-pagination>
-        @scope('cell_category_name', $item)
-            <x-badge :value="$item->category->name" class="btn-ghost btn-outline" />
+        @scope('cell_category_aliases', $item)
+            <x-badge :value="$item->category->aliases" class="btn-ghost btn-outline" />
         @endscope
     </x-table>
 
@@ -37,7 +37,7 @@
                     <x-input wire:model="newItem.minimum_stock" id="minimum_stock" label="Stok minimum" type="number"
                         min="1" inline />
                     <x-choices wire:model="newItem.category_id" :options="$categories" single />
-                    <x-file wire:model="newItem.images" accept="image/png" crop-after-change />
+                    <x-file wire:model="newItem.images" accept="image/png, image/jpg, image/jpeg, image/webp" crop-after-change />
                 </div>
                 <x-textarea label="Deskripsi" wire:model="newItem.description" placeholder="Type here ..."
                     rows="3" inline />

@@ -13,7 +13,7 @@ class Show extends Component
     public function mount($incomingItemID)
     {
         $this->incomingItemID = $incomingItemID;
-        $this->items = IncomingItemDetail::where('incoming_item_id', $this->incomingItemID)->get();
+        $this->items = IncomingItemDetail::where('incoming_item_code', $this->incomingItemID)->get();
     }
     public function render()
     {

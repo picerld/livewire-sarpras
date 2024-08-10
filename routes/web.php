@@ -15,22 +15,22 @@ Route::get('/', function () {
 })->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
-    // admin
+    // route for admin
     Route::group(['prefix' => '/admin', 'middleware' => ['can:isAdmin']], function() {
         Route::get('/', AdminController::class)->name('admin');
     });
 
-    // petugas
+    // route for petugas
     Route::group(['prefix' => '/pengawas', 'middleware' => ['can:isPengawas']], function() {
         Route::get('/', AdminController::class)->name('pengawas');
     });
 
-    // unit
+    // route for unit
     Route::group(['prefix' => '/unit', 'middleware' => ['can:isUnit']], function() {
         Route::get('/', UnitController::class)->name('unit');
     });
 
-    // items
+    // route foritems
     Route::middleware(['can:isAdmin'])->group(function () {
         Route::resource('items', ItemController::class);
         Route::resource('in-items', InItemController::class);

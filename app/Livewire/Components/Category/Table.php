@@ -18,19 +18,18 @@ class Table extends Component
     public $headers = [
         ['key' => 'name', 'label' => 'Nama', 'class' => 'dark:text-slate-300 text-sm'],
         ['key' => 'aliases', 'label' => 'Alias', 'class' => 'dark:text-slate-300 text-sm'],
-        ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300 text-sm'],
     ];
 
     // filters
     public $search = "";
-    public $sortBy = ['column' => 'created_at', 'direction' => 'desc'];
+    public $sortBy = ['column' => 'name', 'direction' => 'asc'];
 
     public function category(): LengthAwarePaginator
     {
         return Category::query()
             ->when($this->search, fn (Builder $query) => $query->where('name', 'like', '%' . $this->search . '%'))
             ->orderBy(...array_values($this->sortBy))
-            ->paginate(5, ['id', 'name', 'aliases', 'created_at']);
+            ->paginate(5, ['id', 'name', 'aliases']);
     }
 
     public function updated($property): void

@@ -1,5 +1,5 @@
 <div>
-    <livewire:components.account.detail :userID="$userID" />
+    <livewire:components.account.detail :userId="$userId" />
 
     <livewire:utils.footer />
 </div>

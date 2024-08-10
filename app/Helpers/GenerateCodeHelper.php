@@ -3,14 +3,21 @@
 namespace App\Helpers;
 
 use App\Models\Category;
+use Illuminate\Support\Str;
 
 class GenerateCodeHelper
 {
-    public static function handleGenerateCode($categoryID)
+    public static function handleGenerateCode()
     {
-        $category =  Category::find($categoryID);
-        $aliases = $category->aliases;
+        // param: category_id
+        
+        // PRODUCTION
+        // $category =  Category::find($categoryID);
+        // $aliases = $category->aliases;
 
-        return $aliases . time();
+        // DEVELOPMENT
+        $code = random_int(100000, 999999);
+
+        return $code;
     }
 }

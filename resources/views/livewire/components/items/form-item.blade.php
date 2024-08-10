@@ -11,7 +11,6 @@
             <div class="p-4 bg-white rounded-lg dark:bg-dark">
                 <x-header title="Details" size="text-2xl" separator />
                 <div class="grid grid-cols-1 gap-4">
-                    <x-input wire:model="newItem.code" id="code" label="Code" inline />
                     <x-input wire:model="newItem.name" id="name" label="Name" inline />
                     <x-input wire:model="newItem.merk" id="merk" label="Brand" inline />
                     <x-input wire:model="newItem.unit" id="unit" label="Satuan" inline />
@@ -34,17 +33,9 @@
                     <div class="flex items-center justify-center h-full">
                         <!-- Placeholder for image -->
                         <div class="flex items-center gap-5 flex-col justify-start w-full h-[50vh]">
-<<<<<<< Updated upstream
-                            <x-file wire:model="newItem.images" accept="image/png, image/jpeg, image/jpg"
-                                crop-after-change>
-                                <img src="{{ asset('/storage/' . $item->images) }}" height="200" width="230"
-                                    aria-labelledby="{{ $item->id }}" alt="{{ $item->name }}" />
-
-=======
-                            <x-file wire:model="newItem.images" accept="image/png, image/jpeg, image/jpg">
+                            <x-file wire:model="newItem.images" accept="image/png, image/jpeg, image/jpg, image/webp">
                                 <img src="{{ asset('storage/' . $item->images) }}" height="200" width="230"
                                     aria-labelledby="{{ $item->id }}" alt="{{ $item->name }}" />
->>>>>>> Stashed changes
                             </x-file>
                             <span class="text-xs">Click to change | Max 1MB</span>
                         </div>

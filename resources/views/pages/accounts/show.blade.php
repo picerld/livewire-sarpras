@@ -1,3 +1,3 @@
 <x-admin-layout>
-    <livewire:layouts.account.show :userID="$userID" />
+    <livewire:layouts.account.show :userId="$userId" />
 </x-admin-layout>

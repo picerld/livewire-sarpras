@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Components\Account;
 
+use App\Helpers\GenerateCodeHelper;
 use App\Models\Employee;
 use App\Models\User;
+use GMP;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
@@ -14,10 +16,11 @@ class FormInput extends Component
     use Toast;
 
     public $newUser = [
-        'email' => '',
+        'id' => '',
+        'username' => '',
         'password' => '',
         'role' => '',
-        'employee_id' => ''
+        'nip' => ''
     ];
 
     public $employees;
@@ -32,11 +35,13 @@ class FormInput extends Component
 
     public function store(): void
     {
+        $this->newUser['id'] = GenerateCodeHelper::handleGenerateCode();
         $validator = Validator::make($this->newUser, [
-            'email' => 'required|email|unique:users,email',
+            'id' => 'required|max:20|unique:users,id|min:5',
+            'username' => 'required|email|unique:users,username',
             'password' => 'required|min:8',
             'role' => 'required',
-            'employee_id' => 'required|unique:users,employee_id'
+            'nip' => 'required|unique:users,nip'
         ]);
         
         

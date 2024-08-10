@@ -41,7 +41,7 @@ class ListItem extends Component
                 $query->whereHas('employee', function (Builder $query) {
                     $query->where('name', 'LIKE', "%$this->search%");
                 })
-                    ->orWhere('email', 'LIKE', "%$this->search%")
+                    ->orWhere('username', 'LIKE', "%$this->search%")
                     ->orWhere('role', 'LIKE', "%$this->search%");
             })
             ->when($this->selectedRole, fn (Builder $q) => $q->where('role', $this->selectedRole))

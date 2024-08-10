@@ -26,7 +26,6 @@ class EmployeeFactory extends Factory
 
         return [
             'id' => fake()->unique()->randomNumber(5),
-            'email' => fake()->unique()->safeEmail(),
             'avatar' => fake()->randomElement($images),
             'name' => fake()->name() ,
         ];

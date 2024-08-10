@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components\InItems;
 
+use App\Helpers\GenerateCodeHelper;
 use App\Models\IncomingItem;
 use App\Models\IncomingItemDetail;
 use App\Models\Item;
@@ -20,12 +21,15 @@ class FormItemIn extends Component
     // it will be
     // [0 => ['item_id' => '', 'qty' => 1], 
     // 1 => ['item_id' => '', 'qty' => 1]] ...
-    public $inputs = [['item_id' => '', 'qty' => 1]];
+    public $inputs = [['item_code' => '', 'qty' => 1]];
     public $items;
     public $supplier_id;
 
     // Index for loop input
     public $i = 1;
+
+    // search
+    public $search;
 
     public function mount()
     {
@@ -35,7 +39,7 @@ class FormItemIn extends Component
     public function addInput()
     {
         // Add new input field on object
-        $this->inputs[] = ['item_id' => '', 'qty' => 1];
+        $this->inputs[] = ['item_code' => '', 'qty' => 1];
     }
 
     public function removeInput($i)
@@ -47,17 +51,23 @@ class FormItemIn extends Component
 
     public function store()
     {
-        try {
+        // try {
             // Validate input data
             $this->validate([
                 'supplier_id' => 'required|exists:suppliers,id',
-                'inputs.*.item_id' => 'required|exists:items,id',
+                'inputs.*.item_code' => 'required|exists:items,id',
                 'inputs.*.qty' => 'required|integer|min:1',
+            ], [
+                'supplier_id.required' => 'Supplier harus dipilih',
+                'inputs.*.item_code.required' => 'Item harus dipilih',
+                'inputs.*.qty.required' => 'Jumlah harus diisi',
+                'inputs.*.qty.min' => 'Jumlah minimal 1',
             ]);
 
             // Store to incoming_item table
             $incomingItem = IncomingItem::create([
-                'user_id' => Auth::id(),
+                'id' => GenerateCodeHelper::handleGenerateCode(),
+                'nip' => Auth::id(),
                 'supplier_id' => $this->supplier_id,
                 'total_items' => 0, // Default value
             ]);
@@ -68,12 +78,12 @@ class FormItemIn extends Component
             // Store to incoming_item_detail table and update item quantities
             foreach ($this->inputs as $input) {
                 IncomingItemDetail::create([
-                    'incoming_item_id' => $incomingItem->id,
-                    'item_id' => $input['item_id'],
+                    'incoming_item_code' => $incomingItem->id,
+                    'item_code' => $input['item_code'],
                     'qty' => $input['qty'],
                 ]);
 
-                $item = Item::find($input['item_id']);
+                $item = Item::find($input['item_code']);
                 $item->update(['stock' => $item->stock + $input['qty']]);
                 $totalItems += $input['qty'];
             }
@@ -85,10 +95,11 @@ class FormItemIn extends Component
 
             $this->success("Item Successfully Added", "Success!!", position: 'toast-bottom', redirectTo: '/in-items');
             $this->reset(['inputs', 'supplier_id']);
-
-        } catch (\Throwable $th) {
-            $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom', redirectTo: '/in-items');
-        }
+        // } catch (\Throwable $th) {
+            // $this->warning('Ada kendala saat proses penginputan', 'Warning!!', position: 'toast-bottom', redirectTo: '/in-items');
+            // development purpose
+            // $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
+        // }
     }
 
     public function render()

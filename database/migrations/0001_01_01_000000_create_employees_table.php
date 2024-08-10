@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->string('id', 20)->primary();
-            $table->string('email', 50)->unique();
             $table->string('avatar')->nullable();
             $table->string('name', 50);
             $table->rememberToken();
