@@ -15,9 +15,9 @@
                     <x-input wire:model="newItem.merk" id="merk" label="Brand" inline />
                     <x-input wire:model="newItem.unit" id="unit" label="Satuan" inline />
                     <x-choices label="Category" wire:model="newItem.category_id" :options="$categories" single />
-                    <x-input label="Price" wire:model="newItem.price" suffix="Rp" money locale="id-ID" inline />
+                    <x-input label="Price" wire:model="newItem.price" prefix="Rp" money locale="id-ID" inline />
                     <x-input wire:model="newItem.stock" id="stock" type="number" label="Stock" min="1"
-                        inline />
+                        inline readonly />
                     <x-input wire:model="newItem.minimum_stock" id="minimum_stock" type="number" label="Minimum Stock"
                         min="1" inline />
                     <x-textarea label="Description" wire:model="newItem.description" rows="3" inline />

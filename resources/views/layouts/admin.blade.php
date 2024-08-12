@@ -16,10 +16,11 @@
     <!-- cdn for currency -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/robsontenorio/mary@0.44.2/libs/currency/currency.js"
         defer></script>
-        
+
     <!-- cdn for rich text TinyMCE -->
-    <!-- NEW FEATURE!! -->
-    {{-- <script src="https://cdn.tiny.cloud/1/YOUR-KEY-HERE/tinymce/6/tinymce.min.js" referrerpolicy="origin" defer></script> --}}
+    <!-- RICH TEXT EDITOR FOR NEXT FEATURE!! -->
+    {{-- <script src="https://cdn.tiny.cloud/1/pbe40jxyz61sydsg39f2uhasr9qlk884n3qmqn5bmocy4jc4/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin" defer></script> --}}
 
     <!-- FOR PERFORMANCE -->
     <link rel="stylesheet" href="{{ mix('/resources/css/app.css') }}">
@@ -45,6 +46,7 @@
     </x-main>
 
     <x-toast />
-    
+
 </body>
+
 </html>

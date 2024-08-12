@@ -97,7 +97,7 @@ class Table extends Component
     public function store(): void
     {
         try {
-        $this->newItem['id'] = GenerateCodeHelper::handleGenerateCode($this->newItem['category_id']);
+        $this->newItem['id'] = GenerateCodeHelper::handleGenerateCode();
         $validator = Validator::make(
             $this->newItem,
             [

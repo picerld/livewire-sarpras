@@ -3,6 +3,7 @@
 namespace App\Livewire\Components\Category;
 
 use App\Models\Category;
+use App\Models\Item;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
@@ -27,7 +28,7 @@ class Table extends Component
     public function category(): LengthAwarePaginator
     {
         return Category::query()
-            ->when($this->search, fn (Builder $query) => $query->where('name', 'like', '%' . $this->search . '%'))
+            ->when($this->search, fn (Builder $query) => $query->whereAny(['name', 'aliases'], 'like', '%' . $this->search . '%'))
             ->orderBy(...array_values($this->sortBy))
             ->paginate(5, ['id', 'name', 'aliases']);
     }

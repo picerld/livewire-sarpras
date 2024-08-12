@@ -8,12 +8,12 @@ use Livewire\Component;
 class Show extends Component
 {
     public $items;
-    public $incomingItemID;
+    public $incomingItemCode;
 
-    public function mount($incomingItemID)
+    public function mount($incomingItemCode)
     {
-        $this->incomingItemID = $incomingItemID;
-        $this->items = IncomingItemDetail::where('incoming_item_code', $this->incomingItemID)->get();
+        $this->incomingItemCode = $incomingItemCode;
+        $this->items = IncomingItemDetail::where('incoming_item_code', $this->incomingItemCode)->get();
     }
     public function render()
     {

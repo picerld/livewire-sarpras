@@ -23,7 +23,9 @@
                 <x-badge value="{{ $user->role }}" class="btn-ghost btn-outline btn-xs" />
             </x-slot:value>
             <x-slot:sub-value>
-                {{ $user->username }}
+                <p class="text-black/80 dark:text-white/60">
+                    {{ $user->username }}
+                </p>
             </x-slot:sub-value>
             <x-slot:actions>
                 <x-button icon="o-bookmark-slash" label="Remove" class="btn-ghost btn-outline btn-sm"
@@ -34,7 +36,7 @@
         <x-alert title="Nothing here!" description="Try to remove some filters." icon="o-exclamation-triangle"
             class="border-none bg-base-100">
             <x-slot:actions>
-                <x-button label="Go back!" link="/users" icon="o-x-mark" class="btn-outline" spinner />
+                <x-button label="Clear!" link="/users" icon="o-x-mark" class="btn-outline" spinner />
             </x-slot:actions>
         </x-alert>
     @endforelse

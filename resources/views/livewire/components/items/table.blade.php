@@ -17,7 +17,7 @@
     <x-table :headers="$headers" :rows="$items" :sort-by="$sortBy" link="/items/{id}"
         class="bg-white rounded dark:bg-dark" with-pagination>
         @scope('cell_category_aliases', $item)
-            <x-badge :value="$item->category->aliases" class="btn-ghost btn-outline" />
+            <x-badge :value="$item->category->aliases ?? 'null'" class="btn-ghost btn-outline" />
         @endscope
     </x-table>
 
@@ -37,10 +37,13 @@
                     <x-input wire:model="newItem.minimum_stock" id="minimum_stock" label="Stok minimum" type="number"
                         min="1" inline />
                     <x-choices wire:model="newItem.category_id" :options="$categories" single />
-                    <x-file wire:model="newItem.images" accept="image/png, image/jpg, image/jpeg, image/webp" crop-after-change />
+                    <x-file wire:model="newItem.images" accept="image/png, image/jpg, image/jpeg, image/webp"
+                        crop-after-change />
                 </div>
                 <x-textarea label="Deskripsi" wire:model="newItem.description" placeholder="Type here ..."
-                    rows="3" inline />
+                    rows="3" hint="Description of your item" inline />
+                {{-- <x-editor wire:model="newItem.description" label="Deskripsi" hint="The full product description"
+                folder="public/" /> --}}
 
                 <x-slot:actions>
                     <x-button label="Submit!" icon="c-paper-airplane" class="text-white btn-primary" type="submit"

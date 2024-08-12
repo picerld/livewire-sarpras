@@ -37,7 +37,7 @@ class InItemController extends Controller
     public function show(string $id)
     {
         return view("pages.inItems.show", [
-            "incomingItemID" => $id
+            "incomingItemCode" => $id
         ]);
     }
 

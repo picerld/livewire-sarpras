@@ -31,7 +31,7 @@
                             alt="{{ $item->item->name }}" />
                     </x-slot:figure>
                     <x-slot:menu>
-                        <x-badge value="{{ $item->item->category->aliases }}"
+                        <x-badge value="{{ $item->item->category->aliases ?? 'null' }}"
                             class="btn-ghost btn-outline" />
                     </x-slot:menu>
                     <div class="w-full mt-3">

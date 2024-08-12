@@ -20,9 +20,11 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('stock')->default(0);
             $table->integer('minimum_stock')->default(0);
-            $table->foreignId('category_id')->constrained('category')->cascadeOnDelete();
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->text('description');
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('category')->onDelete('set null');
         });
         
     }

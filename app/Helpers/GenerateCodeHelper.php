@@ -12,7 +12,7 @@ class GenerateCodeHelper
         // param: category_id
         
         // PRODUCTION
-        // $category =  Category::find($categoryID);
+        // $category =  Category::find($categoryId);
         // $aliases = $category->aliases;
 
         // DEVELOPMENT

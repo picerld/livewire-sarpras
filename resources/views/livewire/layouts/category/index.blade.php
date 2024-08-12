@@ -20,7 +20,7 @@
         </livewire:utils.header>
     </x-slot>
 
-    <div id="category-table" class="flex flex-wrap w-full gap-3 py-7 md:flex-nowrap lg:flex-nowrap">
+    <div id="category-table" class="flex flex-wrap w-full gap-3 py-7 md:flex-nowrap lg:flex-nowrap min-h-[80vh]">
         <livewire:components.category.form-input />
         <livewire:components.category.table />
     </div>

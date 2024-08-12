@@ -51,7 +51,7 @@
 
             <x-menu-sub title="Stok" icon="o-clipboard-document">
                 <livewire:utils.navlink title="Laporan" icon="o-chart-pie" link="stok" />
-                <livewire:utils.navlink title="Opname" icon="o-chart-bar-square" link="opname" />
+                {{-- <livewire:utils.navlink title="Opname" icon="o-chart-bar-square" link="opname" /> --}}
             </x-menu-sub>
 
             @can('isAdmin')
