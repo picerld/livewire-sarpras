@@ -12,21 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->id();
+            $table->string('id', 20)->primary();
             $table->string('name', 100);
-            $table->string('code', 10);
             $table->string('merk', 25);
-            $table->string('unit', 10);
+            $table->string('unit', 25);
             $table->string('images')->nullable();
             $table->integer('price');
             $table->integer('stock')->default(0);
             $table->integer('minimum_stock')->default(0);
-            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->text('description');
             $table->timestamps();
 
-            $table->foreign('category_id')->references('id')->on('category')->cascadeOnDelete();
+            $table->foreign('category_id')->references('id')->on('category')->onDelete('set null');
         });
+        
     }
 
     /**

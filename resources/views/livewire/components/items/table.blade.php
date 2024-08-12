@@ -1,12 +1,14 @@
 <x-card>
-    <x-header wire:model.live.debounce="search" title="Barang" class="px-3 pt-3" size="text-2xl" subtitle="Items Table"
+    <x-header wire:model.live.debounce="search" title="Barang" class="px-3 pt-3" size="text-3xl" subtitle="Items Table"
         progress-indicator separator>
         <x-slot:actions>
-            <x-input wire:model="search" id="search" icon="o-magnifying-glass" class="placeholder:font-semibold"
-                placeholder="Search..." autocomplete="off" />
-            <x-button icon="o-funnel" class="text-black dark:text-white/80" wire:click="tableDrawer" aria-label="filter item" responsive />
+            <x-input wire:model="search" id="search" icon="o-magnifying-glass"
+                class="border-dark focus:outline-black placeholder:font-semibold" placeholder="Search..."
+                autocomplete="off" />
+            <x-button icon="o-funnel" class="text-black dark:text-white/80" wire:click="tableDrawer"
+                aria-label="filter item" responsive />
             <x-button icon-right="m-plus" label="Add" wire:click="createItemsModal"
-                class="text-white bg-dark dark:bg-slate-100 hover:bg-dark hover:opacity-90 dark:text-black" responsive 
+                class="text-white bg-dark dark:bg-slate-100 hover:bg-dark hover:opacity-90 dark:text-black" responsive
                 aria-label="create item" />
         </x-slot:actions>
     </x-header>
@@ -14,8 +16,8 @@
     <!-- USING TABLE -->
     <x-table :headers="$headers" :rows="$items" :sort-by="$sortBy" link="/items/{id}"
         class="bg-white rounded dark:bg-dark" with-pagination>
-        @scope('cell_category_name', $item)
-            <x-badge :value="$item->category->name" class="btn-ghost btn-outline" />
+        @scope('cell_category_aliases', $item)
+            <x-badge :value="$item->category->aliases ?? 'null'" class="btn-ghost btn-outline" />
         @endscope
     </x-table>
 
@@ -34,15 +36,18 @@
                         inline />
                     <x-input wire:model="newItem.minimum_stock" id="minimum_stock" label="Stok minimum" type="number"
                         min="1" inline />
-                    <x-select wire:model="newItem.category_id" id="category" for="Category" label="Category"
-                        :options="$categories" inline />
-                    <x-file wire:model="newItem.images" accept="image/png" crop-after-change />
+                    <x-choices wire:model="newItem.category_id" :options="$categories" single />
+                    <x-file wire:model="newItem.images" accept="image/png, image/jpg, image/jpeg, image/webp"
+                        crop-after-change />
                 </div>
                 <x-textarea label="Deskripsi" wire:model="newItem.description" placeholder="Type here ..."
-                    rows="3" inline />
+                    rows="3" hint="Description of your item" inline />
+                {{-- <x-editor wire:model="newItem.description" label="Deskripsi" hint="The full product description"
+                folder="public/" /> --}}
 
                 <x-slot:actions>
-                    <x-button label="Submit!" icon="c-paper-airplane" class="text-white btn-primary" type="submit" spinner="store" />
+                    <x-button label="Submit!" icon="c-paper-airplane" class="text-white btn-primary" type="submit"
+                        spinner="store" />
                 </x-slot:actions>
             </x-form>
         </x-card>
@@ -52,7 +57,7 @@
         close-on-escape>
         <x-form wire:submit="items" no-separator>
             <!-- Category Filter -->
-            <x-choices label="Category" wire:model="selectedCategory" :options="$categories" inline single />
+            <x-choices label="Category" wire:model="selectedCategory" :options="$categories" searchable single />
 
             <!-- Date Range Filter -->
             <x-input type="date" label="From Date" wire:model="fromDate" />
@@ -60,7 +65,8 @@
 
             <x-slot:actions>
                 <x-button label="Clear" wire:click="clear" class="btn btn-ghost btn-outline" />
-                <x-button label="Save" class="text-white btn-primary" type="submit" icon="c-paper-airplane" spinner="items" />
+                <x-button label="Save" class="text-white btn-primary" type="submit" icon="c-paper-airplane"
+                    spinner="items" />
             </x-slot:actions>
         </x-form>
 

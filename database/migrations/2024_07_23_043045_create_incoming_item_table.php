@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('incoming_item', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('supplier_id');
+        Schema::create('incoming_items', function (Blueprint $table) {
+            $table->string('id', 20)->primary();
+            $table->string('nip', 20);
+            $table->foreignId('supplier_id')->constrained('suppliers')->onDelete('cascade');
             $table->integer('total_items')->default(0);
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreign('supplier_id')->references('id')->on('suppliers')->cascadeOnDelete();
+            
+            $table->foreign('nip')->references('id')->on('employees')->onDelete('cascade');
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('incoming_item');
+        Schema::dropIfExists('incoming_items');
     }
 };

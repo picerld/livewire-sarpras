@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Category;
 use App\Models\Employee;
+use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -18,55 +20,76 @@ class DatabaseSeeder extends Seeder
     {
         // User Seeder
         Employee::factory()->create([
+            'id' => '111',
             'avatar' => 'avatars/01.png',
-            'name' => 'Admin'
+            // 'email' => 'rafi@localhost',
+            'name' => 'Rafi',
         ]);
 
         Employee::factory()->create([
-            'avatar' => 'avatars/01.png',
-            'name' => 'pengawas'
+            'id' => '222',
+            'avatar' => 'avatars/02.png',
+            // 'email' => 'pice@localhost',
+            'name' => 'Pice',
         ]);
 
         Employee::factory()->create([
-            'avatar' => 'avatars/01.png',
-            'name' => 'Unit'
+            'id' => '333',
+            'avatar' => 'avatars/03.png',
+            // 'email' => 'picerld@localhost',
+            'name' => 'Picerld',
         ]);
 
         User::factory()->create([
-            'email' => 'admin@localhost',
+            'id' => '111',
+            'username' => 'admin@localhost',
             'password' => Hash::make('password'),
             'role' => 'admin',
-            'employee_id' => 1
+            'nip' => '111',
+            'id' => '111'
         ]);
 
         User::factory()->create([
-            'email' => 'pengawas@localhost',
+            'id' => '222',
+            'username' => 'pengawas@localhost',
             'password' => Hash::make('password'),
             'role' => 'pengawas',
-            'employee_id' => 2
+            'nip' => '222',
+            'id' => '222'
         ]);
 
         User::factory()->create([
-            'email' => 'unit@localhost',
+            'id' => '333',
+            'username' => 'unit@localhost',
             'password' => Hash::make('password'),
             'role' => 'unit',
-            'employee_id' => 3
+            'nip' => '333',
+            'id' => '333'
+        ]);
+
+        Category::factory()->create([
+            'name' => 'Alat Tulis Kantor',
+            'aliases' => 'ATK'
         ]);
 
         Employee::factory(10)->create();
-        User::factory(10)->create();
 
-        // $this->call(UnitSeeder::class);
+        // foreach ($employees as $employee) {
+        //     User::factory()->create([
+        //         'nip' => $employee->nip,
+        //     ]);
+        // }
+
         $this->call(CategorySeeder::class);
-        $this->call(ItemSeeder::class);
+        // $this->call(ItemSeeder::class);
         $this->call(SupplierSeeder::class);
-        $this->call(SubmissionSeeder::class);
-        $this->call(SubmissionDetailSeeder::class);
-        $this->call(RequestSeeder::class);
-        $this->call(RequestDetailSeeder::class);
-        $this->call(IncomingItemSeeder::class);
-        $this->call(IncomingItemDetailSeeder::class);
-        $this->call(OutgoingItemSeeder::class);
-        $this->call(OutgoingItemDetailSeeder::class);
+        // $this->call(SubmissionSeeder::class);
+        // $this->call(SubmissionDetailSeeder::class);
+        // $this->call(RequestSeeder::class);
+        // $this->call(RequestDetailSeeder::class);
+        // $this->call(IncomingItemSeeder::class);
+        // $this->call(IncomingItemDetailSeeder::class);
+        // $this->call(OutgoingItemSeeder::class);
+        // $this->call(OutgoingItemDetailSeeder::class);
     }
 }

@@ -38,7 +38,7 @@ class ItemController extends Controller
     public function show(string $id)
     {
         return view("pages.items.show", [
-            "itemID" => $id
+            "itemId" => $id
         ]);
     }
 

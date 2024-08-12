@@ -38,6 +38,7 @@ class Table extends Component
     public $fromDate = null;
     public $toDate = null;
     public $selectedUser = null;
+    public $selectedSupplier = null;
 
     public function tableDrawer()
     {
@@ -61,9 +62,10 @@ class Table extends Component
                     ->orWhere('supplier_id', 'LIKE', '%' . $this->search . '%')
                     ->orWhere('total_items', 'LIKE', '%' . $this->search . '%');
             })
-            ->when($this->selectedUser, fn (Builder $q) => $q->where('user_id', $this->selectedUser))
-            ->when($this->fromDate, fn (Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
-            ->when($this->toDate, fn (Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
+            ->when($this->selectedSupplier, fn(Builder $q) => $q->where('supplier_id', $this->selectedSupplier))
+            ->when($this->selectedUser, fn(Builder $q) => $q->where('nip', $this->selectedUser))
+            ->when($this->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
+            ->when($this->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
             ->orderBy(...array_values($this->sortBy))
             ->paginate(5);
     }
@@ -84,6 +86,13 @@ class Table extends Component
 
     public function delete(IncomingItem $incomingItem, IncomingItemDetail $incomingItemDetail): void
     {
+        $items = Item::whereIn('id', $incomingItemDetail->pluck('item_code'))->get();
+
+        foreach ($items as $item) {
+            $item->update(['stock' => $item->stock - $incomingItemDetail->where('incoming_item_code', $incomingItem->id)
+                ->where('item_code', $item->id)->sum('qty')]);
+        }
+
         $incomingItemDetail->delete();
         $incomingItem->delete();
         $this->success("Item $incomingItem->name deleted", 'Good bye!', redirectTo: '/in-items', position: 'toast-bottom');
@@ -92,14 +101,15 @@ class Table extends Component
     public function render()
     {
         $itemsIn = $this->itemsIn();
+        $suppliers = Supplier::all();
         // manualy option role
         $users = [
             [
-                'id' => '1',
+                'id' => '111',
                 'name' => 'Admin'
             ],
             [
-                'id' => '2',
+                'id' => '222',
                 'name' => 'Pengawas'
             ],
         ];
@@ -108,7 +118,8 @@ class Table extends Component
             'itemsIn' => $itemsIn,
             'headers' => $this->headers,
             'sortBy' => $this->sortBy,
-            'users' => $users
+            'users' => $users,
+            'suppliers' => $suppliers
         ]);
     }
 }

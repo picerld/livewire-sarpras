@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('submission_detail', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('submission_id');
-            $table->unsignedBigInteger('item_id');
+            $table->string('submission_code', 20);
+            $table->string('item_code', 20);
             $table->integer('qty');
             $table->integer('qty_accepted');
             $table->timestamps();
 
-            $table->foreign('submission_id')->references('id')->on('submission')->onDelete('cascade');
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            $table->foreign('submission_code')->references('id')->on('submission')->onDelete('cascade');
+            $table->foreign('item_code')->references('id')->on('items')->onDelete('cascade');
         });
     }
 

@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Livewire\Layouts\Account\User;
 use App\Models\Employee;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UnitSeeder extends Seeder

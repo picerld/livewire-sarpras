@@ -1,8 +1,8 @@
 <x-form id="itemsForm" wire:submit.prevent="store" class="space-y-2" autocomplete="off" no-separator>
     <div class="grid w-full grid-cols-1 gap-4">
         <div class="mb-4">
-            <x-choices label="Supplier" id="supplier_id" :options="$suppliers" wire:model="supplier_id" single inline
-                hint="Please select a supplier" icon="o-truck" />
+            <x-choices-offline label="Supplier" id="supplier_id" :options="$suppliers" wire:model="supplier_id" single inline
+                hint="Please select a supplier" icon="o-truck" error-field="supplier_id" searchable />
         </div>
 
         <!-- Dynamic Inputs Loop -->
@@ -10,8 +10,9 @@
             <div
                 class="grid w-full gap-4 p-5 border border-gray-400 border-dashed rounded-md md:grid-cols-6 md:items-center">
                 <div class="col-span-6">
-                    <x-choices label="Items" :options="$items" wire:model="inputs.{{ $key }}.item_id"
-                        hint="Please select an item" class="w-full" icon="o-radio" inline single />
+                    <x-choices-offline label="Items" :options="$items"
+                        wire:model="inputs.{{ $key }}.item_code" hint="Please select an item" class="w-full"
+                        icon="o-radio" inline single searchable />
                 </div>
                 <div class="col-span-4">
                     <x-input type="number" wire:model="inputs.{{ $key }}.qty" class="w-full" icon="o-funnel"
@@ -30,6 +31,6 @@
 
     <x-slot:actions>
         <x-button label="Submit" icon="c-paper-airplane" class="w-full text-white btn-primary md:w-auto lg:w-auto"
-            type="submit" spinner="save" />
+            type="submit" spinner="store" />
     </x-slot:actions>
 </x-form>

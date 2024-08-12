@@ -9,15 +9,15 @@
         @forelse ($users as $user)
             <x-list-item :item="$user" :link="url('/users/' . $user->id)">
                 <x-slot:avatar>
-                    <img src="{{ asset($user->employee->avatar) }}" width="44" height="44" alt="{{ $user->nama }}"
-                        class="rounded-full w-11 avatar" />
+                    <img src="{{ asset($user->employee->avatar) }}" width="44" height="44"
+                        alt="{{ $user->nama }}" class="rounded-full w-11 avatar" />
                 </x-slot:avatar>
-                <x-slot:value>{{ $user->nama }}
+                <x-slot:value>{{ $user->nama ?? $user->employee->name }}
                     <x-badge :value="$user->role" class="btn-ghost btn-outline" />
                 </x-slot:value>
                 <x-slot:sub-value>
                     <p class="text-black dark:text-slate-300">
-                        {{ $user->email }}
+                        {{ $user->username }}
                     </p>
                 </x-slot:sub-value>
             </x-list-item>
@@ -30,5 +30,4 @@
             </x-alert>
         @endforelse
     </div>
-
 </x-card>

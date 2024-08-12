@@ -11,9 +11,9 @@
 
     <x-slot:actions>
         <div class="flex">
-            <x-theme-toggle class="pb-4 btn btn-circle btn-ghost" responsive />
+            <x-theme-toggle class="pb-4 btn btn-circle btn-ghost" aria-label="change theme" responsive />
             <x-button icon="o-bell" link="#" class="relative pb-4 btn-circle btn-ghost" responsive>
-                <x-badge value="{{ $notificationCount }}" class="absolute text-white badge-neutral -right-1 -top-2" />
+                <x-badge value="{{ $notificationCount }}" class="absolute text-white badge-neutral dark:badge-primary -right-1 -top-2" />
             </x-button>
         </div>
     </x-slot:actions>

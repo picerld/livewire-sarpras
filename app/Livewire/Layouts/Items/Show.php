@@ -8,12 +8,12 @@ use Livewire\Component;
 class Show extends Component
 {
     public $item;
-    public $itemID;
+    public $itemId;
 
-    public function mount($itemID)
+    public function mount($itemId)
     {
-        $this->itemID = $itemID;
-        $this->item = Item::findOrFail($this->itemID);
+        $this->itemId = $itemId;
+        $this->item = Item::findOrFail($this->itemId);
     }
 
     public function render()

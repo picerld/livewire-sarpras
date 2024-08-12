@@ -1,5 +1,5 @@
 <div>
-    <livewire:components.in-items.detail :incomingItemID="$incomingItemID" />
+    <livewire:components.in-items.detail :incomingItemCode="$incomingItemCode" />
 
     <livewire:utils.footer />
 </div>

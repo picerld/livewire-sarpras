@@ -13,20 +13,20 @@ class Detail extends Component
     use Toast;
 
     // params
-    public $incomingItemID;
+    public $incomingItemCode;
     public $items;
 
-    public function mount($incomingItemID): void
+    public function mount($incomingItemCode): void
     {
-        $this->incomingItemID = $incomingItemID;
-        $this->items = IncomingItemDetail::where('incoming_item_id', $this->incomingItemID)->get();
+        $this->incomingItemCode = $incomingItemCode;
+        $this->items = IncomingItemDetail::where('incoming_item_code', $this->incomingItemCode)->get();
     }
 
-    public function delete($itemID, $incomingItemID): void
+    public function delete($itemID, $incomingItemCode): void
     {
         // search for qty item on incoming_item_detail
-        $totalQty = IncomingItemDetail::where('item_id', $itemID)
-            ->where('incoming_item_id', $incomingItemID)
+        $totalQty = IncomingItemDetail::where('item_code', $itemID)
+            ->where('incoming_item_code', $incomingItemCode)
             ->sum('qty');
 
         // search for item on item table from param
@@ -36,19 +36,19 @@ class Detail extends Component
             // Update item stock on item table
             $item->update(['stock' => $item->stock - $totalQty]);
 
-            IncomingItemDetail::where('item_id', $itemID)
-                ->where('incoming_item_id', $incomingItemID)
+            IncomingItemDetail::where('item_code', $itemID)
+                ->where('incoming_item_code', $incomingItemCode)
                 ->delete();
 
             // Update total item on incoming_item
-            $totalItems = IncomingItemDetail::where('incoming_item_id', $incomingItemID)
+            $totalItems = IncomingItemDetail::where('incoming_item_code', $incomingItemCode)
                 ->sum('qty');
 
-            IncomingItem::where('id', $incomingItemID)
+            IncomingItem::where('id', $incomingItemCode)
                 ->update(['total_items' => $totalItems]);
         }
 
-        $this->success("Item $item->name deleted", 'Good bye!', redirectTo: "/in-items/{$this->incomingItemID}", position: 'toast-bottom');
+        $this->success("Item $item->name deleted", 'Good bye!', redirectTo: "/in-items/{$this->incomingItemCode}", position: 'toast-bottom');
     }
     
     public function render()

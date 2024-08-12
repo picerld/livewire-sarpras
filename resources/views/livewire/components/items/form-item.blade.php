@@ -1,8 +1,8 @@
 <div>
     <div class="flex flex-col justify-between w-full md:flex-row">
         <x-header title="{{ $item->name }}" size="text-3xl" />
-        <x-button icon="o-document-minus" wire:click="delete({{ $item->id }})" label="Remove" class="btn-ghost btn-outline" spinner
-            aria-label="delete item" />
+        <x-button icon="o-document-minus" wire:click="delete({{ $item->id }})" label="Remove"
+            class="btn-ghost btn-outline" spinner aria-label="delete item" />
     </div>
     <x-form id="updateItemForm" wire:submit="save" class="space-y-4" autocomplete="off"
         class="grid grid-flow-row gap-3 auto-rows-min">
@@ -14,34 +14,29 @@
                     <x-input wire:model="newItem.name" id="name" label="Name" inline />
                     <x-input wire:model="newItem.merk" id="merk" label="Brand" inline />
                     <x-input wire:model="newItem.unit" id="unit" label="Satuan" inline />
-                    <x-choices label="Category" wire:model="newItem.category_id" :options="$categories" inline single />
-                    <x-input label="Price" wire:model="newItem.price" suffix="Rp" money locale="id-ID" inline />
+                    <x-choices label="Category" wire:model="newItem.category_id" :options="$categories" single />
+                    <x-input label="Price" wire:model="newItem.price" prefix="Rp" money locale="id-ID" inline />
                     <x-input wire:model="newItem.stock" id="stock" type="number" label="Stock" min="1"
-                        inline />
+                        inline readonly />
                     <x-input wire:model="newItem.minimum_stock" id="minimum_stock" type="number" label="Minimum Stock"
                         min="1" inline />
                     <x-textarea label="Description" wire:model="newItem.description" rows="3" inline />
+
                     <!-- OPTIONAL -->
                     {{-- <x-editor wire:model="newItem.description" label="Description" hint="Description of the item" /> --}}
                 </div>
             </div>
-            
+
             <div class="grid content-start gap-8">
                 <div class="bg-white rounded-lg dark:bg-dark">
                     <h2 class="p-5 text-lg font-semibold ">Images</h2>
                     <div class="flex items-center justify-center h-full">
                         <!-- Placeholder for image -->
                         <div class="flex items-center gap-5 flex-col justify-start w-full h-[50vh]">
-                            <x-file wire:model="newItem.images" accept="image/png, image/jpeg, image/jpg"
-                                crop-after-change>
-                                <img src="{{ asset('/storage/' . $item->images) }}"
-                                    height="200" width="230" aria-labelledby="{{ $item->id }}"
-                                    alt="{{ $item->name }}" />
-
+                            <x-file wire:model="newItem.images" accept="image/png, image/jpeg, image/jpg, image/webp">
+                                <img src="{{ asset('storage/' . $item->images) }}" height="200" width="230"
+                                    aria-labelledby="{{ $item->id }}" alt="{{ $item->name }}" />
                             </x-file>
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js?v=20240729" defer></script>
-                            <link rel="stylesheet"
-                                href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" />
                             <span class="text-xs">Click to change | Max 1MB</span>
                         </div>
                     </div>

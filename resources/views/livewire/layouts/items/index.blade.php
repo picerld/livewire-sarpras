@@ -20,7 +20,7 @@
         </livewire:utils.header>
     </x-slot>
 
-    <div id="item-table" class="w-full py-7">
+    <div id="item-table" class="w-full min-h-[78vh] py-7">
         <livewire:components.items.table />
     </div>
 

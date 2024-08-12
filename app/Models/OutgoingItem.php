@@ -9,5 +9,5 @@ class OutgoingItem extends Model
 {
     use HasFactory;
 
-    public $table = "outgoing_item";
+    public $table = "outgoing_items";
 }

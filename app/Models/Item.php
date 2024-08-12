@@ -13,17 +13,14 @@ class Item extends Model
 
     public $table = "items";
 
-    protected $guarded = ['id'];
-
-    protected $casts = [
-        'images' => 'array'
-    ];
+    protected $guarded = ['created_at', 'updated_at'];
+    protected $keyType = 'string';
 
     public function category(): BelongsTo {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function incomingItemsDetail(): HasMany {
-        return $this->hasMany(IncomingItemDetail::class, 'item_id');
+        return $this->hasMany(IncomingItemDetail::class, 'id');
     }
 }

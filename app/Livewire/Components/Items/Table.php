@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components\Items;
 
+use App\Helpers\GenerateCodeHelper;
 use App\Helpers\ImageHelper;
 use App\Models\Category;
 use App\Models\Item;
@@ -11,7 +12,6 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
 use Mary\Traits\Toast;
-use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 
 class Table extends Component
@@ -20,8 +20,8 @@ class Table extends Component
 
     // create item
     public $newItem = [
+        'id' => '',
         'name' => '',
-        'code' => '',
         'unit' => '',
         'merk' => '',
         'price' => '',
@@ -34,9 +34,9 @@ class Table extends Component
 
     // Table headers
     public $headers = [
-        ['key' => 'code', 'label' => 'Kode', 'class' => 'dark:text-slate-300'],
+        ['key' => 'id', 'label' => 'Kode', 'class' => 'dark:text-slate-300'],
         ['key' => 'name', 'label' => 'Nama', 'class' => 'dark:text-slate-300',],
-        ['key' => 'category_name', 'label' => 'Kategori', 'class' => 'dark:text-slate-300'],
+        ['key' => 'category_aliases', 'label' => 'Kategori', 'class' => 'dark:text-slate-300'],
         ['key' => 'price', 'label' => 'Harga', 'class' => 'dark:text-slate-300'],
         ['key' => 'stock', 'label' => 'Stok', 'class' => 'dark:text-slate-300'],
         ['key' => 'minimum_stock', 'label' => 'Stok Min', 'class' => 'dark:text-slate-300 text-center'],
@@ -69,13 +69,13 @@ class Table extends Component
     public function items(): LengthAwarePaginator
     {
         return Item::query()
-            ->withAggregate('category', 'name')
-            ->when($this->search, fn (Builder $q) => $q->whereAny(['code', 'name', 'merk', 'price', 'stock'], 'LIKE', "%$this->search%"))
-            ->when($this->selectedCategory, fn (Builder $q) => $q->where('category_id', $this->selectedCategory))
-            ->when($this->fromDate, fn (Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
-            ->when($this->toDate, fn (Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
+            ->withAggregate('category', 'aliases')
+            ->when($this->search, fn(Builder $q) => $q->whereAny(['id', 'name', 'merk', 'price', 'stock'], 'LIKE', "%$this->search%"))
+            ->when($this->selectedCategory, fn(Builder $q) => $q->where('category_id', $this->selectedCategory))
+            ->when($this->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
+            ->when($this->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
             ->orderBy(...array_values($this->sortBy))
-            ->paginate(5, ['code', 'name', 'price', 'stock', 'minimum_stock', 'category->name', 'created_at']);
+            ->paginate(5, ['id', 'name', 'price', 'stock', 'minimum_stock', 'category->name', 'created_at']);
     }
 
     public function updated($property): void
@@ -94,43 +94,38 @@ class Table extends Component
 
     // CRUD
     // func for generate value of random code
-    protected function generateCode()
-    {
-        return substr(hash('sha256', STR::random(40) . time()), 0, 10);
-    }
-
     public function store(): void
     {
         try {
-            $this->newItem['code'] = $this->generateCode();
-            $validator = Validator::make(
-                $this->newItem,
-                [
-                    'name' => 'required|string|max:50|min:5',
-                    'code' => 'required|string|max:10|unique:items,code|min:5',
-                    'unit' => 'required|string|max:20|min:2',
-                    'merk' => 'required|string|max:20|min:5',
-                    'price' => 'required|numeric',
-                    'stock' => 'required|integer|max:999',
-                    'minimum_stock' => 'required|integer|max:999',
-                    'category_id' => 'required|exists:category,id',
-                    'description' => 'required|string|max:100',
-                    'images' => 'nullable|image|max:1024'
-                ]
-            );
+        $this->newItem['id'] = GenerateCodeHelper::handleGenerateCode();
+        $validator = Validator::make(
+            $this->newItem,
+            [
+                'id' => 'required|max:20|unique:items,id|min:5',
+                'name' => 'required|string|max:50|min:5',
+                'unit' => 'required|string|max:20|min:2',
+                'merk' => 'required|string|max:20|min:5',
+                'price' => 'required|numeric',
+                'stock' => 'required|integer|max:999',
+                'minimum_stock' => 'required|integer|max:999',
+                'category_id' => 'required|exists:category,id',
+                'description' => 'required|string|max:100',
+                'images' => 'nullable|image|max:1024'
+            ]
+        );
 
-            if($validator->fails()) {
+            if ($validator->fails()) {
                 $this->warning($validator->errors()->first(), 'Warning!!', position: 'toast-bottom');
                 $this->createItems = false;
                 return;
             }
-    
+
             $data = $validator->validated();
             $data['images'] = ImageHelper::handleImage($this->newItem['images']);
-    
+
             Item::create($data);
             $this->success("Item created!", 'Success!', position: 'toast-bottom');
-        } catch (\Throwable $th) {            
+        } catch (\Throwable $th) {
             $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
         }
 

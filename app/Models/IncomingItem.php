@@ -11,11 +11,14 @@ class IncomingItem extends Model
 {
     use HasFactory;
 
-    public $table = "incoming_item";
-    protected $guarded = ['id'];
+    public $table = "incoming_items";
+  
+    protected $guarded = [];
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     public function users(): BelongsTo {
-        return $this->belongsTo(Employee::class, 'user_id');
+        return $this->belongsTo(Employee::class, 'nip');
     }
 
     public function suppliers(): BelongsTo {
@@ -24,6 +27,7 @@ class IncomingItem extends Model
 
     public function incomingItemDetail(): HasMany
     {
-        return $this->hasMany(IncomingItemDetail::class, 'incoming_item_id');
+        return $this->hasMany(IncomingItemDetail::class);
+
     }
 }

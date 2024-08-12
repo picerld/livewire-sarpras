@@ -15,37 +15,44 @@ class FormItem extends Component
 {
     use Toast, WithFileUploads;
 
+    public $itemId;
     public Item $item;
 
     // Default value for inputs
     public $newItem = [
         'name' => '',
-        'code' => '',
-        'unit' => '',
         'merk' => '',
+        'unit' => '',
         'price' => '',
         'stock' => '',
         'minimum_stock' => '',
         'category_id' => '',
         'description' => '',
-        'images' => ''
+        'images' => '',
     ];
-    public $itemID;
 
-    public function mount($itemID)
+    public function mount($itemId)
     {
-        $this->itemID = $itemID;
-        $this->item = Item::findOrFail($this->itemID);
+        $this->itemId = $itemId;
+        $this->item = Item::findOrFail($this->itemId);
+
         // Fill recent value from table
         $this->fillItem();
     }
-
+    
     public function fillItem(): void
     {
         // Fill item
         $this->newItem = $this->item->only([
-            'name', 'code', 'unit', 'merk', 'price', 'stock',
-            'minimum_stock', 'category_id', 'description', 'images'
+            'name',
+            'unit',
+            'merk',
+            'price',
+            'stock',
+            'minimum_stock',
+            'category_id',
+            'description',
+            'images'
         ]);
     }
 
@@ -65,21 +72,21 @@ class FormItem extends Component
                     'minimum_stock' => 'required|integer|min:1',
                     'category_id' => 'required|exists:category,id',
                     'description' => 'required|string|max:300|min:10',
-                    'images' => 'nullable|max:1024',
+                    'images' => 'nullable',
                 ]
             );
-        
+
             $validated = $validator->validated();
 
-            if($validator->fails()) {
+            if ($validator->fails()) {
                 $this->warning($validator->errors()->first(), 'Warning!!', position: 'toast-bottom');
                 return;
             }
-        
+
             if (!empty($this->newItem['images'])) {
                 // Handle the image upload and get the URL or path
                 $url = ImageHelper::handleImage($this->newItem['images']);
-        
+
                 if ($url) {
                     // Delete the old image if it exists and is different from the new image
                     if ($this->item->images && $this->item->images !== $url) {
@@ -88,23 +95,21 @@ class FormItem extends Component
                             Storage::delete($oldImagePath);
                         }
                     }
-        
                     // Update the item with the new image URL or path
                     $validated['images'] = $url;
                 }
             }
-        
-            // Update the item
-            $this->item->update($validated);        
-        
+
             // Update the item
             $this->item->update($validated);
-        
+
+            // Update the item
+            $this->item->update($validated);
+
             $this->success("Item {$this->item->name} updated!", "Success!!", position: 'toast-bottom');
-        } catch (\Throwable $th) {            
+        } catch (\Throwable $th) {
             $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
         }
-        
     }
 
     public function delete(Item $item): void

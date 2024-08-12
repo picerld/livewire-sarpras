@@ -15,7 +15,7 @@
                 </x-slot:value>
                 <x-slot:sub-value>
                     <p class="text-black dark:text-slate-300">
-                        {{ $user->email }}
+                        {{ $user->username }}
                     </p>
                 </x-slot:sub-value>
                 <x-slot name="actions">
@@ -51,7 +51,7 @@
 
             <x-menu-sub title="Stok" icon="o-clipboard-document">
                 <livewire:utils.navlink title="Laporan" icon="o-chart-pie" link="stok" />
-                <livewire:utils.navlink title="Opname" icon="o-chart-bar-square" link="opname" />
+                {{-- <livewire:utils.navlink title="Opname" icon="o-chart-bar-square" link="opname" /> --}}
             </x-menu-sub>
 
             @can('isAdmin')

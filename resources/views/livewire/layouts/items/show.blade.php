@@ -1,5 +1,5 @@
 <div>
-    <livewire:components.items.form-item :itemID="$itemID" />
+    <livewire:components.items.form-item :itemId="$itemId" />
 
     <livewire:utils.footer />
 </div>
