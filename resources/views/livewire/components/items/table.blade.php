@@ -29,16 +29,14 @@
             <x-form id="itemsForm" wire:submit="store" class="space-y-4" autocomplete="off" no-separator>
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <x-input wire:model="newItem.name" id="name" label="Name" inline />
-                    <x-input wire:model="newItem.merk" id="merk" label="Merk" inline />
-                    <x-input wire:model="newItem.unit" id="unit" label="Satuan" inline />
                     <x-input label="Price" wire:model="newItem.price" suffix="Rp" money locale="id-ID" inline />
+                    <x-choices wire:model="newItem.unit" label="Satuan" :options="$units" single />
+                    <x-choices wire:model="newItem.category_id" label="Category" :options="$categories" single />
                     <x-input wire:model="newItem.stock" id="stock" type="number" label="Stok" min="1"
                         inline />
                     <x-input wire:model="newItem.minimum_stock" id="minimum_stock" label="Stok minimum" type="number"
                         min="1" inline />
-                    <x-choices wire:model="newItem.category_id" :options="$categories" single />
-                    <x-file wire:model="newItem.images" accept="image/png, image/jpg, image/jpeg, image/webp"
-                        crop-after-change />
+                    <x-file wire:model="newItem.images" accept="image/png, image/jpg, image/jpeg, image/webp" />
                 </div>
                 <x-textarea label="Deskripsi" wire:model="newItem.description" placeholder="Type here ..."
                     rows="3" hint="Description of your item" inline />

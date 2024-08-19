@@ -27,7 +27,7 @@ class IncomingItem extends Model
 
     public function incomingItemDetail(): HasMany
     {
-        return $this->hasMany(IncomingItemDetail::class);
+        return $this->hasMany(IncomingItemDetail::class, 'incoming_item_code', 'id');
 
     }
 }

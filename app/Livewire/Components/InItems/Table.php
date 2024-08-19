@@ -19,7 +19,7 @@ class Table extends Component
 
     // header table
     public $headers = [
-        ['key' => 'users_name', 'label' => 'User', 'class' => 'dark:text-slate-300 text-sm'],
+        ['key' => 'users_name', 'label' => 'Pengawas', 'class' => 'dark:text-slate-300 text-sm'],
         ['key' => 'suppliers_name', 'label' => 'Supplier', 'class' => 'dark:text-slate-300 text-sm'],
         ['key' => 'total_items', 'label' => 'Total Item', 'class' => 'dark:text-slate-300 text-center text-sm'],
         ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300 text-sm'],
@@ -34,7 +34,7 @@ class Table extends Component
     // modal
     public bool $createItems = false;
 
-    //filters
+    // filters
     public $fromDate = null;
     public $toDate = null;
     public $selectedUser = null;
@@ -67,7 +67,7 @@ class Table extends Component
             ->when($this->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
             ->when($this->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
             ->orderBy(...array_values($this->sortBy))
-            ->paginate(5);
+            ->paginate(5, ['users_name', 'suppliers_name', 'total_items', 'created_at']);
     }
 
     public function updated($property): void
@@ -102,6 +102,7 @@ class Table extends Component
     {
         $itemsIn = $this->itemsIn();
         $suppliers = Supplier::all();
+        
         // manualy option role
         $users = [
             [
@@ -115,9 +116,9 @@ class Table extends Component
         ];
 
         return view('livewire.components.in-items.table', [
-            'itemsIn' => $itemsIn,
             'headers' => $this->headers,
             'sortBy' => $this->sortBy,
+            'itemsIn' => $itemsIn,
             'users' => $users,
             'suppliers' => $suppliers
         ]);

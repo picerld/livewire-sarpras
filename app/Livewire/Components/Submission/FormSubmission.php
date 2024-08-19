@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Livewire\Components\InItems;
+namespace App\Livewire\Components\Submission;
 
 use App\Helpers\GenerateCodeHelper;
-use App\Models\IncomingItem;
-use App\Models\IncomingItemDetail;
+use App\Models\Employee;
 use App\Models\Item;
-use App\Models\Supplier;
+use App\Models\Submission;
+use App\Models\SubmissionDetail;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Mary\Traits\Toast;
 
-class FormItemIn extends Component
+class FormSubmission extends Component
 {
     use Toast;
 
@@ -26,9 +27,10 @@ class FormItemIn extends Component
     public $inputs = [['item_code' => '', 'qty' => 1]];
 
     public $items;
-    public $supplier_id;
+    public $submissions;
+    public $nip;
 
-    // Index for loop input
+    // index
     public $i = 1;
 
     // search
@@ -57,63 +59,63 @@ class FormItemIn extends Component
         // try {
             // Validate input data
             $this->validate([
-                'supplier_id' => 'required|exists:suppliers,id',
+                'nip' => 'required|exists:employees,id',
                 'inputs.*.item_code' => 'required|exists:items,id',
-                'inputs.*.qty' => 'required|integer|min:1',
+                'inputs.*.qty' => 'required|integer|min:1'
             ], [
-                'supplier_id.required' => 'Supplier harus dipilih',
+                'nip.required' => 'Unit harus dipilih',
                 'inputs.*.item_code.required' => 'Item harus dipilih',
                 'inputs.*.qty.required' => 'Jumlah harus diisi',
                 'inputs.*.qty.min' => 'Jumlah minimal 1',
             ]);
 
-            // Store to incoming_item table
-            $incomingItem = IncomingItem::create([
+            // store to submission_detail table
+            $submission = Submission::create([
                 'id' => GenerateCodeHelper::handleGenerateCode(),
-                'nip' => Auth::id(),
-                'supplier_id' => $this->supplier_id,
+                'nip' => $this->nip,
                 'total_items' => 0, // Default value
             ]);
 
-            // Initialize total items counter
             $totalItems = 0;
 
-            // Store to incoming_item_detail table and update item quantities
             foreach ($this->inputs as $input) {
-                IncomingItemDetail::create([
-                    'incoming_item_code' => $incomingItem->id,
+                SubmissionDetail::create([
+                    'submission_code' => $submission->id,
                     'item_code' => $input['item_code'],
+                    'qty_accepted' => 0,
+                    'accepted_by' => null,
                     'qty' => $input['qty'],
                 ]);
 
-                $item = Item::find($input['item_code']);
-                $item->update(['stock' => $item->stock + $input['qty']]);
                 $totalItems += $input['qty'];
             }
 
-            // Update total_items in incoming_item table
-            $incomingItem->update([
+            $submission->update([
                 'total_items' => $totalItems,
             ]);
 
-            $this->success("Item Successfully Added", "Success!!", position: 'toast-bottom', redirectTo: '/in-items');
-            $this->reset(['inputs', 'supplier_id']);
+            $this->success("Pengajuan Successfully Added", "Success!!", position: 'toast-bottom', redirectTo: '/submissions');
+            $this->reset(['inputs', 'nip']);
+
         // } catch (\Throwable $th) {
-            // $this->warning('Ada kendala saat proses penginputan', 'Warning!!', position: 'toast-bottom', redirectTo: '/in-items');
-            // development purpose
-        //     $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
+        //     $this->error($th->getMessage(), "Failed!!", position: 'toast-bottom');
         // }
     }
 
     public function render()
     {
-        $suppliers = Supplier::all();
-        $items = Item::all();
+        $users = User::withAggregate('employee', 'name')->get();
 
-        return view('livewire.components.in-items.form-item-in', [
-            'suppliers' => $suppliers,
-            'items' => $items,
-            "suppliers" => $suppliers,
+        // mapping users for select with 'nip' as 'id' an 'employee.name' as 'name' for value
+        $userMap = $users->map(function (User $user) {
+            return [
+                'id' => $user->nip,
+                'name' => $user->employee->name
+            ];
+        });
+
+        return view('livewire.components.submission.form-submission', [
+            'users' => $userMap
         ]);
     }
 }

@@ -24,7 +24,7 @@
                             <x-button id="setting" aria-label="Setting" icon="o-cog-6-tooth"
                                 class="btn-circle btn-ghost btn-sm" />
                         </x-slot:trigger>
-                        <livewire:utils.navlink title="Profile" icon="o-finger-print" link="profile" />
+                        <livewire:utils.navlink title="Profile" icon="o-finger-print" link="{{ route('users.show', [$user->id]) }}" />
                         <x-menu-item title="Logout" icon="o-power"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();" />
                     </x-dropdown>
@@ -46,11 +46,11 @@
                 </x-menu-sub>
             @endcan
 
-            <livewire:utils.navlink title="Pengajuan" icon="o-clipboard-document-list" link="pengajuan" />
+            <livewire:utils.navlink title="Pengajuan" icon="o-clipboard-document-list" link="{{ route('submissions.index') }}" />
             <livewire:utils.navlink title="Permintaan" icon="o-chat-bubble-bottom-center-text" link="permintaan" />
 
             <x-menu-sub title="Stok" icon="o-clipboard-document">
-                <livewire:utils.navlink title="Laporan" icon="o-chart-pie" link="stok" />
+                <livewire:utils.navlink title="Laporan" icon="o-chart-pie" link="{{ route('stock.index') }}" />
                 {{-- <livewire:utils.navlink title="Opname" icon="o-chart-bar-square" link="opname" /> --}}
             </x-menu-sub>
 

@@ -5,8 +5,6 @@ namespace App\Livewire\Components\Account;
 use App\Helpers\GenerateCodeHelper;
 use App\Models\Employee;
 use App\Models\User;
-use GMP;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Mary\Traits\Toast;
@@ -23,8 +21,9 @@ class FormInput extends Component
         'nip' => ''
     ];
 
-    public $employees;
     public User $user;
+    
+    public $employees;
     public function mount()
     {
         $this->user = new User();

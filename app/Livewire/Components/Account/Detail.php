@@ -10,6 +10,9 @@ class Detail extends Component
     public $user;
     public $userId;
 
+    //tab
+    public $selectedTab = 'users-tab';
+
     public function mount($userId)
     {
         $this->userId = $userId;

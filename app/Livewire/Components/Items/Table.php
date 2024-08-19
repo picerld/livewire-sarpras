@@ -23,7 +23,6 @@ class Table extends Component
         'id' => '',
         'name' => '',
         'unit' => '',
-        'merk' => '',
         'price' => '',
         'stock' => '',
         'minimum_stock' => '',
@@ -97,22 +96,21 @@ class Table extends Component
     public function store(): void
     {
         try {
-        $this->newItem['id'] = GenerateCodeHelper::handleGenerateCode();
-        $validator = Validator::make(
-            $this->newItem,
-            [
-                'id' => 'required|max:20|unique:items,id|min:5',
-                'name' => 'required|string|max:50|min:5',
-                'unit' => 'required|string|max:20|min:2',
-                'merk' => 'required|string|max:20|min:5',
-                'price' => 'required|numeric',
-                'stock' => 'required|integer|max:999',
-                'minimum_stock' => 'required|integer|max:999',
-                'category_id' => 'required|exists:category,id',
-                'description' => 'required|string|max:100',
-                'images' => 'nullable|image|max:1024'
-            ]
-        );
+            $this->newItem['id'] = GenerateCodeHelper::handleGenerateCode();
+            $validator = Validator::make(
+                $this->newItem,
+                [
+                    'id' => 'required|max:20|unique:items,id|min:5',
+                    'name' => 'required|string|max:50|min:5',
+                    'unit' => 'required|max:20|min:2',
+                    'price' => 'required|numeric',
+                    'stock' => 'required|integer|max:999',
+                    'minimum_stock' => 'required|integer|max:999',
+                    'category_id' => 'required|exists:category,id',
+                    'description' => 'required|string|max:100',
+                    'images' => 'nullable|image|max:1024'
+                ]
+            );
 
             if ($validator->fails()) {
                 $this->warning($validator->errors()->first(), 'Warning!!', position: 'toast-bottom');
@@ -139,11 +137,27 @@ class Table extends Component
         $items = $this->items();
         $categories = Category::all();
 
+        $units = [
+            [
+                'id' => 'Pcs',
+                'name' => 'Pcs'
+            ],
+            [
+                'id' => 'Box',
+                'name' => 'Box'
+            ],
+            [
+                'id' => 'Rim',
+                'name' => 'Rim'
+            ],
+        ];
+
         return view('livewire.components.items.table', [
             'items' => $items,
+            'categories' => $categories,
             'headers' => $this->headers,
             'sortBy' => $this->sortBy,
-            'categories' => $categories,
+            'units' => $units
         ]);
     }
 }

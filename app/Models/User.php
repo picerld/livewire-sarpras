@@ -55,4 +55,12 @@ class User extends Authenticatable
     public function incomingItems(): HasMany {
         return $this->hasMany(IncomingItem::class);
     }
+
+    public function submission(): HasMany {
+        return $this->hasMany(Submission::class);
+    }
+
+    public function submissionDetail(): HasMany {
+        return $this->hasMany(SubmissionDetail::class);
+    }
 }

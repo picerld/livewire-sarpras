@@ -1,11 +1,11 @@
 <div class="min-h-[85vh]">
     <!-- FIX THIS UI!!!!! -->
 
-    <x-button label="See all items" link="/in-items" icon="c-chevron-left" class="text-sm btn-outline btn-sm" spinner />
-    <div class="flex flex-wrap w-full gap-2 py-5 lg:gap-2 md:gap-3 md:flex-nowrap lg:flex-nowrap">
+    <x-button label="See all items" link="/in-items" icon="c-chevron-left" class="text-sm text-white bg-dark btn-outline btn-sm" spinner />
+    <div class="flex flex-wrap w-full py-3">
         @forelse ($items as $item)
             <div class="flex w-full md:w-1/3 lg:1/4">
-                <x-card title="{{ $item->item->name }}">
+                <x-card title="{{ $item->item->name }}" class="my-2">
                     <h3 class="text-base font-semibold">
                         ({{ $item->qty }} {{ $item->item->unit }})
                     </h3>
@@ -23,7 +23,6 @@
                     <p class="text-sm font-normal">
                         {{ $item->created_at->diffForHumans() }}
                     </p>
-
 
                     <x-slot:figure>
                         <img src="{{ asset('/storage/' . $item->item->images) }}" height="200" width="230"
