@@ -46,7 +46,7 @@
                 </x-menu-sub>
             @endcan
 
-            <livewire:utils.navlink title="Pengajuan" icon="o-clipboard-document-list" link="{{ route('submissions.index') }}" />
+            <livewire:utils.navlink title="Pengadaan" icon="o-clipboard-document-list" link="{{ route('submissions.index') }}" />
             <livewire:utils.navlink title="Permintaan" icon="o-chat-bubble-bottom-center-text" link="permintaan" />
 
             <x-menu-sub title="Stok" icon="o-clipboard-document">

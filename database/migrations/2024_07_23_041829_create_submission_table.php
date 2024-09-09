@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('id', 20)->primary();
             $table->string('nip', 20);
             $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
+            $table->string('regarding', 50);
             $table->integer('total_items')->default(0);
             $table->timestamps();
 

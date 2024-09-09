@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -31,6 +32,15 @@ class ProfileController extends Controller
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
+
+        // if (! Auth::guard('web')->validate([
+        //     'email' => $request->user()->email,
+        //     'password' => $request->password,
+        // ])) {
+        //     throw ValidationException::withMessages([
+        //         'password' => __('auth.password'),
+        //     ]);
+        // }
 
         $request->user()->save();
 

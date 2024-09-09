@@ -1,6 +1,6 @@
 <x-card>
-    <x-header wire:model.live.debounce="search" title="Pengajuan" class="px-3 pt-3" size="text-3xl"
-        subtitle="Pengajuan Table" progress-indicator separator>
+    <x-header wire:model.live.debounce="search" title="Pengadaan" class="px-3 pt-3" size="text-3xl"
+        subtitle="Pengadaan Table" progress-indicator separator>
         <x-slot:actions>
             <x-input wire:model="search" id="search" icon="o-magnifying-glass"
                 class="border-dark focus:outline-black placeholder:font-semibold" placeholder="Search..."
@@ -21,6 +21,7 @@
                 class="btn-sm btn-ghost dark:text-slate-300 btn-outline" aria-label="delete item" spinner />
         @endscope --}}
         @scope('cell_status', $submission)
+            <!-- ADD CONDITION IF 'accepted' and 'rejected' -->
             <x-badge :value="$submission->status" class="btn-ghost btn-outline" />
         @endscope
 

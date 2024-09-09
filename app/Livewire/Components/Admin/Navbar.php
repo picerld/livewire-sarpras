@@ -8,7 +8,12 @@ class Navbar extends Component
 {
     // navbar
     public $brandName = 'Sarpras';
-    public $notificationCount = 5;
+    public $notif;
+
+    public function mount($notif): void
+    {
+        $this->notif = count($notif);
+    }
 
     public function render() {
         return view('livewire.components.admin.navbar');

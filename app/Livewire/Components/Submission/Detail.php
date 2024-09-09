@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Components\Submission;
 
+use App\Models\Submission;
 use App\Models\SubmissionDetail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Mary\Traits\Toast;
 
@@ -47,6 +49,16 @@ class Detail extends Component
     public function save(SubmissionDetail $submissionDetail): void
     {
         $submissionDetail = SubmissionDetail::find($submissionDetail->id);
+
+        $this->validate([
+            'submissionApproved.qty' => 'required|numeric|min:1',
+        ]);
+
+        if ($this->submissionApproved['qty'] > $this->submissionItem->qty) {
+            $this->approvalModal = false;
+            $this->error('Jumlah tidak boleh lebih dari yang sudah diajukan', 'Oops!', position: 'toast-bottom');
+            return;
+        }
 
         if ($submissionDetail) {
             $submissionDetail->update([
