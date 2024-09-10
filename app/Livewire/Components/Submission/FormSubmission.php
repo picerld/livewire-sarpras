@@ -29,6 +29,7 @@ class FormSubmission extends Component
     public $items;
     public $submissions;
     public $nip;
+    public $regarding;
 
     // index
     public $i = 1;
@@ -60,9 +61,11 @@ class FormSubmission extends Component
             // Validate input data
             $this->validate([
                 'nip' => 'required|exists:employees,id',
+                'regarding' => 'required|string|min:10|max:50',
                 'inputs.*.item_code' => 'required|exists:items,id',
                 'inputs.*.qty' => 'required|integer|min:1'
             ], [
+                'regarding.required' => 'Keterangan harus diisi',
                 'nip.required' => 'Unit harus dipilih',
                 'inputs.*.item_code.required' => 'Item harus dipilih',
                 'inputs.*.qty.required' => 'Jumlah harus diisi',
@@ -73,6 +76,7 @@ class FormSubmission extends Component
             $submission = Submission::create([
                 'id' => GenerateCodeHelper::handleGenerateCode(),
                 'nip' => $this->nip,
+                'regarding' => $this->regarding,
                 'total_items' => 0, // Default value
             ]);
 

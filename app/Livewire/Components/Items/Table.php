@@ -22,13 +22,17 @@ class Table extends Component
     public $newItem = [
         'id' => '',
         'name' => '',
+        'merk' => '',
         'unit' => '',
+        'color' => '',
+        'type' => '',
+        'size' => '',
         'price' => '',
         'stock' => '',
         'minimum_stock' => '',
         'category_id' => '',
         'description' => '',
-        'images' => ''
+        'images' => '',
     ];
 
     // Table headers
@@ -95,20 +99,24 @@ class Table extends Component
     // func for generate value of random code
     public function store(): void
     {
-        try {
+        // try {
             $this->newItem['id'] = GenerateCodeHelper::handleGenerateCode();
             $validator = Validator::make(
                 $this->newItem,
                 [
-                    'id' => 'required|max:20|unique:items,id|min:5',
-                    'name' => 'required|string|max:50|min:5',
-                    'unit' => 'required|max:20|min:2',
-                    'price' => 'required|numeric',
-                    'stock' => 'required|integer|max:999',
-                    'minimum_stock' => 'required|integer|max:999',
+                    'id' => 'required|max:50|min:1',
+                    'name' => 'required|string|max:255|min:5',
+                    'merk' => 'required|string|max:255|min:3',
+                    'color' => 'required|string|max:255|min:2',
+                    'type' => 'required|string|max:255|min:1',
+                    'size' => 'required|string|max:255|min:1',
+                    'unit' => 'required|string|max:50|min:2',
+                    'price' => 'required|numeric|min:0',
+                    'stock' => 'required|integer|min:1',
+                    'minimum_stock' => 'required|integer|min:1',
                     'category_id' => 'required|exists:category,id',
-                    'description' => 'required|string|max:100',
-                    'images' => 'nullable|image|max:1024'
+                    'description' => 'required|string|max:300|min:10',
+                    'images' => 'nullable',
                 ]
             );
 
@@ -123,9 +131,9 @@ class Table extends Component
 
             Item::create($data);
             $this->success("Item created!", 'Success!', position: 'toast-bottom');
-        } catch (\Throwable $th) {
-            $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
-        }
+        // } catch (\Throwable $th) {
+        //     $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
+        // }
 
         $this->reset('newItem');
         $this->createItems = false;

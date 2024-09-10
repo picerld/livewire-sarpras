@@ -60,10 +60,19 @@ class Detail extends Component
             return;
         }
 
+        if ($this->submissionApproved['qty'] > $this->submissionItem->item->minimum_stock) {
+            $this->approvalModal = false;
+            $this->error('Jumlah tidak boleh lebih dari yang sudah diajukan', 'Oops!', position: 'toast-bottom');
+            return;
+        }
+
         if ($submissionDetail) {
             $submissionDetail->update([
                 'qty_accepted' => $this->submissionApproved['qty'],
                 'accepted_by' => Auth::user()->id,
+            ]);
+            $submissionDetail->item->update([
+                'stock' => $submissionDetail->item->stock - $submissionDetail->qty_accepted
             ]);
         }
 

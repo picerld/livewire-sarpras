@@ -22,6 +22,7 @@ class Table extends Component
         ['key' => 'users_name', 'label' => 'User', 'class' => 'dark:text-slate-300'],
         ['key' => 'status', 'label' => 'Status', 'class' => 'dark:text-slate-300'],
         ['key' => 'total_items', 'label' => 'Total Item', 'class' => 'dark:text-slate-300'],
+        ['key' => 'regarding', 'label' => 'Perihal', 'class' => 'dark:text-slate-300'],
         ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300'],
     ];
 

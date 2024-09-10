@@ -2,6 +2,7 @@
     <div class="grid w-full grid-cols-1 gap-4">
         <x-choices-offline label="Unit" :options="$users" id="unit_id" wire:model="nip" hint="Please select an item"
             class="w-full" icon="o-radio" inline single searchable />
+        <x-textarea label="Perihal" wire:model="regarding" placeholder="Type here ..." rows="3" inline />
         <!-- Dynamic Inputs Loop -->
         @foreach ($inputs as $key => $value)
             <div

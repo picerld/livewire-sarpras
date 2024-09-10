@@ -12,6 +12,9 @@
                 <x-header title="Details" size="text-2xl" separator />
                 <div class="grid grid-cols-1 gap-4">
                     <x-input wire:model="newItem.name" id="name" label="Name" inline />
+                    <x-input wire:model="newItem.merk" id="merk" label="Merk" inline />
+                    <x-input wire:model="newItem.size" id="size" label="Size" inline />
+                    <x-input wire:model="newItem.type" id="type" label="Type" inline />
                     <x-choices label="Satuan" wire:model="newItem.unit" :options="$units" single />
                     <x-choices label="Category" wire:model="newItem.category_id" :options="$categories" single />
                     <x-input label="Price" wire:model="newItem.price" prefix="Rp" money locale="id-ID" inline />

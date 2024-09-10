@@ -20,9 +20,13 @@ class FormItem extends Component
 
     // Default value for inputs
     public $newItem = [
+        'id' => '',
         'name' => '',
         'merk' => '',
         'unit' => '',
+        'color' => '',
+        'type' => '',
+        'size' => '',
         'price' => '',
         'stock' => '',
         'minimum_stock' => '',
@@ -47,6 +51,10 @@ class FormItem extends Component
             'name',
             'unit',
             'price',
+            'merk',
+            'color',
+            'type',
+            'size',
             'stock',
             'minimum_stock',
             'category_id',
@@ -64,6 +72,10 @@ class FormItem extends Component
                 $this->newItem,
                 [
                     'name' => 'required|string|max:255|min:5',
+                    'merk' => 'required|string|max:255|min:3',
+                    'color' => 'required|string|max:255|min:2',
+                    'type' => 'required|string|max:255|min:1',
+                    'size' => 'required|string|max:255|min:1',
                     'unit' => 'required|string|max:50|min:2',
                     'price' => 'required|numeric|min:0',
                     'stock' => 'required|integer|min:1',
