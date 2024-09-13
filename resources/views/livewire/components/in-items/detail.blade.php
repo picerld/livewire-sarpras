@@ -5,7 +5,7 @@
     <div class="flex flex-wrap w-full py-3">
         @forelse ($items as $item)
             <div class="flex w-full md:w-1/3 lg:1/4">
-                <x-card title="{{ $item->item->name }}" class="my-2">
+                <x-card title="{{ $item->item->name }} ({{ $item->item->type }})" class="my-2">
                     <h3 class="text-base font-semibold">
                         ({{ $item->qty }} {{ $item->item->unit }})
                     </h3>

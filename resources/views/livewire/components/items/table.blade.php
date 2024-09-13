@@ -16,6 +16,10 @@
     <!-- USING TABLE -->
     <x-table :headers="$headers" :rows="$items" :sort-by="$sortBy" link="/items/{id}"
         class="bg-white rounded dark:bg-dark" with-pagination>
+        @scope('cell_stock', $item)
+            <p>{{ $item->stock > $item->minimum_stock ? $item->stock : $item->stock . ' !!' }}</p>
+        @endscope
+        
         @scope('cell_category_aliases', $item)
             <x-badge :value="$item->category->aliases ?? 'null'" class="btn-ghost btn-outline" />
         @endscope

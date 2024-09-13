@@ -25,7 +25,7 @@ class Detail extends Component
     public $submissionItem;
     public $submissionDetailCode;
 
-    //
+    // props item
     public $item;
 
     // modal
@@ -60,12 +60,6 @@ class Detail extends Component
             return;
         }
 
-        if ($this->submissionApproved['qty'] > $this->submissionItem->item->minimum_stock) {
-            $this->approvalModal = false;
-            $this->error('Jumlah tidak boleh lebih dari yang sudah diajukan', 'Oops!', position: 'toast-bottom');
-            return;
-        }
-
         if ($submissionDetail) {
             $submissionDetail->update([
                 'qty_accepted' => $this->submissionApproved['qty'],
@@ -74,6 +68,12 @@ class Detail extends Component
             $submissionDetail->item->update([
                 'stock' => $submissionDetail->item->stock - $submissionDetail->qty_accepted
             ]);
+        }
+
+        if ($this->submissionItem->item->stock < $this->submissionItem->item->minimum_stock) {
+            $this->approvalModal = false;
+            $this->warning('Jumlah stock sekarang, kurang dari stock minimum!', 'Success!', redirectTo: "/submissions/{$this->submissionCode}", position: 'toast-bottom');
+            return;
         }
 
         $this->success('Approved successfully!', 'Success!', redirectTo: "/submissions/{$this->submissionCode}", position: 'toast-bottom');

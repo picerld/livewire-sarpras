@@ -55,7 +55,7 @@ class FormItemIn extends Component
     public function store(): void
     {
         // try {
-            // Validate input data
+            // REFACTOR THIS VALIDATE USING REQUEST
             $this->validate([
                 'supplier_id' => 'required|exists:suppliers,id',
                 'inputs.*.item_code' => 'required|exists:items,id',

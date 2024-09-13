@@ -21,8 +21,17 @@
                 class="btn-sm btn-ghost dark:text-slate-300 btn-outline" aria-label="delete item" spinner />
         @endscope --}}
         @scope('cell_status', $submission)
-            <!-- ADD CONDITION IF 'accepted' and 'rejected' -->
-            <x-badge :value="$submission->status" class="btn-ghost btn-outline" />
+            <x-badge :value="$submission->status"
+                class=" btn-ghost btn-outline {{ $submission->status == 'pending' ? '' : 'bg-dark text-white' }}" />
+        @endscope
+
+        @scope('cell_regarding', $submission)
+            @if (Str::length($submission->regarding) > 20)
+                <!-- handle for too long description -->
+                {{ Str::limit($submission->regarding, 20) }}
+            @else
+                {{ $submission->regarding }}
+            @endif
         @endscope
 
         @scope('actions', $submission)

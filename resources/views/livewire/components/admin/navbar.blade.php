@@ -18,16 +18,36 @@
     <x-slot:actions>
         <div class="flex">
             <x-theme-toggle class="pb-4 btn btn-circle btn-ghost" aria-label="change theme" responsive />
-            <x-dropdown icon="o-bell" class="relative pb-4 btn-circle btn-ghost" right>
-                <x-menu-item title="It should align correctly on right side" />
-                <x-menu-item title="Yes!" />
+            <div class="relative">
                 <x-badge value="{{ $notif }}"
-                    class="absolute text-white badge-neutral dark:badge-primary -right-1 -top-2" />
-            </x-dropdown>
-            
-            {{-- <x-button icon="o-bell" link="#" class="relative pb-4 btn-circle btn-ghost" responsive>
-                <x-badge value="{{ $notif }}" class="absolute text-white badge-neutral dark:badge-primary -right-1 -top-2" />
-            </x-button> --}}
+                    class="absolute top-0 right-0 text-white transform translate-x-1/2 -translate-y-1/2 badge-neutral dark:badge-primary" />
+                <x-dropdown icon="o-bell" class="relative pb-4 btn-circle btn-ghost" right>
+                    <div class="w-72">
+                        @foreach ($submissions as $submission)
+                            <x-list-item :item="$submission" no-separator>
+                                <x-slot:avatar>
+                                    <img src="{{ $submission->users->avatar }}"
+                                        alt="{{ $submission->users->name }}'s avatar"
+                                        class="object-cover w-10 h-10 rounded-full">
+                                </x-slot:avatar>
+                                <x-slot:value>
+                                    {{ $submission->users->name }}
+                                </x-slot:value>
+                                <x-slot:sub-value>
+                                    <p class="font-semibold text-dark/70">
+                                        @if (Str::length($submission->regarding) > 5)
+                                            <!-- handle for too long description -->
+                                            {{ Str::limit($submission->regarding, 5) }}
+                                        @else
+                                            {{ $submission->regarding }}
+                                        @endif
+                                    </p>
+                                </x-slot:sub-value>
+                            </x-list-item>
+                        @endforeach
+                    </div>
+                </x-dropdown>
+            </div>
         </div>
     </x-slot:actions>
 </x-nav>

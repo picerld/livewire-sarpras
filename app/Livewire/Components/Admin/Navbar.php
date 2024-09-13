@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components\Admin;
 
+use App\Models\Submission;
 use Livewire\Component;
 
 class Navbar extends Component
@@ -12,7 +13,7 @@ class Navbar extends Component
 
     public function mount($notif): void
     {
-        $this->notif = count($notif);
+        $this->notif = Submission::where('status', 'pending')->count();
     }
 
     public function render() {

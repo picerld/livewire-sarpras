@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Employee;
+use App\Models\Item;
 use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -18,7 +19,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User Seeder
         Employee::factory()->create([
             'id' => '111',
             'avatar' => 'avatars/01.png',
@@ -67,18 +67,17 @@ class DatabaseSeeder extends Seeder
             'id' => '333'
         ]);
 
+        $employees = Employee::factory(10)->create();
+
+        // $user = User::factory()
+        //     ->count(5)
+        //     ->for($employees)
+        //     ->create();
+
         Category::factory()->create([
             'name' => 'Alat Tulis Kantor',
             'aliases' => 'ATK'
         ]);
-
-        Employee::factory(10)->create();
-
-        // foreach ($employees as $employee) {
-        //     User::factory()->create([
-        //         'nip' => $employee->nip,
-        //     ]);
-        // }
 
         $this->call(CategorySeeder::class);
         // $this->call(ItemSeeder::class);

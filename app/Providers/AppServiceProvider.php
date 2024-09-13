@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Submission;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,8 +22,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $submissions = Submission::where('status', 'pending')->get();
+        $submissionsNotify = Submission::where('status', 'pending')->get();
 
-        View::share('submissions', $submissions);
+        View::share('submissions', $submissionsNotify);
     }
 }

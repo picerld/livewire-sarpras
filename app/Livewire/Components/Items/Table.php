@@ -39,8 +39,9 @@ class Table extends Component
     public $headers = [
         ['key' => 'id', 'label' => 'Kode', 'class' => 'dark:text-slate-300'],
         ['key' => 'name', 'label' => 'Nama', 'class' => 'dark:text-slate-300',],
+        ['key' => 'type', 'label' => 'Type', 'class' => 'dark:text-slate-300'],
+        ['key' => 'merk', 'label' => 'Merk', 'class' => 'dark:text-slate-300'],
         ['key' => 'category_aliases', 'label' => 'Kategori', 'class' => 'dark:text-slate-300'],
-        ['key' => 'price', 'label' => 'Harga', 'class' => 'dark:text-slate-300'],
         ['key' => 'stock', 'label' => 'Stok', 'class' => 'dark:text-slate-300'],
         ['key' => 'minimum_stock', 'label' => 'Stok Min', 'class' => 'dark:text-slate-300 text-center'],
         ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300'],

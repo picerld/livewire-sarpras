@@ -64,11 +64,11 @@ class FormInput extends Component
                 'name' => 'Admin'
             ],
             [
-                'id' => '2',
+                'id' => '3',
                 'name' => 'Pengawas'
             ],
             [
-                'id' => '3',
+                'id' => '2',
                 'name' => 'Unit'
             ],
         ];

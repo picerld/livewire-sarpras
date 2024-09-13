@@ -15,7 +15,7 @@
 
     <!-- USING TABLE -->
     <x-table :headers="$headers" :rows="$itemsIn" :sort-by="$sortBy" link="/in-items/{id}"
-        class="bg-white rounded dark:bg-dark" with-pagination>
+        class="bg-white rounded dark:bg-dark" with-pagination>        
         @scope('actions', $itemsIn)
             <x-button icon="o-trash" wire:click="delete({{ $itemsIn->id }})"
                 class="btn-sm btn-ghost dark:text-slate-300 btn-outline" aria-label="delete item" spinner />

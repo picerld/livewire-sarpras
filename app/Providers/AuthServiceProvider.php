@@ -37,5 +37,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('createTransaction', function ($user) {
             return $user->role == 'admin' || $user->role == 'pengawas';
         });
+
+        Gate::define('acceptTransaction', function ($user) {
+            return $user->role == 'pengawas';
+        });
     }
 }

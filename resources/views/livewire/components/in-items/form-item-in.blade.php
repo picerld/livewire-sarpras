@@ -10,7 +10,7 @@
             <div
                 class="grid w-full gap-4 p-5 border border-gray-400 border-dashed rounded-md md:grid-cols-6 md:items-center">
                 <div class="col-span-6">
-                    <x-choices-offline label="Items" :options="$items"
+                    <x-choices-offline label="Items" :options="$items" option-label="name" option-sub-label="type"
                         wire:model="inputs.{{ $key }}.item_code" hint="Please select an item" class="w-full"
                         icon="o-radio" inline single searchable />
                 </div>
