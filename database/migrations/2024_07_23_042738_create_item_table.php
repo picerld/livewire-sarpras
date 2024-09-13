@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('price');
             $table->string('merk', 50);
             $table->string('color', 20);
-            $table->string('type', 20);
+            $table->string('type', 20)->nullable();
             $table->string('size', 20);
             $table->integer('stock')->default(0);
             $table->integer('minimum_stock')->default(0);

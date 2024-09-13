@@ -34,12 +34,13 @@ Route::middleware(['auth'])->group(function () {
 
     // route for admin
     Route::middleware(['can:isAdmin'])->group(function () {
-        Route::resource('items', ItemController::class);
         Route::resource('in-items', InItemController::class);
         Route::resource('category', CategoryController::class);
         Route::resource('users', UserController::class);
         Route::resource('stock', StockController::class);
     });
+    
+    Route::resource('items', ItemController::class);
 
     // route for submission 'pengawas or admin'
     Route::middleware(['can:createTransaction'])->group(function () {

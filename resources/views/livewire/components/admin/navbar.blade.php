@@ -23,7 +23,7 @@
                     class="absolute top-0 right-0 text-white transform translate-x-1/2 -translate-y-1/2 badge-neutral dark:badge-primary" />
                 <x-dropdown icon="o-bell" class="relative pb-4 btn-circle btn-ghost" right>
                     <div class="w-72">
-                        @foreach ($submissions as $submission)
+                        @forelse ($submissions as $submission)
                             <x-list-item :item="$submission" no-separator>
                                 <x-slot:avatar>
                                     <img src="{{ $submission->users->avatar }}"
@@ -44,7 +44,9 @@
                                     </p>
                                 </x-slot:sub-value>
                             </x-list-item>
-                        @endforeach
+                        @empty
+                            <h1 class="text-sm font-semibold">Nothing here!</h1>
+                        @endforelse
                     </div>
                 </x-dropdown>
             </div>
