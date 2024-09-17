@@ -51,11 +51,11 @@ class Detail extends Component
         $item = $this->submissionItem->item;
 
         // check if stock is 0 
-        if ($this->submissionItem->item->stock == 0) {
-            $this->approvalModal = false;
-            $this->error("Stok untuk $item->name habis!", 'Oops!', position: 'toast-bottom');
-            return;
-        }
+        // if ($this->submissionItem->item->stock == 0) {
+        //     $this->approvalModal = false;
+        //     $this->error("Stok untuk $item->name habis!", 'Oops!', position: 'toast-bottom');
+        //     return;
+        // }
 
         $submissionDetail = SubmissionDetail::find($submissionDetail->id);
 
@@ -64,30 +64,29 @@ class Detail extends Component
         ]);
 
         // check if qty approved is greater than qty item
-        if ($this->submissionApproved['qty'] > $this->submissionItem->qty || $this->submissionApproved['qty'] > $item->stock) {
+        if ($this->submissionApproved['qty'] > $this->submissionItem->qty) {
             $this->approvalModal = false;
             $this->error('Jumlah tddak boleh lebih dari yang seharusnya!', 'Oops!', position: 'toast-bottom');
             return;
         }
         
-        
-        // update stock and submission detail
+        // // update stock and submission detail
         if ($submissionDetail) {
             $submissionDetail->update([
                 'qty_accepted' => $this->submissionApproved['qty'],
                 'accepted_by' => Auth::user()->id,
             ]);
-            $submissionDetail->item->update([
-                'stock' => $submissionDetail->item->stock - $submissionDetail->qty_accepted
-            ]);
+            // $submissionDetail->item->update([
+            //     'stock' => $submissionDetail->item->stock - $submissionDetail->qty_accepted
+            // ]);
         }
 
         // validate if stock < stock min
-        if ($item->stock <= $item->minimum_stock) {
-            $this->approvalModal = false;
-            $this->warning("Jumlah stock $item->name, kurang dari stock minimum!", 'Success!', redirectTo: "/submissions/{$this->submissionCode}", position: 'toast-bottom');
-            return;
-        }
+        // if ($item->stock <= $item->minimum_stock) {
+        //     $this->approvalModal = false;
+        //     $this->warning("Jumlah stock $item->name, kurang dari stock minimum!", 'Success!', redirectTo: "/submissions/{$this->submissionCode}", position: 'toast-bottom');
+        //     return;
+        // }
 
         $this->approvalModal = false;
         $this->success('Approved successfully!', 'Success!', redirectTo: "/submissions/{$this->submissionCode}", position: 'toast-bottom');
