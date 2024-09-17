@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components\Admin;
 
+use App\Models\Notification as ModelsNotification;
 use App\Models\Submission;
 use Illuminate\Notifications\Notification;
 use Livewire\Component;
@@ -14,7 +15,7 @@ class Navbar extends Component
 
     public function mount($notif): void
     {
-        $this->notif = Submission::where('status', 'pending')->count();
+        $this->notif = ModelsNotification::where('read_at', null)->count();
     }
 
     public function render() {

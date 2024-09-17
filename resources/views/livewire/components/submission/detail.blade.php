@@ -5,7 +5,6 @@
 
         @can('acceptTransaction')
             <!-- HANDLE BUTTON ON MOBILE DEVICE -->
-
             <x-dropdown label="Option" class="flex btn btn-outline btn-sm lg:hidden md:hidden" no-x-anchor right>
                 <livewire:components.submission.form-acceptance :submissionCode="$submissions[0]->submission_code" />
             </x-dropdown>
@@ -13,9 +12,8 @@
             <div class="hidden md:flex lg:flex">
                 <livewire:components.submission.form-acceptance :submissionCode="$submissions[0]->submission_code" />
             </div>
-            <!-- END -->
+            <!-- END HANDLE -->
         @endcan
-
     </div>
 
     <div class="grid w-full grid-cols-1 py-4 md:grid-cols-2 lg:grid-cols-3">
@@ -63,7 +61,7 @@
                 </x-card>
             </div>
         @endforeach
-    </div>   
+    </div>
 
     <x-spotlight />
 

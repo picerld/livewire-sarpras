@@ -81,7 +81,7 @@ class FormSubmission extends Component
             'total_items' => 0, // Default value
         ]);
 
-        $user = User::find($this->nip);  // Assuming you're notifying a user
+        $user = User::where('nip', $this->nip)->first();  // Assuming you're notifying a user
         $user->notify(new ConfirmSubmission($this->nip, $this->regarding, $submission));
 
         $totalItems = 0;

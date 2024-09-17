@@ -17,49 +17,42 @@
 
     <x-slot:actions>
         <div class="flex">
-            <x-theme-toggle class="pb-4 btn btn-circle btn-ghost" aria-label="change theme" responsive />
             <div class="relative">
                 <x-badge value="{{ $notif }}"
                     class="absolute top-0 right-0 text-white transform translate-x-1/2 -translate-y-1/2 badge-neutral dark:badge-primary" />
                 <x-dropdown icon="o-bell" class="relative pb-4 btn-circle btn-ghost" right>
                     <div class="w-72">
-                        @foreach ($employees as $user)
-                            @foreach ($user->notifications as $notification)
-                                @php
-                                    $employee = \App\Models\Employee::where(
-                                        'id',
-                                        $notification['data']['user'],
-                                    )->first();
-                                    $submission = \App\Models\Submission::where(
-                                        'id',
-                                        $notification['data']['submission_id'],
-                                    )->first();
-                                @endphp
+                        @foreach ($notifications as $notification)
+                            @php
+                                $datas = json_decode($notification['data'], true);
 
-                                @isset($submission)
-                                    @if ($submission->status == 'pending')
-                                        <x-list-item :item="$notification" link="/submissions/{{ $submission->id }}" no-separator>
-                                            <x-slot:avatar>
-                                                <img src={{ asset($employee->avatar) }} alt="{{ $employee->name }}'s avatar"
-                                                    class="object-cover w-10 h-10 rounded-full">
-                                            </x-slot:avatar>
-                                            <x-slot:value>
-                                                {{ $employee->name }}
-                                            </x-slot:value>
-                                            <x-slot:sub-value>
-                                                <p class="font-semibold text-dark/70">
-                                                    @if (Str::length($notification['data']['message']) > 20)
-                                                        <!-- handle for too long description -->
-                                                        {{ Str::limit($notification['data']['message'], 20) }}
-                                                    @else
-                                                        {{ $notification['data']['message'] }}
-                                                    @endif
-                                                </p>
-                                            </x-slot:sub-value>
-                                        </x-list-item>
-                                    @endif
-                                @endisset
-                            @endforeach
+                                $employee = \App\Models\Employee::find($datas['user']);
+                                $submission = \App\Models\Submission::find($datas['submission_id']);
+                            @endphp
+
+                            @isset($submission)
+                                @if ($submission->status == 'pending')
+                                    <x-list-item :item="$notification" link="/submissions/{{ $submission->id }}" no-separator>
+                                        <x-slot:avatar>
+                                            <img src="{{ asset($employee->avatar) }}" alt="{{ $employee->name }}'s avatar"
+                                                class="object-cover w-10 h-10 rounded-full">
+                                        </x-slot:avatar>
+                                        <x-slot:value>
+                                            {{ $employee->name }}
+                                        </x-slot:value>
+                                        <x-slot:sub-value>
+                                            <p class="font-semibold text-dark/70">
+                                                @if (Str::length($datas['message']) > 20)
+                                                    <!-- HANDLE THE LONG MESSAGE -->
+                                                    {{ Str::limit($datas['message'], 20) }}
+                                                @else
+                                                    {{ $datas['message'] }}
+                                                @endif
+                                            </p>
+                                        </x-slot:sub-value>
+                                    </x-list-item>
+                                @endif
+                            @endisset
                         @endforeach
                     </div>
                 </x-dropdown>

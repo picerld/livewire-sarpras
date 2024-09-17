@@ -8,6 +8,7 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
+// PURPOSE: FOR DELETE RECENT NOTIFICATION FOR DEVELOPING
 Artisan::command('delete:delete-notification', function () {
     DB::table('notifications')->delete();
 })->purpose('Delete recent notification')->everyMinute();

@@ -22,15 +22,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        
+
         // View::composer('*', function ($view) {
         //     $user = auth()->user();
         //     $view->with('user', $user);
         //     // dd($user);
         // });
-        
-        $employees = User::all();
 
-        View::share('employees', $employees);
+        $notifications = Notification::where('read_at', null)->orderBy('created_at', 'DESC')->paginate(3);
+
+        View::share('notifications', $notifications);
     }
 }
