@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $submissionsNotify = Submission::where('status', 'pending')->get();
+        $submissionsNotify = Submission::where('status', 'pending')->orderBy('created_at', 'DESC')->paginate(3);
 
         View::share('submissions', $submissionsNotify);
     }

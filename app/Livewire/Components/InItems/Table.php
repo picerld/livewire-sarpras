@@ -6,7 +6,6 @@ use App\Models\IncomingItem;
 use App\Models\IncomingItemDetail;
 use App\Models\Item;
 use App\Models\Supplier;
-use App\Models\User;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
@@ -19,7 +18,7 @@ class Table extends Component
 
     // header table
     public $headers = [
-        ['key' => 'users_name', 'label' => 'Pengawas', 'class' => 'dark:text-slate-300 text-sm'],
+        ['key' => 'users_name', 'label' => 'Petugas', 'class' => 'dark:text-slate-300 text-sm'],
         ['key' => 'suppliers_name', 'label' => 'Supplier', 'class' => 'dark:text-slate-300 text-sm'],
         ['key' => 'total_items', 'label' => 'Total Item', 'class' => 'dark:text-slate-300 text-center text-sm'],
         ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300 text-sm'],

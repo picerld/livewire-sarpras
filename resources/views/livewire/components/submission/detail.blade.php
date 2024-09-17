@@ -18,10 +18,10 @@
 
     </div>
 
-    <div class="flex flex-wrap w-full py-4">
+    <div class="grid w-full grid-cols-1 py-4 md:grid-cols-2 lg:grid-cols-3">
         @foreach ($submissions as $submission)
-            <div class="w-full sm:w-1/2 lg:w-1/3">
-                <x-card title="{{ $submission->item->name }} ({{ $submission->item->type }})" class="m-2" shadow>
+            <div class="m-2">
+                <x-card title="{{ $submission->item->name }} ({{ $submission->item->type }})" class="shadow">
                     <x-icon name="o-tag" label="{{ $submission->item->merk }}" />
                     <p class="text-sm font-semibold">
                         {{ $submission->qty_accepted > 0 && $submission->qty_accepted !== $submission->qty ? $submission->qty_accepted : $submission->qty }}
@@ -60,11 +60,10 @@
                                 class="w-full mt-3 text-sm text-white btn-outline bg-dark btn-sm" spinner />
                         @endif
                     </x-slot:actions>
-
                 </x-card>
             </div>
         @endforeach
-    </div>
+    </div>   
 
     <x-spotlight />
 

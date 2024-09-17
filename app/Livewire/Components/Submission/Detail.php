@@ -48,18 +48,29 @@ class Detail extends Component
 
     public function save(SubmissionDetail $submissionDetail): void
     {
+        $item = $this->submissionItem->item;
+
+        // check if stock is 0 
+        if($this->submissionItem->item->stock == 0) {
+            $this->approvalModal = false;
+            $this->error("Stok untuk $item->name habis!", 'Oops!', position: 'toast-bottom');
+            return;
+        }
+
         $submissionDetail = SubmissionDetail::find($submissionDetail->id);
 
         $this->validate([
             'submissionApproved.qty' => 'required|numeric|min:1',
         ]);
 
+        // check if qty approved is greater than qty item
         if ($this->submissionApproved['qty'] > $this->submissionItem->qty) {
             $this->approvalModal = false;
             $this->error('Jumlah tidak boleh lebih dari yang sudah diajukan', 'Oops!', position: 'toast-bottom');
             return;
         }
 
+        // update stock and submission detail
         if ($submissionDetail) {
             $submissionDetail->update([
                 'qty_accepted' => $this->submissionApproved['qty'],
@@ -70,7 +81,8 @@ class Detail extends Component
             ]);
         }
 
-        if ($this->submissionItem->item->stock < $this->submissionItem->item->minimum_stock) {
+        // validate if stock < stock min
+        if ($item->stock < $item->minimum_stock) {
             $this->approvalModal = false;
             $this->warning('Jumlah stock sekarang, kurang dari stock minimum!', 'Success!', redirectTo: "/submissions/{$this->submissionCode}", position: 'toast-bottom');
             return;

@@ -40,12 +40,13 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('stock', StockController::class);
     });
     
-    Route::resource('items', ItemController::class);
-
     // route for submission 'pengawas or admin'
     Route::middleware(['can:createTransaction'])->group(function () {
         Route::resource('submissions', SubmissionController::class);
     });
+
+    // route for admin and pengawas
+    Route::resource('items', ItemController::class);
 });
 
 // Users will be redirected to this route if not logged in
