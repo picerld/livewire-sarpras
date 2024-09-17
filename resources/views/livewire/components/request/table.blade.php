@@ -36,7 +36,7 @@
 
         @scope('cell_characteristic', $request)
             <x-badge :value="$request->characteristic"
-                class=" btn-ghost btn-outline" />
+                class="text-white  btn-ghost btn-outline bg-dark" />
         @endscope
 
         @scope('actions', $request)

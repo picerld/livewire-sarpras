@@ -26,7 +26,7 @@ class Table extends Component
 
     // search
     public $search = "";
-    public $sortBy = ['column' => 'created_at', 'direction' => 'desc'];
+    public $sortBy = ['column' => 'created_at', 'direction' => 'DESC'];
 
     // drawer
     public bool $drawerIsOpen = false;
@@ -101,7 +101,7 @@ class Table extends Component
     {
         $itemsIn = $this->itemsIn();
         $suppliers = Supplier::all();
-        
+
         // manualy option role
         $users = [
             [

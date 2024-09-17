@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Items\CategoryController;
 use App\Http\Controllers\Items\InItemController;
 use App\Http\Controllers\Items\ItemController;
+use App\Http\Controllers\Items\OutItemController;
 use App\Http\Controllers\Items\StockController;
 use App\Http\Controllers\Request\RequestController;
 use App\Http\Controllers\Submission\SubmissionController;
@@ -45,9 +46,10 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('submissions', SubmissionController::class);
         Route::resource('requests', RequestController::class);
     });
-
+    
     // route for admin and pengawas
     Route::resource('items', ItemController::class);
+    Route::resource('out-items', OutItemController::class);
 });
 
 // Users will be redirected to this route if not logged in
