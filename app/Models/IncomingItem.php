@@ -25,9 +25,8 @@ class IncomingItem extends Model
         return $this->belongsTo(Supplier::class, 'supplier_id');
     }
 
-    public function incomingItemDetail(): HasMany
-    {
-        return $this->hasMany(IncomingItemDetail::class);
+    public function incomingItemDetail(): HasMany {
+        return $this->hasMany(IncomingItemDetail::class, 'incoming_item_code', 'id');
 
     }
 }

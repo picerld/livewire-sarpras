@@ -19,9 +19,12 @@ class FormItemIn extends Component
 
     // Default value for inputs
     // it will be
-    // [0 => ['item_id' => '', 'qty' => 1], 
-    // 1 => ['item_id' => '', 'qty' => 1]] ...
+    // [
+    //  0 => ['item_id' => '', 'qty' => 1], 
+    //  1 => ['item_id' => '', 'qty' => 1]
+    // ] ... 
     public $inputs = [['item_code' => '', 'qty' => 1]];
+
     public $items;
     public $supplier_id;
 
@@ -49,10 +52,10 @@ class FormItemIn extends Component
         $this->inputs = array_values($this->inputs);
     }
 
-    public function store()
+    public function store(): void
     {
         // try {
-            // Validate input data
+            // REFACTOR THIS VALIDATE USING REQUEST
             $this->validate([
                 'supplier_id' => 'required|exists:suppliers,id',
                 'inputs.*.item_code' => 'required|exists:items,id',
@@ -98,7 +101,7 @@ class FormItemIn extends Component
         // } catch (\Throwable $th) {
             // $this->warning('Ada kendala saat proses penginputan', 'Warning!!', position: 'toast-bottom', redirectTo: '/in-items');
             // development purpose
-            // $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
+        //     $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
         // }
     }
 

@@ -86,4 +86,4 @@ new #[Title('Login')] class extends Component {
                 link="https://github.com/picerld/livewire-sarpras" external />
             <x-button icon="o-heart" label="Sarpras Team" class="text-sm font-semibold btn-ghost text-primary" />
         </div>
-    </div>
+</div>

@@ -23,7 +23,7 @@ class FormInput extends Component
         $validator = Validator::make(
             $this->newCategory,
             [
-                'name' => 'required|string|max:50|min:5|unique:category,name',
+                'name' => 'required|string|max:50|min:4|unique:category,name',
                 'aliases' => 'required|string|max:6|min:2|unique:category,aliases'
             ]
         );

@@ -26,7 +26,7 @@ class Charts extends Component
                 'labels' => $labels,
                 'datasets' => [
                     [
-                        'label' => 'Presentase',
+                        'label' => 'Role',
                         'data' => $data,
                         'fill' => false,
                         'backgroundColor' => [

@@ -17,8 +17,14 @@
     <x-table :headers="$headers" :rows="$itemsIn" :sort-by="$sortBy" link="/in-items/{id}"
         class="bg-white rounded dark:bg-dark" with-pagination>
         @scope('actions', $itemsIn)
-            <x-button icon="o-trash" wire:click="delete({{ $itemsIn->id }})"
-                class="btn-sm btn-ghost dark:text-slate-300 btn-outline" aria-label="delete item" spinner />
+            <div class="flex gap-3">
+                <x-button icon="o-document-plus" class="btn-sm btn-ghost dark:text-slate-300 btn-outline"
+                    aria-label="delete item" spinner />
+                <x-button icon="o-folder-open" class="btn-sm btn-ghost dark:text-slate-300 btn-outline"
+                    aria-label="delete item" spinner />
+                <x-button icon="o-trash" wire:click="delete({{ $itemsIn->id }})"
+                    class="btn-sm btn-ghost dark:text-slate-300 btn-outline" aria-label="delete item" spinner />
+            </div>
         @endscope
     </x-table>
 

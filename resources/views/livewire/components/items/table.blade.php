@@ -16,6 +16,10 @@
     <!-- USING TABLE -->
     <x-table :headers="$headers" :rows="$items" :sort-by="$sortBy" link="/items/{id}"
         class="bg-white rounded dark:bg-dark" with-pagination>
+        @scope('cell_stock', $item)
+            <p>{{ $item->stock > $item->minimum_stock ? $item->stock : $item->stock . ' !!' }}</p>
+        @endscope
+        
         @scope('cell_category_aliases', $item)
             <x-badge :value="$item->category->aliases ?? 'null'" class="btn-ghost btn-outline" />
         @endscope
@@ -30,16 +34,18 @@
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <x-input wire:model="newItem.name" id="name" label="Name" inline />
                     <x-input wire:model="newItem.merk" id="merk" label="Merk" inline />
-                    <x-input wire:model="newItem.unit" id="unit" label="Satuan" inline />
+                    <x-choices wire:model="newItem.category_id" label="Category" :options="$categories" single />
+                    <x-choices wire:model="newItem.unit" label="Satuan" :options="$units" single />
+                    <x-input wire:model="newItem.size" id="size" label="Size" inline />
                     <x-input label="Price" wire:model="newItem.price" suffix="Rp" money locale="id-ID" inline />
+                    <x-input wire:model="newItem.type" id="type" label="Type" inline />
+                    <x-input wire:model="newItem.color" id="color" label="Color" inline />
                     <x-input wire:model="newItem.stock" id="stock" type="number" label="Stok" min="1"
                         inline />
                     <x-input wire:model="newItem.minimum_stock" id="minimum_stock" label="Stok minimum" type="number"
                         min="1" inline />
-                    <x-choices wire:model="newItem.category_id" :options="$categories" single />
-                    <x-file wire:model="newItem.images" accept="image/png, image/jpg, image/jpeg, image/webp"
-                        crop-after-change />
                 </div>
+                <x-file wire:model="newItem.images" accept="image/png, image/jpg, image/jpeg, image/webp" />
                 <x-textarea label="Deskripsi" wire:model="newItem.description" placeholder="Type here ..."
                     rows="3" hint="Description of your item" inline />
                 {{-- <x-editor wire:model="newItem.description" label="Deskripsi" hint="The full product description"

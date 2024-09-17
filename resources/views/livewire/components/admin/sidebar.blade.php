@@ -4,7 +4,7 @@
             <form id="logout-form" class="hidden" action="{{ route('logout') }}" method="POST">
                 @csrf
             </form>
-            
+
             <x-list-item :item="$user" no-separator no-hover class="pt-2 text-black dark:text-slate-100">
                 <x-slot:avatar>
                     <img src="{{ asset($user->employee->avatar) }}" width="30" height="30" alt="{{ $user->name }}"
@@ -24,7 +24,8 @@
                             <x-button id="setting" aria-label="Setting" icon="o-cog-6-tooth"
                                 class="btn-circle btn-ghost btn-sm" />
                         </x-slot:trigger>
-                        <livewire:utils.navlink title="Profile" icon="o-finger-print" link="profile" />
+                        <livewire:utils.navlink title="Profile" icon="o-finger-print"
+                            link="{{ route('users.show', [$user->id]) }}" />
                         <x-menu-item title="Logout" icon="o-power"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();" />
                     </x-dropdown>
@@ -35,22 +36,24 @@
         <x-menu activate-by-route>
             <livewire:utils.navlink title="Dashboard" icon="o-rectangle-group" link="/{{ $user->role }}" />
 
-            @can('isAdmin')
-                <x-menu-sub title="Barang" icon="o-cube" class="text-black">
-                    <livewire:utils.navlink title="Data Barang" icon="o-document-chart-bar"
-                        link="{{ route('items.index') }}" />
+            <x-menu-sub title="Barang" icon="o-cube" class="text-black">
+                <livewire:utils.navlink title="Data Barang" icon="o-document-chart-bar"
+                    link="{{ route('items.index') }}" />
+                <livewire:utils.navlink title="Barang Keluar" icon="o-arrow-up-on-square-stack" link="{{ route('out-items.index') }}" />
+                @can('isAdmin')
                     <livewire:utils.navlink title="Barang Masuk" icon="o-arrow-down-on-square-stack"
                         link="{{ route('in-items.index') }}" />
-                    <livewire:utils.navlink title="Barang Keluar" icon="o-arrow-up-on-square-stack" link="barang-keluar" />
                     <livewire:utils.navlink title="Kategori" icon="o-puzzle-piece" link="{{ route('category.index') }}" />
-                </x-menu-sub>
-            @endcan
+                @endcan
+            </x-menu-sub>
 
-            <livewire:utils.navlink title="Pengajuan" icon="o-clipboard-document-list" link="pengajuan" />
-            <livewire:utils.navlink title="Permintaan" icon="o-chat-bubble-bottom-center-text" link="permintaan" />
+            <livewire:utils.navlink title="Pengadaan" icon="o-clipboard-document-list"
+                link="{{ route('submissions.index') }}" />
+            <livewire:utils.navlink title="Permintaan" icon="o-chat-bubble-bottom-center-text"
+                link="{{ route('requests.index') }}" />
 
             <x-menu-sub title="Stok" icon="o-clipboard-document">
-                <livewire:utils.navlink title="Laporan" icon="o-chart-pie" link="stok" />
+                <livewire:utils.navlink title="Laporan" icon="o-chart-pie" link="{{ route('stock.index') }}" />
                 {{-- <livewire:utils.navlink title="Opname" icon="o-chart-bar-square" link="opname" /> --}}
             </x-menu-sub>
 

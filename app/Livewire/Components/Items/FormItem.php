@@ -20,9 +20,13 @@ class FormItem extends Component
 
     // Default value for inputs
     public $newItem = [
+        'id' => '',
         'name' => '',
         'merk' => '',
         'unit' => '',
+        'color' => '',
+        'type' => '',
+        'size' => '',
         'price' => '',
         'stock' => '',
         'minimum_stock' => '',
@@ -46,8 +50,11 @@ class FormItem extends Component
         $this->newItem = $this->item->only([
             'name',
             'unit',
-            'merk',
             'price',
+            'merk',
+            'color',
+            'type',
+            'size',
             'stock',
             'minimum_stock',
             'category_id',
@@ -65,7 +72,10 @@ class FormItem extends Component
                 $this->newItem,
                 [
                     'name' => 'required|string|max:255|min:5',
-                    'merk' => 'required|string|max:255|min:5',
+                    'merk' => 'required|string|max:255|min:3',
+                    'color' => 'required|string|max:255|min:2',
+                    'type' => 'required|string|max:255|min:1',
+                    'size' => 'required|string|max:255|min:1',
                     'unit' => 'required|string|max:50|min:2',
                     'price' => 'required|numeric|min:0',
                     'stock' => 'required|integer|min:1',
@@ -103,9 +113,6 @@ class FormItem extends Component
             // Update the item
             $this->item->update($validated);
 
-            // Update the item
-            $this->item->update($validated);
-
             $this->success("Item {$this->item->name} updated!", "Success!!", position: 'toast-bottom');
         } catch (\Throwable $th) {
             $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
@@ -126,8 +133,24 @@ class FormItem extends Component
     {
         $categories = Category::all();
 
+        $units = [
+            [
+                'id' => 'Pcs',
+                'name' => 'Pcs'
+            ],
+            [
+                'id' => 'Box',
+                'name' => 'Box'
+            ],
+            [
+                'id' => 'Rim',
+                'name' => 'Rim'
+            ],
+        ];
+
         return view('livewire.components.items.form-item', [
-            "categories" => $categories
+            "categories" => $categories,
+            'units' => $units
         ]);
     }
 }

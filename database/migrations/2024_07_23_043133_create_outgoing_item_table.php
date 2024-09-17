@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('outgoing_items', function (Blueprint $table) {
             $table->string('id', 20)->primary();
             $table->string('nip', 20);
+            $table->enum('status', ['taken', 'not taken'])->default('not taken');
             $table->integer('total_items')->default(0);
             $table->timestamps();
             

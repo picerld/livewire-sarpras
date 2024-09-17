@@ -22,22 +22,26 @@ class Table extends Component
     public $newItem = [
         'id' => '',
         'name' => '',
-        'unit' => '',
         'merk' => '',
+        'unit' => '',
+        'color' => '',
+        'type' => '',
+        'size' => '',
         'price' => '',
         'stock' => '',
         'minimum_stock' => '',
         'category_id' => '',
         'description' => '',
-        'images' => ''
+        'images' => '',
     ];
 
     // Table headers
     public $headers = [
         ['key' => 'id', 'label' => 'Kode', 'class' => 'dark:text-slate-300'],
         ['key' => 'name', 'label' => 'Nama', 'class' => 'dark:text-slate-300',],
+        ['key' => 'type', 'label' => 'Type', 'class' => 'dark:text-slate-300'],
+        ['key' => 'merk', 'label' => 'Merk', 'class' => 'dark:text-slate-300'],
         ['key' => 'category_aliases', 'label' => 'Kategori', 'class' => 'dark:text-slate-300'],
-        ['key' => 'price', 'label' => 'Harga', 'class' => 'dark:text-slate-300'],
         ['key' => 'stock', 'label' => 'Stok', 'class' => 'dark:text-slate-300'],
         ['key' => 'minimum_stock', 'label' => 'Stok Min', 'class' => 'dark:text-slate-300 text-center'],
         ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300'],
@@ -96,23 +100,26 @@ class Table extends Component
     // func for generate value of random code
     public function store(): void
     {
-        try {
-        $this->newItem['id'] = GenerateCodeHelper::handleGenerateCode();
-        $validator = Validator::make(
-            $this->newItem,
-            [
-                'id' => 'required|max:20|unique:items,id|min:5',
-                'name' => 'required|string|max:50|min:5',
-                'unit' => 'required|string|max:20|min:2',
-                'merk' => 'required|string|max:20|min:5',
-                'price' => 'required|numeric',
-                'stock' => 'required|integer|max:999',
-                'minimum_stock' => 'required|integer|max:999',
-                'category_id' => 'required|exists:category,id',
-                'description' => 'required|string|max:100',
-                'images' => 'nullable|image|max:1024'
-            ]
-        );
+        // try {
+            $this->newItem['id'] = GenerateCodeHelper::handleGenerateCode();
+            $validator = Validator::make(
+                $this->newItem,
+                [
+                    'id' => 'required|max:50|min:1',
+                    'name' => 'required|string|max:255|min:5',
+                    'merk' => 'required|string|max:255|min:3',
+                    'color' => 'required|string|max:255|min:2',
+                    'type' => 'required|string|max:255|min:1',
+                    'size' => 'string|max:255|min:1',
+                    'unit' => 'required|string|max:50|min:2',
+                    'price' => 'required|numeric|min:0',
+                    'stock' => 'required|integer|min:1',
+                    'minimum_stock' => 'required|integer|min:1',
+                    'category_id' => 'required|exists:category,id',
+                    'description' => 'required|string|max:300|min:10',
+                    'images' => 'nullable',
+                ]
+            );
 
             if ($validator->fails()) {
                 $this->warning($validator->errors()->first(), 'Warning!!', position: 'toast-bottom');
@@ -125,9 +132,9 @@ class Table extends Component
 
             Item::create($data);
             $this->success("Item created!", 'Success!', position: 'toast-bottom');
-        } catch (\Throwable $th) {
-            $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
-        }
+        // } catch (\Throwable $th) {
+        //     $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
+        // }
 
         $this->reset('newItem');
         $this->createItems = false;
@@ -139,11 +146,27 @@ class Table extends Component
         $items = $this->items();
         $categories = Category::all();
 
+        $units = [
+            [
+                'id' => 'Pcs',
+                'name' => 'Pcs'
+            ],
+            [
+                'id' => 'Box',
+                'name' => 'Box'
+            ],
+            [
+                'id' => 'Rim',
+                'name' => 'Rim'
+            ],
+        ];
+
         return view('livewire.components.items.table', [
             'items' => $items,
+            'categories' => $categories,
             'headers' => $this->headers,
             'sortBy' => $this->sortBy,
-            'categories' => $categories,
+            'units' => $units
         ]);
     }
 }
