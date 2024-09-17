@@ -23,30 +23,44 @@
                     class="absolute top-0 right-0 text-white transform translate-x-1/2 -translate-y-1/2 badge-neutral dark:badge-primary" />
                 <x-dropdown icon="o-bell" class="relative pb-4 btn-circle btn-ghost" right>
                     <div class="w-72">
-                        @forelse ($submissions as $submission)
-                            <x-list-item :item="$submission" no-separator>
-                                <x-slot:avatar>
-                                    <img src="{{ $submission->users->avatar }}"
-                                        alt="{{ $submission->users->name }}'s avatar"
-                                        class="object-cover w-10 h-10 rounded-full">
-                                </x-slot:avatar>
-                                <x-slot:value>
-                                    {{ $submission->users->name }}
-                                </x-slot:value>
-                                <x-slot:sub-value>
-                                    <p class="font-semibold text-dark/70">
-                                        @if (Str::length($submission->regarding) > 5)
-                                            <!-- handle for too long description -->
-                                            {{ Str::limit($submission->regarding, 5) }}
-                                        @else
-                                            {{ $submission->regarding }}
-                                        @endif
-                                    </p>
-                                </x-slot:sub-value>
-                            </x-list-item>
-                        @empty
-                            <h1 class="text-sm font-semibold">Nothing here!</h1>
-                        @endforelse
+                        @foreach ($employees as $user)
+                            @foreach ($user->notifications as $notification)
+                                @php
+                                    $employee = \App\Models\Employee::where(
+                                        'id',
+                                        $notification['data']['user'],
+                                    )->first();
+                                    $submission = \App\Models\Submission::where(
+                                        'id',
+                                        $notification['data']['submission_id'],
+                                    )->first();
+                                @endphp
+
+                                @isset($submission)
+                                    @if ($submission->status == 'pending')
+                                        <x-list-item :item="$notification" link="/submissions/{{ $submission->id }}" no-separator>
+                                            <x-slot:avatar>
+                                                <img src={{ asset($employee->avatar) }} alt="{{ $employee->name }}'s avatar"
+                                                    class="object-cover w-10 h-10 rounded-full">
+                                            </x-slot:avatar>
+                                            <x-slot:value>
+                                                {{ $employee->name }}
+                                            </x-slot:value>
+                                            <x-slot:sub-value>
+                                                <p class="font-semibold text-dark/70">
+                                                    @if (Str::length($notification['data']['message']) > 20)
+                                                        <!-- handle for too long description -->
+                                                        {{ Str::limit($notification['data']['message'], 20) }}
+                                                    @else
+                                                        {{ $notification['data']['message'] }}
+                                                    @endif
+                                                </p>
+                                            </x-slot:sub-value>
+                                        </x-list-item>
+                                    @endif
+                                @endisset
+                            @endforeach
+                        @endforeach
                     </div>
                 </x-dropdown>
             </div>

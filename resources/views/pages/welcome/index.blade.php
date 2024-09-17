@@ -65,7 +65,11 @@
             </ul>
         </div>
         <div class="navbar-end">
-            <a href="{{ route('login') }}" class="text-white btn btn-ghost btn-outline bg-dark">Login</a>
+            @auth
+                <a href="{{ route(Auth::user()->role) }}" class="text-white btn btn-ghost btn-outline bg-dark">Dashboard</a>
+            @else
+                <a href="{{ route('login') }}" class="text-white btn btn-ghost btn-outline bg-dark">Login</a>
+            @endauth
         </div>
     </nav>
     <main>
@@ -78,7 +82,7 @@
                     <div class="flex justify-center px-4 py-16 bg-base-200">Welcome!</div>
                 </div>
             </div>
-            
+
             <div class="grid w-full grid-cols-4 gap-4 py-5">
                 <div class="grid-cols-1 mockup-code">
                     <pre data-prefix="$"><code>npm i sarpras@latest</code></pre>

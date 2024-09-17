@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Models\Submission;
 use App\Models\SubmissionDetail;
 use App\Models\User;
+use App\Notifications\ConfirmSubmission;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Mary\Traits\Toast;
@@ -58,48 +59,51 @@ class FormSubmission extends Component
     public function store(): void
     {
         // try {
-            // Validate input data
-            $this->validate([
-                'nip' => 'required|exists:employees,id',
-                'regarding' => 'required|string|min:10|max:50',
-                'inputs.*.item_code' => 'required|exists:items,id',
-                'inputs.*.qty' => 'required|integer|min:1'
-            ], [
-                'regarding.required' => 'Keterangan harus diisi',
-                'nip.required' => 'Unit harus dipilih',
-                'inputs.*.item_code.required' => 'Item harus dipilih',
-                'inputs.*.qty.required' => 'Jumlah harus diisi',
-                'inputs.*.qty.min' => 'Jumlah minimal 1',
+        // Validate input data
+        $this->validate([
+            'nip' => 'required|exists:employees,id',
+            'regarding' => 'required|string|min:10|max:50',
+            'inputs.*.item_code' => 'required|exists:items,id',
+            'inputs.*.qty' => 'required|integer|min:1'
+        ], [
+            'regarding.required' => 'Keterangan harus diisi',
+            'nip.required' => 'Unit harus dipilih',
+            'inputs.*.item_code.required' => 'Item harus dipilih',
+            'inputs.*.qty.required' => 'Jumlah harus diisi',
+            'inputs.*.qty.min' => 'Jumlah minimal 1',
+        ]);
+
+        // store to submission_detail table
+        $submission = Submission::create([
+            'id' => GenerateCodeHelper::handleGenerateCode(),
+            'nip' => $this->nip,
+            'regarding' => $this->regarding,
+            'total_items' => 0, // Default value
+        ]);
+
+        $user = User::find($this->nip);  // Assuming you're notifying a user
+        $user->notify(new ConfirmSubmission($this->nip, $this->regarding, $submission));
+
+        $totalItems = 0;
+
+        foreach ($this->inputs as $input) {
+            SubmissionDetail::create([
+                'submission_code' => $submission->id,
+                'item_code' => $input['item_code'],
+                'qty_accepted' => 0,
+                'accepted_by' => null,
+                'qty' => $input['qty'],
             ]);
 
-            // store to submission_detail table
-            $submission = Submission::create([
-                'id' => GenerateCodeHelper::handleGenerateCode(),
-                'nip' => $this->nip,
-                'regarding' => $this->regarding,
-                'total_items' => 0, // Default value
-            ]);
+            $totalItems += $input['qty'];
+        }
 
-            $totalItems = 0;
+        $submission->update([
+            'total_items' => $totalItems,
+        ]);
 
-            foreach ($this->inputs as $input) {
-                SubmissionDetail::create([
-                    'submission_code' => $submission->id,
-                    'item_code' => $input['item_code'],
-                    'qty_accepted' => 0,
-                    'accepted_by' => null,
-                    'qty' => $input['qty'],
-                ]);
-
-                $totalItems += $input['qty'];
-            }
-
-            $submission->update([
-                'total_items' => $totalItems,
-            ]);
-
-            $this->success("Pengajuan Successfully Added", "Success!!", position: 'toast-bottom', redirectTo: '/submissions');
-            $this->reset(['inputs', 'nip']);
+        $this->success("Pengajuan Successfully Added", "Success!!", position: 'toast-bottom', redirectTo: '/submissions');
+        $this->reset(['inputs', 'nip']);
 
         // } catch (\Throwable $th) {
         //     $this->error($th->getMessage(), "Failed!!", position: 'toast-bottom');

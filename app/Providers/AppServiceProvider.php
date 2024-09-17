@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Submission;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
+use App\Models\User;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,8 +22,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $submissionsNotify = Submission::where('status', 'pending')->orderBy('created_at', 'DESC')->paginate(3);
+        
+        // View::composer('*', function ($view) {
+        //     $user = auth()->user();
+        //     $view->with('user', $user);
+        //     // dd($user);
+        // });
+        
+        $employees = User::all();
 
-        View::share('submissions', $submissionsNotify);
+        View::share('employees', $employees);
     }
 }
