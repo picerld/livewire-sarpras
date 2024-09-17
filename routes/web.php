@@ -1,16 +1,16 @@
 <?php
 
+use Livewire\Volt\Volt;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Items\CategoryController;
 use App\Http\Controllers\Items\InItemController;
 use App\Http\Controllers\Items\ItemController;
 use App\Http\Controllers\Items\StockController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Request\RequestController;
 use App\Http\Controllers\Submission\SubmissionController;
 use App\Http\Controllers\Unit\UnitController;
 use Illuminate\Support\Facades\Route;
-use Livewire\Volt\Volt;
 
 Route::get('/', function () {
     return view("pages.welcome.index");
@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
     // route for submission 'pengawas or admin'
     Route::middleware(['can:createTransaction'])->group(function () {
         Route::resource('submissions', SubmissionController::class);
+        Route::resource('requests', RequestController::class);
     });
 
     // route for admin and pengawas

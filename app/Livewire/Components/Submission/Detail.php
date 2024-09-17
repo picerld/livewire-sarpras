@@ -51,7 +51,7 @@ class Detail extends Component
         $item = $this->submissionItem->item;
 
         // check if stock is 0 
-        if($this->submissionItem->item->stock == 0) {
+        if ($this->submissionItem->item->stock == 0) {
             $this->approvalModal = false;
             $this->error("Stok untuk $item->name habis!", 'Oops!', position: 'toast-bottom');
             return;
@@ -64,12 +64,13 @@ class Detail extends Component
         ]);
 
         // check if qty approved is greater than qty item
-        if ($this->submissionApproved['qty'] > $this->submissionItem->qty) {
+        if ($this->submissionApproved['qty'] > $this->submissionItem->qty || $this->submissionApproved['qty'] > $item->stock) {
             $this->approvalModal = false;
-            $this->error('Jumlah tidak boleh lebih dari yang sudah diajukan', 'Oops!', position: 'toast-bottom');
+            $this->error('Jumlah tddak boleh lebih dari yang seharusnya!', 'Oops!', position: 'toast-bottom');
             return;
         }
-
+        
+        
         // update stock and submission detail
         if ($submissionDetail) {
             $submissionDetail->update([
@@ -82,14 +83,14 @@ class Detail extends Component
         }
 
         // validate if stock < stock min
-        if ($item->stock < $item->minimum_stock) {
+        if ($item->stock <= $item->minimum_stock) {
             $this->approvalModal = false;
-            $this->warning('Jumlah stock sekarang, kurang dari stock minimum!', 'Success!', redirectTo: "/submissions/{$this->submissionCode}", position: 'toast-bottom');
+            $this->warning("Jumlah stock $item->name, kurang dari stock minimum!", 'Success!', redirectTo: "/submissions/{$this->submissionCode}", position: 'toast-bottom');
             return;
         }
 
-        $this->success('Approved successfully!', 'Success!', redirectTo: "/submissions/{$this->submissionCode}", position: 'toast-bottom');
         $this->approvalModal = false;
+        $this->success('Approved successfully!', 'Success!', redirectTo: "/submissions/{$this->submissionCode}", position: 'toast-bottom');
     }
 
     public function render()

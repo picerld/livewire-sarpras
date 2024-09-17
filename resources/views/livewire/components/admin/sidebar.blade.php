@@ -49,7 +49,7 @@
 
             <livewire:utils.navlink title="Pengadaan" icon="o-clipboard-document-list"
                 link="{{ route('submissions.index') }}" />
-            <livewire:utils.navlink title="Permintaan" icon="o-chat-bubble-bottom-center-text" link="permintaan" />
+            <livewire:utils.navlink title="Permintaan" icon="o-chat-bubble-bottom-center-text" link="{{ route('requests.index') }}" />
 
             <x-menu-sub title="Stok" icon="o-clipboard-document">
                 <livewire:utils.navlink title="Laporan" icon="o-chart-pie" link="{{ route('stock.index') }}" />

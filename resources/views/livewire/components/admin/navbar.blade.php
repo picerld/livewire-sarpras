@@ -22,7 +22,7 @@
                     class="absolute top-0 right-0 text-white transform translate-x-1/2 -translate-y-1/2 badge-neutral dark:badge-primary" />
                 <x-dropdown icon="o-bell" class="relative pb-4 btn-circle btn-ghost" right>
                     <div class="w-72">
-                        @foreach ($notifications as $notification)
+                        @forelse ($notifications as $notification)
                             @php
                                 $datas = json_decode($notification['data'], true);
 
@@ -53,7 +53,10 @@
                                     </x-list-item>
                                 @endif
                             @endisset
-                        @endforeach
+
+                        @empty
+                            <h1 class="text-sm font-semibold">Nothing here!</h1>
+                        @endforelse
                     </div>
                 </x-dropdown>
             </div>

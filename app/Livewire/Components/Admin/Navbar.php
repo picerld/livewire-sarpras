@@ -15,7 +15,8 @@ class Navbar extends Component
 
     public function mount($notif): void
     {
-        $this->notif = ModelsNotification::where('read_at', null)->count();
+        // $this->notif = ModelsNotification::where('read_at', null)->count();
+        $this->notif = Submission::where('status', 'pending')->count();
     }
 
     public function render() {

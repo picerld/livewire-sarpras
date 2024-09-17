@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Livewire\Components\Submission;
+namespace App\Livewire\Components\Request;
 
+use App\Models\Request;
+use App\Models\RequestDetail;
 use App\Models\User;
-use App\Models\Submission;
-use App\Models\SubmissionDetail;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Livewire\Component;
@@ -19,6 +19,7 @@ class Table extends Component
         ['key' => 'id', 'label' => 'Kode', 'class' => 'dark:text-slate-300'],
         ['key' => 'users_name', 'label' => 'User', 'class' => 'dark:text-slate-300'],
         ['key' => 'status', 'label' => 'Status', 'class' => 'dark:text-slate-300'],
+        ['key' => 'characteristic', 'label' => 'Sifat', 'class' => 'dark:text-slate-300'],
         ['key' => 'total_items', 'label' => 'Total Item', 'class' => 'dark:text-slate-300'],
         ['key' => 'regarding', 'label' => 'Perihal', 'class' => 'dark:text-slate-300'],
         ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300'],
@@ -27,10 +28,8 @@ class Table extends Component
     public $search = "";
     public $sortBy = ['column' => 'created_at', 'direction' => 'DESC'];
 
-    // drawer
     public bool $drawerIsOpen = false;
-    // modal
-    public bool $createSubmission = false;
+    public bool $createRequest = false;
 
     // filter
     public $selectedUser = null;
@@ -43,14 +42,14 @@ class Table extends Component
         $this->drawerIsOpen = true;
     }
 
-    public function createSubmissionModal()
+    public function createRequestModal()
     {
-        $this->createSubmission = true;
+        $this->createRequest = true;
     }
 
-    public function submissions(): LengthAwarePaginator
+    public function requests(): LengthAwarePaginator
     {
-        return Submission::query()
+        return Request::query()
             ->withAggregate('users', 'name')
             ->when($this->search, function (Builder $query) {
                 $query->whereHas('users', function (Builder $query) {
@@ -63,7 +62,7 @@ class Table extends Component
             ->when($this->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
             ->when($this->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
             ->orderBy(...array_values($this->sortBy))
-            ->paginate(5, ['id', 'users_name', 'total_items', 'status', 'regarding']);
+            ->paginate(5, ['id', 'users_name', 'total_items', 'status', 'regarding', 'charasterictic']);
     }
 
     public function updated($property): void
@@ -80,11 +79,11 @@ class Table extends Component
         $this->success('Filters cleared.', position: 'toast-bottom');
     }
 
-    public function delete(Submission $submission, SubmissionDetail $submissionDetail): void
+    public function delete(Request $request, RequestDetail $requestDetail): void
     {
-        $submission->delete();
-        $submissionDetail->delete();
-        $this->success("Submission with code " . $submission->id . " successfully deleted!!", 'Good bye!', position: 'toast-bottom');
+        $request->delete();
+        $requestDetail->delete();
+        $this->success("Submission with code " . $request->id . " successfully deleted!!", 'Good bye!', position: 'toast-bottom');
     }
 
     public function render()
@@ -113,12 +112,12 @@ class Table extends Component
             ],
         ];
 
-        return view('livewire.components.submission.table', [
+        return view('livewire.components.request.table', [
             'headers' => $this->headers,
             'sortBy' => $this->sortBy,
             'users' => $userMap,
             'status' => $status,
-            'submissions' => $this->submissions()
+            'requests' => $this->requests()
         ]);
     }
 }

@@ -17,8 +17,10 @@ return new class extends Migration
             $table->string('item_code', 20);
             $table->integer('qty');
             $table->integer('qty_accepted');
+            $table->string('accepted_by')->nullable();
             $table->timestamps();
 
+            $table->foreign('accepted_by')->references('id')->on('employees')->onDelete('cascade');
             $table->foreign('request_code')->references('id')->on('request')->onDelete('cascade');
             $table->foreign('item_code')->references('id')->on('items')->onDelete('cascade');
         });
