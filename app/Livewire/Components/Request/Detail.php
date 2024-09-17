@@ -2,6 +2,9 @@
 
 namespace App\Livewire\Components\Request;
 
+use App\Helpers\GenerateCodeHelper;
+use App\Models\OutgoingItem;
+use App\Models\OutgoingItemDetail;
 use App\Models\RequestDetail;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -74,6 +77,9 @@ class Detail extends Component
             ]);
         }
 
+        // STORE TO OUTGOING AND DETAIL TABLE
+        $this->createOutgoingItem($item);
+
         // validate if stock < stock min
         if ($item->stock <= $item->minimum_stock) {
             $this->approvalModal = false;
@@ -83,6 +89,36 @@ class Detail extends Component
 
         $this->success('Approved successfully!', 'Success!', redirectTo: "/requests/{$this->requestCode}", position: 'toast-bottom');
         $this->approvalModal = false;
+        return;
+    }
+
+    // Helper method to create outgoing item and detail
+    private function createOutgoingItem($item): void
+    {
+        $outgoingItem = OutgoingItem::create([
+            'id' => GenerateCodeHelper::handleGenerateCode(),
+            'nip' => Auth::user()->nip,
+            'total_items' => 0, 
+        ]);
+
+        if($outgoingItem) {
+            $this->createOutgoingItemDetail($outgoingItem, $item);
+        }
+
+        $outgoingItem->update([
+            'total_items' => $this->requestApproved['qty'],
+        ]);
+    }
+
+    private function createOutgoingItemDetail($outgoingItem, $item): void
+    {
+        OutgoingItemDetail::create([
+            'id' => GenerateCodeHelper::handleGenerateCode(),
+            'outgoing_item_code' => $outgoingItem->id,
+            'item_code' => $item->id,
+            'qty' => $this->requestApproved['qty'],
+        ]);
+
     }
 
     public function render()

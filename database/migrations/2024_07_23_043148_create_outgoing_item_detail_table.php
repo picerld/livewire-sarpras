@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('outgoing_item_detail', function (Blueprint $table) {
             $table->id();
-            $table->string('outgoing_item_code', 20)->unique();
+            $table->string('outgoing_item_code', 20);
             $table->string('item_code', 20);
             $table->integer('qty')->default(0);
             $table->timestamps();

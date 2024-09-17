@@ -82,7 +82,7 @@
 
                 <x-slot:actions>
                     <x-button label="Accept!" class="text-white btn-primary hover:opacity-80" type="submit"
-                        spinner="save" wire:click="save({{ $requestItem->id }})" />
+                        spinner="save" wire:click.prevent="save({{ $requestItem->id }})" />
                 </x-slot:actions>
             </x-form>
         @endif
