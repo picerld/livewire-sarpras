@@ -1,7 +1,7 @@
 <div>
     <x-slot name="header">
         <livewire:utils.header>
-            <div class="text-right">
+            <div class="flex text-right md:block lg:block">
                 <button class="normal-case btn btn-ghost btn-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" aria-hidden="true" class="w-4 mr-2">

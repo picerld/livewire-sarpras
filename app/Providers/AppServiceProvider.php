@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Notification;
-use App\Models\User;
+use App\Models\Submission;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
