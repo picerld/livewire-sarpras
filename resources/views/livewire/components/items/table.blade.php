@@ -30,7 +30,7 @@
     <x-modal wire:model="createItems" class="backdrop-blur" box-class="w-full lg:min-w-[800px] md:min-w-[800px]">
         <p class="text-sm">Press `ESC` or click outside to close.</p>
         <x-card>
-            <x-form id="itemsForm" wire:submit="store" class="space-y-4" autocomplete="off" no-separator>
+            <x-form id="itemsForm" wire:submit.prevent="store" class="space-y-4" autocomplete="off" no-separator>
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <x-input wire:model="newItem.name" id="name" label="Name" inline />
                     <x-input wire:model="newItem.merk" id="merk" label="Merk" inline />
