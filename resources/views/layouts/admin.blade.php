@@ -31,7 +31,7 @@
 </head>
 
 <body>
-    <livewire:components.admin.navbar :notif="$notifications" />
+    <livewire:components.admin.navbar />
     <x-main with-nav full-width class="bg-base-100">
         <livewire:components.admin.sidebar />
 
