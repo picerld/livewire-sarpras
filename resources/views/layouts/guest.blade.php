@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="light">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +7,7 @@
 
         <title>{{ 'Login | ' . 'Sarpras' }}</title>
         
-        <!-- Scripts -->
+        <!-- DEPLOYMENT -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased text-gray-900">
@@ -18,7 +18,7 @@
                 </a>
             </div> --}}
 
-            <div class="w-full px-6 py-4 mt-6 overflow-hidden bg-base-300 sm:max-w-md sm:rounded-lg">
+            <div class="w-full overflow-hidden bg-base-300">
                 {{ $slot }}
             </div>
         </div>

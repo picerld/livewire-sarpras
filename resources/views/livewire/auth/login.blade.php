@@ -51,39 +51,68 @@ new #[Title('Login')] class extends Component {
 };
 ?>
 
-<div class="mx-auto md:w-96">
-    <div class="mb-8 hidden-when-collapsed">
-        <div class="flex flex-col items-center gap-2">
-            <img src="{{ asset('img/login.png') }}" class="mt-1" width="200" height="200" alt="Sarpras">
-            {{-- <svg class="inline text-white w-9 h-9" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5">
-                </path>
-            </svg> --}}
-            {{-- <span
-                class="mr-3 text-3xl font-bold text-transparent bg-gradient-to-r from-white to-slate-400 bg-clip-text ">
-                Sarpras
-            </span>
-        </div> --}}
+<div class="flex flex-col w-full h-screen md:flex-row">
+    <!-- Left Section -->
+    <div class="hidden w-full h-screen text-white bg-black/90 md:flex md:w-1/2 md:flex-col">
+        <div class="flex gap-3 p-8">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-6 h-6">
+                <rect width="256" height="256" fill="none"></rect>
+                <line x1="208" y1="128" x2="128" y2="208" fill="none" stroke="currentColor"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                <line x1="192" y1="40" x2="40" y2="192" fill="none" stroke="currentColor"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+            </svg>
+            <h4 class="text-lg font-semibold">Sarpras</h4>
         </div>
 
-        <x-form wire:submit="login" no-separator>
-            <x-input label="Username" wire:model="username" icon="o-envelope" placeholder="me@example.com"
-                class="text-white border-white outline-none focus:border-white active:border-white focus:outline-none active:outline-none bg-base-300" />
-            <x-input label="Password" wire:model="password" type="password"
-                class="text-white border-white outline-none focus:border-white active:border-white focus:outline-none active:outline-none bg-base-300"
-                icon="o-key" placeholder="******" />
-
-            <x-slot:actions>
-                <x-button label="Login" type="submit" icon="o-paper-airplane"
-                    class="bg-accent hover:bg-accent hover:opacity-90 text-white/95" spinner="login" />
-            </x-slot:actions>
-        </x-form>
-
-        <div class="flex items-center justify-center mt-10">
-            <x-button icon="o-code-bracket" label="Repository" class="text-sm font-semibold btn-ghost text-slate-300"
-                link="https://github.com/picerld/livewire-sarpras" external />
-            <x-button icon="o-heart" label="Sarpras Team" class="text-sm font-semibold btn-ghost text-primary" />
+        <div class="flex items-end flex-grow p-8">
+            <div>
+                <p class="mb-4 text-lg italic">"Sarana Prasarana SMKN 11 Bandung."</p>
+                <p class="font-semibold">Pa Toni</p>
+            </div>
         </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="flex flex-col items-center justify-center w-full h-screen p-8 bg-white md:w-1/2">
+        <div class="w-full max-w-md">
+            <!-- Form title -->
+            <div class="flex flex-col items-center">
+                <h2 class="mb-4 text-3xl font-semibold text-gray-800">Login to Sarpras</h2>
+                <p class="mb-8 text-gray-600">Enter your email below to login to your account.</p>
+            </div>
+
+            <x-form wire:submit.prevent="login" no-separator>
+                <div>
+                    <x-input wire:model="username" id="username" type="email" placeholder="name@example.com"
+                        class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-dark focus:border-dark focus:outline-none" />
+                </div>
+                <div>
+                    <x-input wire:model="password" id="password" type="password" placeholder="*******"
+                        class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-dark focus:border-dark focus:outline-none" />
+                </div>
+
+                <x-slot:actions>
+                    <x-button type="submit" spinner="login"
+                        class="w-full font-medium text-white bg-black rounded-lg shadow-md hover:bg-gray-800">
+                        Sign in with Email
+                    </x-button>
+                </x-slot:actions>
+            </x-form>
+
+            {{-- <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-300"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-2 text-gray-500 bg-white">OR CONTINUE WITH</span>
+                </div>
+            </div>
+
+            <x-button
+                class="flex items-center justify-center w-full py-2 space-x-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200">
+                <span>GitHub</span>
+            </x-button> --}}
+        </div>
+    </div>
 </div>

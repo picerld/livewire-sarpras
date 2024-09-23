@@ -22,12 +22,12 @@
     {{-- <script src="https://cdn.tiny.cloud/1/pbe40jxyz61sydsg39f2uhasr9qlk884n3qmqn5bmocy4jc4/tinymce/6/tinymce.min.js"
         referrerpolicy="origin" defer></script> --}}
 
-    <!-- FOR PERFORMANCE -->
-    <link rel="stylesheet" href="{{ mix('/resources/css/app.css') }}">
-    <script src="{{ mix('/resources/js/app.js') }}"></script>
+    <!-- FOR DEVELOPMENT -->
+    {{-- <link rel="stylesheet" href="{{ mix('/resources/css/app.css') }}">
+    <script src="{{ mix('/resources/js/app.js') }}"></script> --}}
 
-    <!-- BEST PRACTICE -->
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    <!-- PRODUCTION -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body>

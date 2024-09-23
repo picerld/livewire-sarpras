@@ -10,7 +10,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Validator;
+use Livewire\Attributes\Validate;
 use Mary\Traits\Toast;
 use Livewire\WithFileUploads;
 
@@ -18,7 +18,7 @@ class Table extends Component
 {
     use WithPagination, Toast, WithFileUploads;
 
-    // create item
+    #[Validate]
     public $newItem = [
         'id' => '',
         'name' => '',
@@ -60,6 +60,43 @@ class Table extends Component
     public $fromDate = null;
     public $toDate = null;
 
+    // Validation
+    public function rules()
+    {
+        return [
+            'newItem.id' => 'required|max:50|min:1',
+            'newItem.name' => 'required|string|max:255|min:2',
+            'newItem.merk' => 'required|string|max:255|min:2',
+            'newItem.color' => 'required|string|max:255|min:2',
+            'newItem.type' => 'string|max:255|min:1',
+            'newItem.size' => 'string|max:255|min:1',
+            'newItem.unit' => 'required|string|max:50|min:2',
+            'newItem.price' => 'required|numeric|min:0',
+            'newItem.stock' => 'required|integer|min:1',
+            'newItem.minimum_stock' => 'required|integer|min:1',
+            'newItem.category_id' => 'required|exists:category,id',
+            'newItem.description' => 'required|string|max:300|min:10',
+            'newItem.images' => 'nullable',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'newItem.name.required' => 'nama harus diisi',
+            'newItem.merk.required' => 'merk harus diisi',
+            'newItem.color.required' => 'warna harus diisi',
+            'newItem.size.required' => 'size harus diisi',
+            'newItem.unit.required' => 'unit harus diisi',
+            'newItem.price.required' => 'harga harus diisi',
+            'newItem.stock.required' => 'stok harus diisi',
+            'newItem.minimum_stock.required' => 'stok min harus diisi',
+            'newItem.category_id.required' => 'kategori harus diisi',
+            'newItem.description.required' => 'deskripsi harus diisi',
+            'newItem.description.min' => 'deskripsi minimal 10 karakter',
+        ];
+    }
+
     public function tableDrawer()
     {
         $this->drawerIsOpen = true;
@@ -96,42 +133,32 @@ class Table extends Component
         $this->success('Filters cleared.', position: 'toast-bottom');
     }
 
-    // CRUD
-    // func for generate value of random code
     public function store(): void
     {
         // try {
-            $this->newItem['id'] = GenerateCodeHelper::handleGenerateCode();
-            $validator = Validator::make(
-                $this->newItem,
-                [
-                    'id' => 'required|max:50|min:1',
-                    'name' => 'required|string|max:255|min:5',
-                    'merk' => 'required|string|max:255|min:3',
-                    'color' => 'required|string|max:255|min:2',
-                    'type' => 'required|string|max:255|min:1',
-                    'size' => 'string|max:255|min:1',
-                    'unit' => 'required|string|max:50|min:2',
-                    'price' => 'required|numeric|min:0',
-                    'stock' => 'required|integer|min:1',
-                    'minimum_stock' => 'required|integer|min:1',
-                    'category_id' => 'required|exists:category,id',
-                    'description' => 'required|string|max:300|min:10',
-                    'images' => 'nullable',
-                ]
-            );
+        $this->newItem['id'] = GenerateCodeHelper::handleGenerateCode();
+        
+        $this->validate();
+        
+        $this->newItem['images'] = ImageHelper::handleImage($this->newItem['images']);
 
-            if ($validator->fails()) {
-                $this->warning($validator->errors()->first(), 'Warning!!', position: 'toast-bottom');
-                $this->createItems = false;
-                return;
-            }
+        Item::create([
+            'id' => $this->newItem['id'],
+            'name' => $this->newItem['name'],
+            'unit' => $this->newItem['unit'],
+            'merk' => $this->newItem['merk'],
+            'color' => $this->newItem['color'],
+            'type' => $this->newItem['type'],
+            'size' => $this->newItem['size'],
+            'price' => $this->newItem['price'],
+            'stock' => $this->newItem['stock'],
+            'minimum_stock' => $this->newItem['minimum_stock'],
+            'category_id' => $this->newItem['category_id'],
+            'description' => $this->newItem['description'],
+            'images' => $this->newItem['images'],
+        ]);
 
-            $data = $validator->validated();
-            $data['images'] = ImageHelper::handleImage($this->newItem['images']);
-
-            Item::create($data);
-            $this->success("Item created!", 'Success!', position: 'toast-bottom');
+        $this->success("Item created!", 'Success!', position: 'toast-bottom');
         // } catch (\Throwable $th) {
         //     $this->warning($th->getMessage(), 'Warning!!', position: 'toast-bottom');
         // }
