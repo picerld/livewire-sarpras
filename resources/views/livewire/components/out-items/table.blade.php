@@ -1,6 +1,6 @@
 <x-card class="min-h-[70vh]">
-    <x-header wire:model.live.debounce="search" title="Barang Keluar" class="px-3 pt-3" size="text-3xl" subtitle="Items Table"
-        progress-indicator separator>
+    <x-header wire:model.live.debounce="search" title="Barang Keluar" class="px-3 pt-3" size="text-3xl"
+        subtitle="Items Table" progress-indicator separator>
         <x-slot:actions>
             <x-input wire:model="search" id="search" icon="o-magnifying-glass"
                 class="border-dark focus:outline-black placeholder:font-semibold" placeholder="Search..."
@@ -22,6 +22,12 @@
             <x-button icon="o-trash" wire:click="delete({{ $itemsOut->id }})"
                 class="btn-sm btn-ghost dark:text-slate-300 btn-outline" aria-label="delete item" spinner />
         @endscope
+
+        <x-slot:empty>
+            <x-alert title="Nothing here!" description="There is no data yet." icon="o-exclamation-triangle"
+                class="border-none bg-base-100">
+            </x-alert>
+        </x-slot:empty>
     </x-table>
 
     <x-spotlight />

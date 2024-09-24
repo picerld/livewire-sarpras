@@ -58,6 +58,8 @@
             </x-menu-sub>
 
             @can('isAdmin')
+                <livewire:utils.navLink title="Supplier" icon="o-truck" link="{{ route('suppliers.index') }}" />
+                <livewire:utils.navLink title="Pegawai" icon="o-computer-desktop" link="{{ route('employees.index') }}" />
                 <livewire:utils.navLink title="Akun" icon="o-identification" link="{{ route('users.index') }}" />
             @endcan
         </x-menu>
