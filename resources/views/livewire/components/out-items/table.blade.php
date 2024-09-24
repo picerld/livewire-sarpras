@@ -1,5 +1,5 @@
 <x-card class="min-h-[70vh]">
-    <x-header wire:model.live.debounce="search" title="Barang Keluar" class="px-3 pt-3" size="text-3xl"
+    <x-header wire:model.live.debounce="search" title="Barang Keluars" class="px-3 pt-3" size="text-3xl"
         subtitle="Items Table" progress-indicator separator>
         <x-slot:actions>
             <x-input wire:model="search" id="search" icon="o-magnifying-glass"
