@@ -17,9 +17,10 @@
         class="bg-white rounded dark:bg-dark" with-pagination per-page="perPage" :per-page-values="[5, 20, 50]">
 
         <x-slot:empty>
-            <x-icon name="o-cube" label="It is empty." />
+            <x-alert title="Nothing here!" description="There is no data yet." icon="o-exclamation-triangle"
+                class="border-none bg-base-100">
+            </x-alert>
         </x-slot:empty>
-        
     </x-table>
 
     <x-spotlight />

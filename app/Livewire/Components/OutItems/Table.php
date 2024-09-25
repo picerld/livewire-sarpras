@@ -17,11 +17,15 @@ class Table extends Component
     use WithPagination, Toast;
 
     public $headers = [
-        ['key' => 'users_name', 'label' => 'Petugas', 'class' => 'dark:text-slate-300 text-sm'],
+        ['key' => 'users_name', 'label' => 'Unit', 'class' => 'dark:text-slate-300 text-sm'],
+        ['key' => 'item_name', 'label' => 'Barang', 'class' => 'dark:text-slate-300 text-sm'],
+        ['key' => 'total_items', 'label' => 'Kuantiti', 'class' => 'dark:text-slate-300 text-center text-sm'],
         ['key' => 'status', 'label' => 'Status', 'class' => 'dark:text-slate-300 text-sm'],
-        ['key' => 'total_items', 'label' => 'Total Item', 'class' => 'dark:text-slate-300 text-center text-sm'],
         ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300 text-sm'],
+        ['key' => 'updated_at', 'label' => 'Tanggal Diambil', 'class' => 'dark:text-slate-300 text-sm'],
     ];
+
+    public int $perPage = 5;
 
     // search
     public $search = "";
@@ -44,6 +48,7 @@ class Table extends Component
     {
         return OutgoingItem::query()
             ->withAggregate('users', 'name')
+            ->withAggregate('item', 'name')
             ->when($this->search, function (Builder $query) {
                 $query->whereHas('users', function (Builder $query) {
                     $query->where('name', 'LIKE', "%$this->search%");
@@ -55,7 +60,7 @@ class Table extends Component
             ->when($this->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
             ->when($this->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
             ->orderBy(...array_values($this->sortBy))
-            ->paginate(5, ['users_name', 'status', 'total_items', 'created_at']);
+            ->paginate($this->perPage, ['users_name', 'status', 'total_items', 'created_at']);
     }
 
     public function updated($property): void
@@ -72,11 +77,10 @@ class Table extends Component
         $this->success('Filters cleared.', position: 'toast-bottom');
     }
 
-    public function delete(OutgoingItem $outgoingItem, OutgoingItemDetail $outgoingItemDetail): void
+    public function delete(OutgoingItem $outgoingItem): void
     {
         $outgoingItem->delete();
-        $outgoingItemDetail->delete();
-        $this->success("Report for $outgoingItem->id deleted", 'Good bye!', redirectTo: '/in-items', position: 'toast-bottom');
+        $this->success("Report for  id #$outgoingItem->id deleted", 'Good bye!', position: 'toast-bottom');
     }
 
     public function render()

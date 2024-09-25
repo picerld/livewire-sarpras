@@ -5,6 +5,7 @@ namespace App\Livewire\Components\Request;
 use App\Helpers\GenerateCodeHelper;
 use App\Models\OutgoingItem;
 use App\Models\OutgoingItemDetail;
+use App\Models\Request;
 use App\Models\RequestDetail;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -19,6 +20,7 @@ class Detail extends Component
     ];
 
     public $requests;
+    public $nip;
     public $requestCode;
 
     public $requestItem;
@@ -31,7 +33,8 @@ class Detail extends Component
     public function mount($requestCode): void
     {
         $this->requestCode = $requestCode;
-        $this->requests = RequestDetail::where('request_code', $this->requestCode)->get();
+        $this->requests = RequestDetail::where('request_code', $this->requestCode)->orderBy('qty_accepted', 'ASC')->get();
+        $this->nip = Request::where('id', $this->requestCode)->first()->nip;
     }
 
     public function approval($requestDetailCode): void
@@ -97,28 +100,11 @@ class Detail extends Component
     {
         $outgoingItem = OutgoingItem::create([
             'id' => GenerateCodeHelper::handleGenerateCode(),
-            'nip' => Auth::user()->nip,
-            'total_items' => 0, 
-        ]);
-
-        if($outgoingItem) {
-            $this->createOutgoingItemDetail($outgoingItem, $item);
-        }
-
-        $outgoingItem->update([
-            'total_items' => $this->requestApproved['qty'],
-        ]);
-    }
-
-    private function createOutgoingItemDetail($outgoingItem, $item): void
-    {
-        OutgoingItemDetail::create([
-            'id' => GenerateCodeHelper::handleGenerateCode(),
-            'outgoing_item_code' => $outgoingItem->id,
+            'nip' => $this->nip,
             'item_code' => $item->id,
-            'qty' => $this->requestApproved['qty'],
+            'total_items' => $this->requestApproved['qty'],
+            'updated_at' => null
         ]);
-
     }
 
     public function render()

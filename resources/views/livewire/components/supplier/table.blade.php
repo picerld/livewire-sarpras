@@ -14,11 +14,17 @@
     </x-header>
 
     <x-table :headers="$headers" :rows="$suppliers" :sort-by="$sortBy" link="/suppliers/{id}"
-        class="bg-white rounded dark:bg-dark" with-pagination>
+        class="bg-white rounded dark:bg-dark" with-pagination per-page="perPage" :per-page-values="[5, 20, 50]">
         @scope('actions', $suppliers)
             <x-button icon="o-trash" wire:click="delete({{ $suppliers->id }})"
                 class="btn-sm btn-ghost dark:text-slate-300 btn-outline" aria-label="delete supplier" spinner />
         @endscope
+
+        <x-slot:empty>
+            <x-alert title="Nothing here!" description="There is no data yet." icon="o-exclamation-triangle"
+                class="border-none bg-base-100">
+            </x-alert>
+        </x-slot:empty>
     </x-table>
 
     <x-spotlight />

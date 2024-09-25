@@ -36,10 +36,11 @@
         <x-menu activate-by-route>
             <livewire:utils.navLink title="Dashboard" icon="o-rectangle-group" link="/{{ $user->role }}" />
 
-            <x-menu-sub title="Barang" icon="o-cube" class="text-black">
+            <x-menu-sub title="Barang" icon="o-cube" class="text-black" open>
                 <livewire:utils.navLink title="Data Barang" icon="o-document-chart-bar"
                     link="{{ route('items.index') }}" />
-                <livewire:utils.navLink title="Barang Keluar" icon="o-arrow-up-on-square-stack" link="{{ route('out-items.index') }}" />
+                <livewire:utils.navLink title="Barang Keluar" icon="o-arrow-up-on-square-stack"
+                    link="{{ route('out-items.index') }}" />
                 @can('isAdmin')
                     <livewire:utils.navLink title="Barang Masuk" icon="o-arrow-down-on-square-stack"
                         link="{{ route('in-items.index') }}" />
@@ -47,20 +48,24 @@
                 @endcan
             </x-menu-sub>
 
-            <livewire:utils.navLink title="Pengadaan" icon="o-clipboard-document-list"
-                link="{{ route('submissions.index') }}" />
-            <livewire:utils.navLink title="Permintaan" icon="o-chat-bubble-bottom-center-text"
-                link="{{ route('requests.index') }}" />
-
-            <x-menu-sub title="Stok" icon="o-clipboard-document">
-                <livewire:utils.navLink title="Laporan" icon="o-chart-pie" link="{{ route('stock.index') }}" />
-                {{-- <livewire:utils.navLink title="Opname" icon="o-chart-bar-square" link="opname" /> --}}
+            <x-menu-sub title="Pengajuan" icon="o-tag" open>
+                <livewire:utils.navLink title="Pengadaan" icon="o-clipboard-document-list"
+                    link="{{ route('submissions.index') }}" />
+                <livewire:utils.navLink title="Permintaan" icon="o-chat-bubble-bottom-center-text"
+                    link="{{ route('requests.index') }}" />
             </x-menu-sub>
 
+            <livewire:utils.navLink title="Laporan" icon="o-chart-pie" link="{{ route('stock.index') }}" />
+            {{-- <x-menu-sub title="Stok" icon="o-clipboard-document"> --}}
+                {{-- <livewire:utils.navLink title="Opname" icon="o-chart-bar-square" link="opname" /> --}}
+            {{-- </x-menu-sub> --}}
+
             @can('isAdmin')
+            <x-menu-sub title="Kelola Akun" icon="o-tv" open>
                 <livewire:utils.navLink title="Supplier" icon="o-truck" link="{{ route('suppliers.index') }}" />
                 <livewire:utils.navLink title="Pegawai" icon="o-computer-desktop" link="{{ route('employees.index') }}" />
                 <livewire:utils.navLink title="Akun" icon="o-identification" link="{{ route('users.index') }}" />
+            </x-menu-sub>
             @endcan
         </x-menu>
     </x-slot:sidebar>

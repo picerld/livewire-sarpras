@@ -15,7 +15,7 @@
 
     <!-- USING TABLE -->
     <x-table :headers="$headers" :rows="$requests" :sort-by="$sortBy" link="/requests/{id}"
-        class="bg-white rounded dark:bg-dark" with-pagination>
+        class="bg-white rounded dark:bg-dark" with-pagination per-page="perPage" :per-page-values="[5, 20, 50]">
         {{-- @scope('users_name', $submission)
             <x-button icon="o-trash" wire:click="delete({{ $submission->id }})"
                 class="btn-sm btn-ghost dark:text-slate-300 btn-outline" aria-label="delete item" spinner />
@@ -35,14 +35,20 @@
         @endscope
 
         @scope('cell_characteristic', $request)
-            <x-badge :value="$request->characteristic"
-                class="text-white  btn-ghost btn-outline bg-dark" />
+            <x-badge :value="$request->characteristic ? $request->characteristic : 'none'"
+                class="text-white btn-ghost btn-outline bg-dark" />
         @endscope
 
         @scope('actions', $request)
             <x-button icon="o-trash" wire:click="delete({{ $request->id }})"
                 class="btn-sm btn-ghost dark:text-slate-300 btn-outline" aria-label="delete item" spinner />
         @endscope
+
+        <x-slot:empty>
+            <x-alert title="Nothing here!" description="There is no data yet." icon="o-exclamation-triangle"
+                class="border-none bg-base-100">
+            </x-alert>
+        </x-slot:empty>
     </x-table>
 
     <x-spotlight />

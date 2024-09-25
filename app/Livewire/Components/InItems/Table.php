@@ -24,6 +24,8 @@ class Table extends Component
         ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300 text-sm'],
     ];
 
+    public int $perPage = 5;
+
     // search
     public $search = "";
     public $sortBy = ['column' => 'created_at', 'direction' => 'DESC'];
@@ -66,7 +68,7 @@ class Table extends Component
             ->when($this->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
             ->when($this->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
             ->orderBy(...array_values($this->sortBy))
-            ->paginate(5, ['users_name', 'suppliers_name', 'total_items', 'created_at']);
+            ->paginate($this->perPage, ['users_name', 'suppliers_name', 'total_items', 'created_at']);
     }
 
     public function updated($property): void
@@ -94,7 +96,7 @@ class Table extends Component
 
         $incomingItemDetail->delete();
         $incomingItem->delete();
-        $this->success("Item $incomingItem->name deleted", 'Good bye!', redirectTo: '/in-items', position: 'toast-bottom');
+        $this->success("Item $incomingItem->name deleted", 'Good bye!', position: 'toast-bottom');
     }
 
     public function render()

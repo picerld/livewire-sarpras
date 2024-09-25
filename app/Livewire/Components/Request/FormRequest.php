@@ -50,7 +50,7 @@ class FormRequest extends Component
     {
         $this->validate([
             'nip' => 'required|exists:employees,id',
-            'regarding' => 'required|string|min:10|max:50',
+            'regarding' => 'required|string|min:10|max:100',
             'characteristic' => 'required|string|min:3|max:50',
             'inputs.*.item_code' => 'required|exists:items,id',
             'inputs.*.qty' => 'required|integer|min:1'
@@ -72,6 +72,7 @@ class FormRequest extends Component
         ]);
 
         $totalItems = 0;
+        
         foreach ($this->inputs as $input) {
             RequestDetail::create([
                 'request_code' => $request->id,
