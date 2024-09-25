@@ -27,4 +27,8 @@ class Item extends Model
     public function submissionDetail(): HasMany {
         return $this->hasMany(SubmissionDetail::class, 'id');
     }
+
+    public function outgoingItem(): HasMany {
+        return $this->hasMany(OutgoingItem::class, 'id');
+    }
 }

@@ -21,7 +21,7 @@ class OutgoingItem extends Model
         return $this->belongsTo(Employee::class, 'nip');
     }
 
-    public function outgoingItemDetail(): HasMany {
-        return $this->hasMany(OutgoingItemDetail::class, 'outgoing_item_code', 'id');
+    public function item(): BelongsTo {
+        return $this->belongsTo(Item::class, 'item_code');
     }
 }

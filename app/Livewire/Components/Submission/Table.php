@@ -86,7 +86,7 @@ class Table extends Component
     {
         $submission->delete();
         $submissionDetail->delete();
-        $this->success("Submission with code " . $submission->id . " successfully deleted!!", 'Good bye!', position: 'toast-bottom');
+        $this->success("Submission with id #$submission->id successfully deleted!!", 'Good bye!', position: 'toast-bottom');
     }
 
     public function render()

@@ -101,27 +101,10 @@ class Detail extends Component
         $outgoingItem = OutgoingItem::create([
             'id' => GenerateCodeHelper::handleGenerateCode(),
             'nip' => $this->nip,
-            'total_items' => 0, 
-        ]);
-
-        if($outgoingItem) {
-            $this->createOutgoingItemDetail($outgoingItem, $item);
-        }
-
-        $outgoingItem->update([
-            'total_items' => $this->requestApproved['qty'],
-        ]);
-    }
-
-    private function createOutgoingItemDetail($outgoingItem, $item): void
-    {
-        OutgoingItemDetail::create([
-            'id' => GenerateCodeHelper::handleGenerateCode(),
-            'outgoing_item_code' => $outgoingItem->id,
             'item_code' => $item->id,
-            'qty' => $this->requestApproved['qty'],
+            'total_items' => $this->requestApproved['qty'],
+            'updated_at' => null
         ]);
-
     }
 
     public function render()

@@ -18,6 +18,10 @@
                 class=" btn-ghost btn-outline {{ $itemsOut->status == 'not taken' ? '' : 'bg-dark text-white' }}" />
         @endscope
 
+        @scope('cell_updated_at', $itemsOut)
+            {{ $itemsOut->updated_at ? $itemsOut->updated_at : 'not taken yet' }}
+        @endscope
+
         @scope('actions', $itemsOut)
             <x-button icon="o-trash" wire:click="delete({{ $itemsOut->id }})"
                 class="btn-sm btn-ghost dark:text-slate-300 btn-outline" aria-label="delete item" spinner />
