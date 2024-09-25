@@ -78,7 +78,7 @@ class Table extends Component
             'avatar' => 'avatars/01.png'
         ]);
 
-        $this->success('Employee created successfully.', 'Success!!', redirectTo: '/employees' , position: 'toast-bottom');
+        $this->success('Employee created successfully.', 'Success!!', position: 'toast-bottom');
     }
 
     public function updated($property): void

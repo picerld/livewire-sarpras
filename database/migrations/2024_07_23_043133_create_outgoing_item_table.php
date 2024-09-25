@@ -15,10 +15,12 @@ return new class extends Migration
             $table->string('id', 20)->primary();
             $table->string('nip', 20);
             $table->enum('status', ['taken', 'not taken'])->default('not taken');
+            $table->string('item_code', 20);
             $table->integer('total_items')->default(0);
             $table->timestamps();
             
             $table->foreign('nip')->references('id')->on('employees')->onDelete('cascade');
+            $table->foreign('item_code')->references('id')->on('items')->cascadeOnDelete();
         });
     }
 

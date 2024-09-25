@@ -1,4 +1,4 @@
-<x-card class="min-h-[70vh]">
+<x-card>
     <x-header wire:model.live.debounce="search" title="Barang Masuk" class="px-3 pt-3" size="text-3xl" subtitle="Items Table"
         progress-indicator separator>
         <x-slot:actions>
@@ -15,7 +15,7 @@
 
     <!-- USING TABLE -->
     <x-table :headers="$headers" :rows="$itemsIn" :sort-by="$sortBy" link="/in-items/{id}"
-        class="bg-white rounded dark:bg-dark" with-pagination>
+        class="bg-white rounded dark:bg-dark" with-pagination per-page="perPage" :per-page-values="[5, 20, 50]">
         @scope('actions', $itemsIn)
             <div class="flex gap-3">
                 <x-button icon="o-document-plus" class="btn-sm btn-ghost dark:text-slate-300 btn-outline"
@@ -26,6 +26,12 @@
                     class="btn-sm btn-ghost dark:text-slate-300 btn-outline" aria-label="delete item" spinner />
             </div>
         @endscope
+
+        <x-slot:empty>
+            <x-alert title="Nothing here!" description="There is no data yet." icon="o-exclamation-triangle"
+                class="border-none bg-base-100">
+            </x-alert>
+        </x-slot:empty>
     </x-table>
 
     <x-spotlight />

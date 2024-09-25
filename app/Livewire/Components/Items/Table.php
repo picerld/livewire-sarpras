@@ -47,6 +47,8 @@ class Table extends Component
         ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300'],
     ];
 
+    public int $perPage = 5;
+
     public $search = "";
     public $sortBy = ['column' => 'created_at', 'direction' => 'DESC'];
 
@@ -116,7 +118,7 @@ class Table extends Component
             ->when($this->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
             ->when($this->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
             ->orderBy(...array_values($this->sortBy))
-            ->paginate(5, ['id', 'name', 'price', 'stock', 'minimum_stock', 'category->name', 'created_at']);
+            ->paginate($this->perPage, ['id', 'name', 'price', 'stock', 'minimum_stock', 'category->name', 'created_at']);
     }
 
     public function updated($property): void

@@ -17,11 +17,13 @@ class Table extends Component
     use WithPagination, Toast;
 
     public $headers = [
-        ['key' => 'users_name', 'label' => 'Petugas', 'class' => 'dark:text-slate-300 text-sm'],
+        ['key' => 'users_name', 'label' => 'Unit', 'class' => 'dark:text-slate-300 text-sm'],
         ['key' => 'status', 'label' => 'Status', 'class' => 'dark:text-slate-300 text-sm'],
-        ['key' => 'total_items', 'label' => 'Total Item', 'class' => 'dark:text-slate-300 text-center text-sm'],
+        ['key' => 'total_items', 'label' => 'Kuantiti', 'class' => 'dark:text-slate-300 text-center text-sm'],
         ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300 text-sm'],
     ];
+
+    public int $perPage = 5;
 
     // search
     public $search = "";
@@ -55,7 +57,7 @@ class Table extends Component
             ->when($this->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
             ->when($this->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
             ->orderBy(...array_values($this->sortBy))
-            ->paginate(5, ['users_name', 'status', 'total_items', 'created_at']);
+            ->paginate($this->perPage, ['users_name', 'status', 'total_items', 'created_at']);
     }
 
     public function updated($property): void
@@ -76,7 +78,7 @@ class Table extends Component
     {
         $outgoingItem->delete();
         $outgoingItemDetail->delete();
-        $this->success("Report for $outgoingItem->id deleted", 'Good bye!', redirectTo: '/in-items', position: 'toast-bottom');
+        $this->success("Report for $outgoingItem->id deleted", 'Good bye!', position: 'toast-bottom');
     }
 
     public function render()

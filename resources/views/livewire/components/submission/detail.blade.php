@@ -50,7 +50,7 @@
                                     class="w-full mt-3 text-sm btn-outline btn-sm" spinner />
                             @else
                                 <x-button icon="o-bell-alert"
-                                    class="w-full mt-3 text-sm text-white btn-outline bg-dark btn-sm" />
+                                    class="w-full mt-3 text-sm btn-outline btn-sm" />
                             @endcan
                             <!-- END -->
                         @else

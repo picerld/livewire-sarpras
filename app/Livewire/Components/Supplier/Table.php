@@ -20,6 +20,8 @@ class Table extends Component
         ['key' => 'created_at', 'label' => 'Tanggal bergabung', 'class' => 'dark:text-slate-300'],
     ];
 
+    public int $perPage = 5;
+
     public $search = "";
     public $sortBy = ['column' => 'created_at', 'direction' => 'DESC'];
 
@@ -53,7 +55,7 @@ class Table extends Component
             ->when($this->fromDate, fn (Builder $query) => $query->whereDate('created_at', '>=', $this->fromDate))
             ->when($this->toDate, fn (Builder $query) => $query->whereDate('created_at', '<=', $this->toDate))
             ->orderBy(...array_values($this->sortBy))
-            ->paginate(5, ['id', 'name', 'address', 'created_at']);
+            ->paginate($this->perPage, ['id', 'name', 'address', 'created_at']);
     }
 
     public function store(): void
@@ -92,7 +94,7 @@ class Table extends Component
     public function delete(Supplier $supplier): void
     {
         $supplier->delete();
-        $this->success("Supplier $supplier->name deleted", 'Good bye!', redirectTo: '/suppliers', position: 'toast-bottom');
+        $this->success("Supplier $supplier->name deleted", 'Good bye!', position: 'toast-bottom');
     }
 
     public function render()

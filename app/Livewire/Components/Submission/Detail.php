@@ -34,7 +34,7 @@ class Detail extends Component
     public function mount($submissionCode): void
     {
         $this->submissionCode = $submissionCode;
-        $this->submissions = SubmissionDetail::where('submission_code', $this->submissionCode)->get();
+        $this->submissions = SubmissionDetail::where('submission_code', $this->submissionCode)->orderBy('qty_accepted', 'ASC')->get();
     }
 
     // business accept
@@ -69,7 +69,7 @@ class Detail extends Component
             $this->error('Jumlah tddak boleh lebih dari yang seharusnya!', 'Oops!', position: 'toast-bottom');
             return;
         }
-        
+
         // // update stock and submission detail
         if ($submissionDetail) {
             $submissionDetail->update([

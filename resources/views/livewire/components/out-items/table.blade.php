@@ -1,5 +1,5 @@
-<x-card class="min-h-[70vh]">
-    <x-header wire:model.live.debounce="search" title="Barang Keluars" class="px-3 pt-3" size="text-3xl"
+<x-card>
+    <x-header wire:model.live.debounce="search" title="Barang Keluar" class="px-3 pt-3" size="text-3xl"
         subtitle="Items Table" progress-indicator separator>
         <x-slot:actions>
             <x-input wire:model="search" id="search" icon="o-magnifying-glass"
@@ -12,7 +12,7 @@
 
     <!-- USING TABLE -->
     <x-table :headers="$headers" :rows="$itemsOut" :sort-by="$sortBy" link="/out-items/{id}"
-        class="bg-white rounded dark:bg-dark" with-pagination>
+        class="bg-white rounded dark:bg-dark" with-pagination per-page="perPage" :per-page-values="[5, 20, 50]">
         @scope('cell_status', $itemsOut)
             <x-badge :value="$itemsOut->status"
                 class=" btn-ghost btn-outline {{ $itemsOut->status == 'not taken' ? '' : 'bg-dark text-white' }}" />
