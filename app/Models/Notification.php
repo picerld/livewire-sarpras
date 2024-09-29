@@ -9,5 +9,7 @@ class Notification extends Model
 {
     use HasFactory;
 
+    protected $keyType = 'string';
+
     protected $table = 'notifications';
 }

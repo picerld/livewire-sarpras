@@ -19,6 +19,8 @@ class FormSubmission extends Component
 
     public Item $item;
 
+    public $selectedItemTab = "existing-item-tab";
+
     // Default value for inputs
     // it will be
     // [
@@ -26,11 +28,16 @@ class FormSubmission extends Component
     //  1 => ['item_id' => '', 'qty' => 1]
     // ] ... 
     public $inputs = [['item_code' => '', 'qty' => 1]];
+    public $inputNewItems = [['custom_item' => '', 'custom_item_qty' => 1]];
 
-    public $items;
     public $submissions;
+
     public $nip;
+    public $items;
     public $regarding;
+
+    // message on status 'rejected' or 'accepted'
+    public $statusNote;
 
     // index
     public $i = 1;
@@ -43,10 +50,14 @@ class FormSubmission extends Component
         $this->items = Item::all();
     }
 
-    public function addInput()
+    public function addInput($subject)
     {
-        // Add new input field on object
-        $this->inputs[] = ['item_code' => '', 'qty' => 1];
+        if ($subject == 'exist-item') {
+            $this->inputs[] = ['item_code' => '', 'qty' => 1];
+            return;
+        }
+
+        $this->inputNewItems[] = ['custom_item' => '', 'custom_item_qty' => 1];
     }
 
     public function removeInput($i)
@@ -58,44 +69,62 @@ class FormSubmission extends Component
 
     public function store(): void
     {
-        // try {
         // Validate input data
         $this->validate([
             'nip' => 'required|exists:employees,id',
             'regarding' => 'required|string|min:10|max:50',
-            'inputs.*.item_code' => 'required|exists:items,id',
-            'inputs.*.qty' => 'required|integer|min:1'
+            'inputs.*.item_code' => 'nullable|exists:items,id',
+            'inputs.*.qty' => 'integer|min:1',
+            'inputNewItems.*.custom_item' => 'nullable|string|min:3|max:50',
         ], [
-            'regarding.required' => 'Keterangan harus diisi',
             'nip.required' => 'Unit harus dipilih',
-            'inputs.*.item_code.required' => 'Item harus dipilih',
-            'inputs.*.qty.required' => 'Jumlah harus diisi',
+            'regarding.required' => 'Keterangan harus diisi',
             'inputs.*.qty.min' => 'Jumlah minimal 1',
         ]);
 
-        // store to submission_detail table
+        // store to submission table
         $submission = Submission::create([
             'id' => GenerateCodeHelper::handleGenerateCode(),
             'nip' => $this->nip,
             'regarding' => $this->regarding,
-            'total_items' => 0, // Default value
+            'total_items' => 0,
         ]);
 
-        $user = User::where('nip', $this->nip)->first();  // Assuming you're notifying a user
+        $user = User::where('nip', $this->nip)->first();
         $user->notify(new ConfirmSubmission($this->nip, $this->regarding, $submission));
 
         $totalItems = 0;
 
+        // if there is existing item
         foreach ($this->inputs as $input) {
-            SubmissionDetail::create([
-                'submission_code' => $submission->id,
-                'item_code' => $input['item_code'],
-                'qty_accepted' => 0,
-                'accepted_by' => null,
-                'qty' => $input['qty'],
-            ]);
+            if (!empty($input['item_code'])) {
+                SubmissionDetail::create([
+                    'submission_code' => $submission->id,
+                    'item_code' => $input['item_code'],
+                    'qty_accepted' => 0,
+                    'accepted_by' => null,
+                    'qty' => $input['qty'],
+                    'status_note' => null,
+                    'custom_item' => null,
+                ]);
+                $totalItems += $input['qty'];
+            }
+        }
 
-            $totalItems += $input['qty'];
+        // if there is custom item
+        foreach ($this->inputNewItems as $newItem) {
+            if (!empty($newItem['custom_item'])) {
+                SubmissionDetail::create([
+                    'submission_code' => $submission->id,
+                    'item_code' => null,
+                    'qty_accepted' => 0,
+                    'accepted_by' => null,
+                    'qty' => $newItem['custom_item_qty'],
+                    'status_note' => null,
+                    'custom_item' => $newItem['custom_item_qty'],
+                ]);
+                $totalItems += $newItem['custom_item_qty'];
+            }
         }
 
         $submission->update([
@@ -104,10 +133,6 @@ class FormSubmission extends Component
 
         $this->success("Pengajuan successfully created", "Success!!", position: 'toast-bottom', redirectTo: '/submissions');
         $this->reset(['inputs', 'nip']);
-
-        // } catch (\Throwable $th) {
-        //     $this->error($th->getMessage(), "Failed!!", position: 'toast-bottom');
-        // }
     }
 
     public function render()

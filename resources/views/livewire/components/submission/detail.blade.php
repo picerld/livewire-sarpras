@@ -19,16 +19,19 @@
     <div class="grid w-full grid-cols-1 py-4 md:grid-cols-2 lg:grid-cols-3">
         @foreach ($submissions as $submission)
             <div class="m-2">
-                <x-card title="{{ $submission->item->name }} ({{ $submission->item->type }})" class="shadow">
-                    <x-icon name="o-tag" label="{{ $submission->item->merk }}" />
+                <x-card
+                    title="{{ $submission->item->name ?? $submission->custom_item }} ({{ $submission->item->type ?? 'null' }})"
+                    class="shadow">
+                    <x-icon name="o-tag" label="{{ $submission->item->merk ?? $submission->custom_item }}" />
                     <p class="text-sm font-semibold">
                         {{ $submission->qty_accepted > 0 && $submission->qty_accepted !== $submission->qty ? $submission->qty_accepted : $submission->qty }}
-                        {{ $submission->item->unit }}
+                        {{ $submission->item->unit ?? "" }}
                     </p>
                     <x-slot:figure>
-                        <img src="{{ asset('/storage/' . $submission->item->images) }}" height="200" width="230"
-                            class="object-cover w-full min-h-40 max-h-40" aria-labelledby="{{ $submission->item->id }}"
-                            alt="{{ $submission->item->name }}" />
+                        <img src="{{ !empty($submission->item->images) ? asset('/storage/' . $submission->item->images) : asset('img/submission.webp') }}"
+                            height="200" width="230" class="object-cover w-full min-h-40 max-h-40"
+                            aria-labelledby="{{ $submission->item->id ?? $submission->custom_item }}"
+                            alt="{{ $submission->item->name ?? $submission->custom_item }}" />
                     </x-slot:figure>
                     <x-slot:menu>
                         <!-- adding badge for approved submission -->
@@ -49,8 +52,7 @@
                                 <x-button label="Accept" wire:click="approval({{ $submission->id }})" icon="o-check-circle"
                                     class="w-full mt-3 text-sm btn-outline btn-sm" spinner />
                             @else
-                                <x-button icon="o-bell-alert"
-                                    class="w-full mt-3 text-sm btn-outline btn-sm" />
+                                <x-button icon="o-bell-alert" class="w-full mt-3 text-sm btn-outline btn-sm" />
                             @endcan
                             <!-- END -->
                         @else
