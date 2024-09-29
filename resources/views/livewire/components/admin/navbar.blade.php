@@ -22,17 +22,21 @@
                     class="absolute top-0 right-0 text-white transform translate-x-1/2 -translate-y-1/2 badge-neutral dark:badge-primary" />
                 <x-dropdown icon="o-bell" class="relative pb-4 btn-circle btn-ghost" right>
                     <div class="w-72">
+                        {{-- @isset($notifications) --}}
                         @forelse ($notifications as $notification)
                             @php
                                 $datas = json_decode($notification['data'], true);
 
                                 $employee = \App\Models\Employee::find($datas['user']);
                                 $submission = \App\Models\Submission::find($datas['submission_id']);
+
+                                // $requests = \App\Models\Request::find($datas['request_id']);
+
                             @endphp
 
                             @isset($submission)
                                 @if ($submission->status == 'pending')
-                                    <x-list-item :item="$notification" link="/submissions/{{ $submission->id }}" no-separator>
+                                    <x-list-item :item="$notification" no-hover no-separator>
                                         <x-slot:avatar>
                                             <img src="{{ asset($employee->avatar) }}" alt="{{ $employee->name }}'s avatar"
                                                 class="object-cover w-10 h-10 rounded-full">
@@ -50,13 +54,18 @@
                                                 @endif
                                             </p>
                                         </x-slot:sub-value>
+                                        <x-slot:actions>
+                                            <x-button icon="o-x-mark" class="rounded-full btn-xs btn-ghost"
+                                                wire:click="read('{{ $notification->id }}')" aria-label="read notif"
+                                                spinner />
+                                        </x-slot:actions>
                                     </x-list-item>
                                 @endif
                             @endisset
-
                         @empty
                             <h1 class="text-sm font-semibold">Nothing here!</h1>
                         @endforelse
+                        {{-- @endisset --}}
                     </div>
                 </x-dropdown>
             </div>

@@ -1,0 +1,1 @@
+<x-button label="Refresh Page" class="btn-ghost btn-sm" icon="o-arrow-path" onclick="window.location.reload()" />

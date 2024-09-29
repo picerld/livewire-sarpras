@@ -28,7 +28,7 @@ class Table extends Component
 
     // search
     public $search = "";
-    public $sortBy = ['column' => 'created_at', 'direction' => 'DESC'];
+    public $sortBy = ['column' => 'name', 'direction' => 'ASC'];
 
     // drawer
     public bool $drawerIsOpen = false;

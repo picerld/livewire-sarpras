@@ -23,7 +23,7 @@ class Table extends Component
     public int $perPage = 5;
 
     public $search = "";
-    public $sortBy = ['column' => 'created_at', 'direction' => 'DESC'];
+    public $sortBy = ['column' => 'name', 'direction' => 'ASC'];
 
     public $newSupplier = [
         'name' => '',

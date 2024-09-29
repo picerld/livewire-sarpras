@@ -1,7 +1,7 @@
 <div class="w-72">
     <label for="academicYear" class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Tahun
         Akademik</label>
-    <select id="academicYear" class="w-full max-w-xs border-slate-200 dark:border-black/50 select" aria-label="Pilih Tahun Akademik">
+    <select id="academicYear" class="w-full max-w-xs focus:ring-0 focus:outline-none select" aria-label="Pilih Tahun Akademik">
         <option value="" disabled selected hidden>Pilih Tahun Akademik</option>
         <option value="2023-2024">2023-2024 (Aktif)</option>
         <option value="2022-2023">2022-2023</option>
