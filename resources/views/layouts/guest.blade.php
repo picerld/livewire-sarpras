@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Sarpras - Sistem Informasi Manajemen Sarana dan Prasarana.">
+    <meta name="keywords" content="Sarpras, Manajemen, Sarana, Prasarana, Laravel, Livewire">
+    <meta name="author" content="Picerld">
+
     <title>{{ 'Login - ' . 'Sarpras' }}</title>
 
     <!-- CHANGE THE ICON -->
