@@ -17,15 +17,19 @@ class ItemFactory extends Factory
     public function definition(): array
     {
         return [
+            'id' => $this->faker->randomNumber(9),
             'name' => $this->faker->word(),
-            'code' => 'item-' . $this->faker->numberBetween(1, 10),
-            'merk' => $this->faker->word(),
-            'unit' => 'unit',
-            'images' => $this->faker->imageUrl(640, 480, 'items', true),
+            'unit' => 'Pcs',
+            'images' => 'img/subission.webp',
             'price' => $this->faker->numberBetween(2000, 5000),
-            'category_id' => $this->faker->numberBetween(1, 10),
+            'merk' => $this->faker->word(),
+            'color' => $this->faker->word(),
+            'type' => $this->faker->word(),
+            'size' => $this->faker->word(),
+            'images' => $this->faker->imageUrl(640, 480, 'items', true),
             'stock' => $this->faker->numberBetween(10, 100),
             'minimum_stock' => $this->faker->numberBetween(10, 100),
+            'category_id' => $this->faker->numberBetween(1, 5),
             'description' => $this->faker->paragraph(1) 
         ];
     }

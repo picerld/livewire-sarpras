@@ -4,10 +4,10 @@ namespace App\Livewire\Components\Request;
 
 use App\Helpers\GenerateCodeHelper;
 use App\Models\OutgoingItem;
-use App\Models\OutgoingItemDetail;
 use App\Models\Request;
 use App\Models\RequestDetail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Mary\Traits\Toast;
 
@@ -87,15 +87,13 @@ class Detail extends Component
         if ($item->stock <= $item->minimum_stock) {
             $this->approvalModal = false;
             $this->warning("Jumlah stock $item->name, kurang dari stock minimum!", 'Success!', redirectTo: "/requests/{$this->requestCode}", position: 'toast-bottom');
-            return;
         }
 
         $this->success('Approved successfully!', 'Success!', redirectTo: "/requests/{$this->requestCode}", position: 'toast-bottom');
         $this->approvalModal = false;
-        return;
     }
 
-    // Helper method to create outgoing item and detail
+    // helper method to create outgoing item and detail
     private function createOutgoingItem($item): void
     {
         $outgoingItem = OutgoingItem::create([
