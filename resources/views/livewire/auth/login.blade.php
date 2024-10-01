@@ -54,7 +54,7 @@ new #[Title('Login')] class extends Component {
 <div class="flex flex-col w-full h-screen md:flex-row">
     <!-- Left Section -->
     <div class="hidden w-full h-screen text-white bg-black/90 md:flex md:w-1/2 md:flex-col">
-        <div class="flex gap-3 p-8">
+        <a href="/" class="flex gap-3 p-8">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-6 h-6">
                 <rect width="256" height="256" fill="none"></rect>
                 <line x1="208" y1="128" x2="128" y2="208" fill="none" stroke="currentColor"
@@ -63,7 +63,7 @@ new #[Title('Login')] class extends Component {
                     stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
             </svg>
             <h4 class="text-lg font-semibold">Sarpras</h4>
-        </div>
+        </a>
 
         <div class="flex items-end flex-grow p-8">
             <div>
