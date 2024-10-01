@@ -69,18 +69,13 @@ class DatabaseSeeder extends Seeder
 
         $employees = Employee::factory(10)->create();
 
-        // $user = User::factory()
-        //     ->count(5)
-        //     ->for($employees)
-        //     ->create();
-
         Category::factory()->create([
             'name' => 'Alat Tulis Kantor',
             'aliases' => 'ATK'
         ]);
 
         $this->call(CategorySeeder::class);
-        // $this->call(ItemSeeder::class);
+        $this->call(ItemSeeder::class);
         $this->call(SupplierSeeder::class);
         // $this->call(SubmissionSeeder::class);
         // $this->call(SubmissionDetailSeeder::class);

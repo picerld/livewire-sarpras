@@ -44,7 +44,6 @@ class Detail extends Component
 
         $this->submissionDetailCode = $submissionDetailCode;
         $this->submissionItem = SubmissionDetail::where('id', $this->submissionDetailCode)->first();
-        dd($this->submissionItem);
     }
 
     public function save(SubmissionDetail $submissionDetail): void

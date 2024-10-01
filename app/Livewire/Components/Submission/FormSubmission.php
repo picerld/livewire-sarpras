@@ -60,11 +60,16 @@ class FormSubmission extends Component
         $this->inputNewItems[] = ['custom_item' => '', 'custom_item_qty' => 1];
     }
 
-    public function removeInput($i)
+    public function removeInput($subject, $i)
     {
-        // Remove input field on object based on index
-        unset($this->inputs[$i]);
-        $this->inputs = array_values($this->inputs);
+        if ($subject == 'exist-item') {
+            unset($this->inputs[$i]);
+            $this->inputs = array_values($this->inputs);
+            return;
+        }
+        
+        unset($this->inputNewItems[$i]);
+        $this->inputNewItems = array_values($this->inputNewItems);
     }
 
     public function store(): void
@@ -76,10 +81,13 @@ class FormSubmission extends Component
             'inputs.*.item_code' => 'nullable|exists:items,id',
             'inputs.*.qty' => 'integer|min:1',
             'inputNewItems.*.custom_item' => 'nullable|string|min:3|max:50',
+            'inputNewItems.*.custom_item_qty' => 'integer|min:1',
         ], [
             'nip.required' => 'Unit harus dipilih',
             'regarding.required' => 'Keterangan harus diisi',
             'inputs.*.qty.min' => 'Jumlah minimal 1',
+            'inputNewItems.*.custom_item.min' => 'Minimal 3 karakter',
+            'inputNewItems.*.custom_item_qty.min' => 'Jumlah minimal 1',
         ]);
 
         // store to submission table

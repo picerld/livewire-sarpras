@@ -19,7 +19,7 @@
 
     <!-- cdn for rich text TinyMCE -->
     <!-- RICH TEXT EDITOR FOR NEXT FEATURE!! -->
-    {{-- <script src="https://cdn.tiny.cloud/1/pbe40jxyz61sydsg39f2uhasr9qlk884n3qmqn5bmocy4jc4/tinymce/6/tinymce.min.js"
+    {{-- <script src="https://cdn.tiny.cloud/1/{{ env('TINYMCE_API_KEY') }}/tinymce/6/tinymce.min.js"
         referrerpolicy="origin" defer></script> --}}
 
     <!-- FOR DEVELOPMENT -->
@@ -30,7 +30,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body class="transition-colors duration-300">
     <livewire:components.admin.navbar />
     <x-main with-nav full-width class="bg-base-100">
         <livewire:components.admin.sidebar />
