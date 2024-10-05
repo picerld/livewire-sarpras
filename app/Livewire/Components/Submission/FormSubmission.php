@@ -21,12 +21,6 @@ class FormSubmission extends Component
 
     public $selectedItemTab = "existing-item-tab";
 
-    // Default value for inputs
-    // it will be
-    // [
-    //  0 => ['item_id' => '', 'qty' => 1], 
-    //  1 => ['item_id' => '', 'qty' => 1]
-    // ] ... 
     public $inputs = [['item_code' => '', 'qty' => 1]];
     public $inputNewItems = [['custom_item' => '', 'custom_item_qty' => 1]];
 

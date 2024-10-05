@@ -9,6 +9,7 @@ use App\Http\Controllers\Items\InItemController;
 use App\Http\Controllers\Items\ItemController;
 use App\Http\Controllers\Items\OutItemController;
 use App\Http\Controllers\Items\StockController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Request\RequestController;
 use App\Http\Controllers\Submission\SubmissionController;
 use App\Http\Controllers\Supplier\SupplierController;

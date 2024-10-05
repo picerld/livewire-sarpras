@@ -25,7 +25,7 @@ class FormAcceptance extends Component
     
         $message = $status === 'accepted' ? 'Approved successfully!' : 'Rejected successfully!';
         $this->success($message, 'Success!', redirectTo: "/submissions/" . $this->submission->id, position: 'toast-bottom');
-    }    
+    }
 
     public function render()
     {
