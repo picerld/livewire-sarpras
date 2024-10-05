@@ -1,8 +1,8 @@
 <x-form id="itemsForm" wire:submit.prevent="store" class="space-y-2" autocomplete="off" no-separator>
     <div class="grid w-full grid-cols-1 gap-4">
         <div class="mb-4">
-            <x-choices-offline label="Supplier" id="supplier_id" :options="$suppliers" wire:model="supplier_id" single inline
-                hint="Please select a supplier" icon="o-truck" error-field="supplier_id" searchable />
+            <x-choices-offline label="Supplier" id="supplierId" :options="$suppliers" wire:model="supplierId" single inline
+                hint="Please select a supplier" icon="o-truck" error-field="supplierId" searchable />
         </div>
 
         <!-- Dynamic Inputs Loop -->

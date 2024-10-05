@@ -17,16 +17,10 @@ class FormItemIn extends Component
 
     public Item $item;
 
-    // Default value for inputs
-    // it will be
-    // [
-    //  0 => ['item_id' => '', 'qty' => 1], 
-    //  1 => ['item_id' => '', 'qty' => 1]
-    // ] ... 
     public $inputs = [['item_code' => '', 'qty' => 1]];
 
     public $items;
-    public $supplier_id;
+    public $supplierId;
 
     // Index for loop input
     public $i = 1;
@@ -57,11 +51,11 @@ class FormItemIn extends Component
         // try {
             // REFACTOR THIS VALIDATE USING REQUEST
             $this->validate([
-                'supplier_id' => 'required|exists:suppliers,id',
+                'supplierId' => 'required|exists:suppliers,id',
                 'inputs.*.item_code' => 'required|exists:items,id',
                 'inputs.*.qty' => 'required|integer|min:1',
             ], [
-                'supplier_id.required' => 'Supplier harus dipilih',
+                'supplierId.required' => 'Supplier harus dipilih',
                 'inputs.*.item_code.required' => 'Item harus dipilih',
                 'inputs.*.qty.required' => 'Jumlah harus diisi',
                 'inputs.*.qty.min' => 'Jumlah minimal 1',
@@ -71,7 +65,7 @@ class FormItemIn extends Component
             $incomingItem = IncomingItem::create([
                 'id' => GenerateCodeHelper::handleGenerateCode(),
                 'nip' => Auth::id(),
-                'supplier_id' => $this->supplier_id,
+                'supplier_id' => $this->supplierId,
                 'total_items' => 0, // Default value
             ]);
 
@@ -97,7 +91,7 @@ class FormItemIn extends Component
             ]);
 
             $this->success("Item Successfully Added", "Success!!", position: 'toast-bottom', redirectTo: '/in-items');
-            $this->reset(['inputs', 'supplier_id']);
+            $this->reset(['inputs', 'supplierId']);
         // } catch (\Throwable $th) {
             // $this->warning('Ada kendala saat proses penginputan', 'Warning!!', position: 'toast-bottom', redirectTo: '/in-items');
             // development purpose

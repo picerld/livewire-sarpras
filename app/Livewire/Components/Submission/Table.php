@@ -16,12 +16,12 @@ class Table extends Component
     use WithPagination, Toast;
 
     public $headers = [
-        ['key' => 'id', 'label' => 'Kode', 'class' => 'dark:text-slate-300'],
-        ['key' => 'users_name', 'label' => 'User', 'class' => 'dark:text-slate-300'],
-        ['key' => 'status', 'label' => 'Status', 'class' => 'dark:text-slate-300'],
-        ['key' => 'total_items', 'label' => 'Total Item', 'class' => 'dark:text-slate-300'],
-        ['key' => 'regarding', 'label' => 'Perihal', 'class' => 'dark:text-slate-300'],
-        ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300'],
+        ['key' => 'id', 'label' => 'Kode'],
+        ['key' => 'users_name', 'label' => 'User'],
+        ['key' => 'status', 'label' => 'Status'],
+        ['key' => 'total_items', 'label' => 'Total Item'],
+        ['key' => 'regarding', 'label' => 'Perihal'],
+        ['key' => 'created_at', 'label' => 'Tanggal'],
     ];
 
     public int $perPage = 5;

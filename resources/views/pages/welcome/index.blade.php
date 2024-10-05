@@ -48,7 +48,7 @@
                             class="mt-10 text-base text-white transition-all duration-300 bg-gray-800 border-none outline-none hover:bg-gray-800/80" />
                     </div>
 
-                    <div id="features"
+                    <div
                         class="grid grid-cols-1 px-20 mt-24 text-left gap-x-12 gap-y-8 sm:grid-cols-2 sm:px-0">
                         <livewire:components.landing.card icon="s-computer-desktop" title="Simple dashboard"
                             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, alias." />
