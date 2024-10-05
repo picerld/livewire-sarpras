@@ -4,19 +4,14 @@ namespace App\Livewire\Utils;
 
 use App\Models\IncomingItem;
 use App\Models\OutgoingItem;
-use App\Models\User;
 use Livewire\Component;
 
-class Charts extends Component
+class TransactionChart extends Component
 {
     public $chart;
     public $class;
-    public $type;
 
-    public function mount($type) {
-        $this->type = $type;
-
-        // Retrieve data for incoming and outgoing items grouped by month
+    public function mount() {
         $incomingItems = IncomingItem::selectRaw('MONTH(created_at) as month, SUM(total_items) as total')
             ->groupBy('month')
             ->orderBy('month')
@@ -27,33 +22,31 @@ class Charts extends Component
             ->orderBy('month')
             ->get();
 
-        // Prepare data for the chart
         $labels = collect(range(1, 12))->map(function($month) {
-            return \Carbon\Carbon::create()->month($month)->format('M'); // Convert month number to name
+            return \Carbon\Carbon::create()->month($month)->format('M');
         })->toArray();
 
         $incomingData = $this->mapDataByMonth($incomingItems);
         $outgoingData = $this->mapDataByMonth($outgoingItems);
 
-        // Define chart configuration
         $this->chart = [
-            'type' => $type,
+            'type' => 'bar',
             'data' => [
                 'labels' => $labels,
                 'datasets' => [
                     [
                         'label' => 'Incoming Items',
                         'data' => $incomingData,
-                        'backgroundColor' => '#111111', // Black bars
+                        'backgroundColor' => '#09090b',
                         'borderRadius' => 5,
-                        'barThickness' => 'flex', // Flexible bar width
+                        'barThickness' => 23,
                     ],
                     [
                         'label' => 'Outgoing Items',
                         'data' => $outgoingData,
-                        'backgroundColor' => '#333333', // Dark gray bars
+                        'backgroundColor' => '#333333',
                         'borderRadius' => 5,
-                        'barThickness' => 'flex', // Flexible bar width
+                        'barThickness' => 23,
                     ],
                 ]
             ],
@@ -61,28 +54,28 @@ class Charts extends Component
                 'scales' => [
                     'x' => [
                         'grid' => [
-                            'display' => true, // Hide x-axis grid lines
+                            'display' => true,
                         ],
                         'ticks' => [
-                            'color' => '#999999', // Light gray for labels
+                            'color' => '#999999',
                         ],
-                        'barPercentage' => 0.6, // Width of bars relative to category
-                        'categoryPercentage' => 0.8, // Width of category (leaves space between bars)
+                        'barPercentage' => 0.5,
+                        'categoryPercentage' => 0.5,
                     ],
                     'y' => [
                         'grid' => [
                             'display' => false,
-                            'color' => 'rgba(0, 0, 0, 0.1)', // Light gray for grid lines
+                            'color' => 'rgba(0, 0, 0, 0.1)',
                         ],
                         'ticks' => [
-                            'color' => '#999999', // Light gray for labels
-                            'stepSize' => 1500, // Adjust step size if needed
-                        ]
+                            'color' => '#999999',
+                            'stepSize' => 50,
+                        ],
                     ]
                 ],
                 'plugins' => [
                     'legend' => [
-                        'display' => false, // Hide the legend for simplicity
+                        'display' => true,
                     ]
                 ],
                 'layout' => [
@@ -96,7 +89,7 @@ class Charts extends Component
 
     private function mapDataByMonth($items)
     {
-        $data = array_fill(0, 12, 0); // Initialize array with 12 months, set to 0
+        $data = array_fill(0, 12, 0);
 
         foreach ($items as $item) {
             $data[$item->month - 1] = $item->total;
@@ -107,6 +100,6 @@ class Charts extends Component
 
     public function render()
     {
-        return view('livewire.utils.charts');
+        return view('livewire.utils.transaction-chart');
     }
 }

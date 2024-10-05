@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Utils;
 
+use Illuminate\Support\Facades\Schema;
 use Livewire\Component;
 
 class Stats extends Component
@@ -16,7 +17,11 @@ class Stats extends Component
     public function mount($title, $model, $icon) {
         $modelClass = '\App\Models\\' . $model;
 
-        $this->value = $model ? $modelClass::count() : $title;
+        if ($model && Schema::hasColumn((new $modelClass)->getTable(), 'total_items')) {
+            $this->value = $modelClass::sum('total_items');
+        } else {
+            $this->value = $modelClass::count();
+        }
         $this->title = $title;
         $this->icon = $icon;
     }
