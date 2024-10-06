@@ -104,6 +104,7 @@ class Detail extends Component
                 'request_code' => $requestDetail->request_code,
                 'nip' => $this->nip,
                 'total_items' => $this->requestApproved['qty'],
+                'updated_at' => null
             ]);
             $this->createOutgoingItemDetail($outgoingItem, $requestDetail->item);
             return;
