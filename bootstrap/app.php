@@ -25,6 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'ability' => CheckForAnyAbility::class,
             'auth' => Authentication::class,
         ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         // if ($exceptions instanceof AuthorizationException) {
