@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Components\Admin;
 
-use App\Models\User;
+use App\Models\Item;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Livewire\Component;
 
@@ -10,21 +10,20 @@ class ListItem extends Component
 {
     // search
     public $search = "";
+    public $sortBy = ['column' => 'stock', 'direction' => 'ASC'];
 
-    public function users()
+    public function items()
     {
-        $users = User::query()
-            ->withAggregate('employee', 'name')
-            ->when($this->search, function (Builder $query) {
-                $query->whereHas('employee', function (Builder $query) {
-                    $query->where('name', 'LIKE', "%$this->search%");
+        return Item::query()
+            ->withAggregate('category', 'aliases')
+            ->when($this->search, function (Builder $q) {
+                $q->whereHas('category', function (Builder $q) {
+                    $q->where('aliases', 'LIKE', "%$this->search%");
                 })
-                    ->orWhere('username', 'LIKE', "%$this->search%")
-                    ->orWhere('role', 'LIKE', "%$this->search%");
+                    ->orWhereAny(['id', 'name', 'merk', 'price', 'stock'], 'LIKE', "%$this->search%");
             })
+            ->orderBy(...array_values($this->sortBy))
             ->paginate(5);
-
-        return $users;
     }
 
     public function clear(): void
@@ -34,10 +33,8 @@ class ListItem extends Component
 
     public function render()
     {
-        $users = $this->users();
-
         return view('livewire.components.admin.list-item', [
-            'users' => $users,
+            'items' => $this->items(),
         ]);
     }
 }

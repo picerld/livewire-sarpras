@@ -40,9 +40,8 @@
     </div>
 
     <div id="overview" class="grid grid-cols-1 gap-3 mt-4 lg-grid-cols-2 md:grid-cols-2">
-        <!-- param 'model' for models -->
-        <livewire:components.admin.items title="Items" link="items" model="Item" />
-        <livewire:components.admin.items title="Users" link="users" model="User" />
+        <livewire:components.admin.items title="Pengadaan" link="submissions" model="Submission" />
+        <livewire:components.admin.items title="Permintaan" link="requests" model="Request" />
     </div>
 
     <div id="user-tabel" class="w-full py-3">

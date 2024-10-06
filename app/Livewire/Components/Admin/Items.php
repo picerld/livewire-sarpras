@@ -23,7 +23,7 @@ class Items extends Component
         $modelClass = '\\App\\Models\\' . $this->model;
         if (class_exists($modelClass)) {
             // data random
-            return $modelClass::inRandomOrder();
+            return $modelClass::orderBy('status' , 'ASC')->paginate(5);
         } else {
             return collect();
         }
@@ -34,7 +34,7 @@ class Items extends Component
         $datas = $this->datas();
 
         return view('livewire.components.admin.items', [
-            "datas" => $datas->paginate(4)
+            "datas" => $datas
         ]);
     }
 }

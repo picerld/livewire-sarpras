@@ -33,6 +33,6 @@ export default {
         "prettier-plugin-tailwindcss",
     ],
     daisyui: {
-        themes: ["light", "dark"],
+        themes: ["light"],
     }
 };

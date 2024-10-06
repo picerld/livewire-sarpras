@@ -3,4 +3,5 @@
     :value="$value"
     :icon="$icon"
     color="text-black"
-    description="This month" />
+    description="This month"
+    tooltip="Hello" />

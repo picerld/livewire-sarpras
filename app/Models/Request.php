@@ -24,4 +24,8 @@ class Request extends Model
     public function requestDetail(): HasMany {
         return $this->hasMany(RequestDetail::class, 'request_code', 'id');
     }
+
+    public function outgoingItem(): HasMany {
+        return $this->hasMany(OutgoingItem::class, 'id');
+    }
 }
