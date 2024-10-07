@@ -37,6 +37,7 @@ class Table extends Component
     public $fromDate = null;
     public $toDate = null;
     public $selectedUser = null;
+    public $selectedStatus = null;
 
     public function tableDrawer()
     {
@@ -57,6 +58,8 @@ class Table extends Component
             ->when($this->selectedUser, fn(Builder $q) => $q->where('nip', $this->selectedUser))
             ->when($this->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
             ->when($this->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
+            ->when($this->selectedStatus, fn(Builder $q) => $q->where('status', $this->selectedStatus))
+            ->orderBy('status', 'DESC')
             ->orderBy(...array_values($this->sortBy))
             ->paginate($this->perPage, ['users_name', 'status', 'total_items', 'created_at']);
     }
@@ -85,6 +88,17 @@ class Table extends Component
     {
         $itemsOut = $this->itemsOut();
 
+        $status = [
+            [
+                'id' => 0,
+                'name' => 'not taken'
+            ],
+            [
+                'id' => 1,
+                'name' => 'taken'
+            ],
+        ];
+
         $users = User::withAggregate('employee', 'name')->get();
         $userMap = $users->map(function (User $user) {
             return [
@@ -98,6 +112,7 @@ class Table extends Component
             'sortBy' => $this->sortBy,
             'itemsOut' => $itemsOut,
             'users' => $userMap,
+            'status' => $status,
         ]);
     }
 }

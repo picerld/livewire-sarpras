@@ -36,7 +36,9 @@ class OutItemController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('pages.outItems.show', [
+            'outgoingItemCode' => $id
+        ]);
     }
 
     /**

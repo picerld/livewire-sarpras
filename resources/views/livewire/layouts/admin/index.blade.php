@@ -22,7 +22,7 @@
 
     <div id="stats" class="grid grid-cols-1 gap-4 mt-7 lg:grid-cols-4 md:grid-cols-4">
         <!-- param 'model' for models -->
-        <livewire:utils.stats title="Item" model="Item" icon="o-chart-pie" />
+        <livewire:utils.stats title="Item" model="Item" icon="o-puzzle-piece" />
         <livewire:utils.stats title="In Item" model="incomingItem" icon="o-arrow-trending-up" />
         <livewire:utils.stats title="Out Item" model="outgoingItem" icon="o-arrow-trending-down" />
         <livewire:utils.stats title="Item" model="Item" icon="o-chart-pie" />

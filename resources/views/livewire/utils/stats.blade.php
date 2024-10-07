@@ -4,4 +4,4 @@
     :icon="$icon"
     color="text-black"
     description="This month"
-    tooltip="Hello" />
+    tooltip="{{ $value > 10 ? 'Greater than 10' : 'Less than 10' }}" />

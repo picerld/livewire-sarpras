@@ -52,7 +52,7 @@ class Table extends Component
     public function employees(): LengthAwarePaginator
     {
         return Employee::query()
-            ->when($this->search, fn(Builder $query) => $query->whereAny(['name', 'nip', 'created_at'], 'like', '%' . $this->search . '%'))
+            ->when($this->search, fn(Builder $query) => $query->whereAny(['name', 'id', 'created_at'], 'like', '%' . $this->search . '%'))
             ->when($this->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
             ->when($this->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
             ->orderBy(...array_values($this->sortBy))

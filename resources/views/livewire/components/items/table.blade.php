@@ -72,8 +72,8 @@
             <x-choices label="Category" wire:model="selectedCategory" :options="$categories" searchable single />
 
             <!-- Date Range Filter -->
-            <x-input type="date" label="From Date" wire:model="fromDate" />
-            <x-input type="date" label="To Date" wire:model="toDate" />
+            <x-input type="number" label="Stock from" wire:model="fromStock" />
+            <x-input type="number" label="Stock to" wire:model="toStock" />
 
             <x-slot:actions>
                 <x-button label="Clear" wire:click="clear" class="btn btn-ghost btn-outline" />

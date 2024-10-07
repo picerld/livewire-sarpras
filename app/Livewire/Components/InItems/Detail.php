@@ -22,19 +22,20 @@ class Detail extends Component
         $this->items = IncomingItemDetail::where('incoming_item_code', $this->incomingItemCode)->get();
     }
 
-    public function delete($itemId, $incomingItemCode): void
+    public function save($itemId, $incomingItemCode): void
     {
-        // search for qty item on incoming_item_detail
+        $item = Item::find($itemId);
+
         $totalQty = IncomingItemDetail::where('item_code', $itemId)
             ->where('incoming_item_code', $incomingItemCode)
             ->sum('qty');
 
-        // search for item on item table from param
-        $item = Item::find($itemId);
+        dd(abs($item->stock - $totalQty));
+
 
         if ($item) {
             // Update item stock on item table
-            $item->update(['stock' => $item->stock - $totalQty]);
+            $item->update(['stock' => abs($item->stock - $totalQty)]);
 
             IncomingItemDetail::where('item_code', $itemId)
                 ->where('incoming_item_code', $incomingItemCode)

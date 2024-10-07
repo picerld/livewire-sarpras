@@ -17,7 +17,7 @@
                 <x-slot:value>
                     <div class="flex justify-between">
                         {{ $data->users->name }}
-                        <x-badge value="{{ $data->status }}" class="btn-outline" />
+                        <x-badge value="{{ $data->status }}" class="{{ $data->status !== 'pending' ? 'bg-dark text-white' : 'btn-outline' }}" />
                     </div>
                 </x-slot:value>
                 <x-slot:sub-value>

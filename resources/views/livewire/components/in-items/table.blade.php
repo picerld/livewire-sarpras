@@ -18,10 +18,8 @@
         class="bg-white rounded dark:bg-dark" with-pagination per-page="perPage" :per-page-values="[5, 20, 50]">
         @scope('actions', $itemsIn)
             <div class="flex gap-3">
-                <x-button icon="o-document-plus" class="btn-sm btn-ghost dark:text-slate-300 btn-outline"
-                    aria-label="delete item" spinner />
                 <x-button icon="o-folder-open" class="btn-sm btn-ghost dark:text-slate-300 btn-outline"
-                    aria-label="delete item" spinner />
+                    aria-label="delete item" wire:click="inItemImageModal({{ $itemsIn->id }})" spinner />
                 <x-button icon="o-trash" wire:click="delete({{ $itemsIn->id }})"
                     class="btn-sm btn-ghost dark:text-slate-300 btn-outline" aria-label="delete item" spinner />
             </div>
@@ -35,6 +33,17 @@
     </x-table>
 
     <x-spotlight />
+
+    <x-modal wire:model="inItemImage" class="backdrop-blur" box-class="w-full lg:min-w-[800px] md:min-w-[800px]">
+        <p class="text-sm">Press `ESC` or click outside to close.</p>
+        <x-card>
+            @if (isset($itemIn))
+                <x-file wire:model="image" accept="image/png, image/jpeg">
+                    {{-- <img src="{{ asset('img/submission.webp') }}" class="h-40 rounded-lg" /> --}}
+                </x-file>
+            @endif
+        </x-card>
+    </x-modal>
 
     <x-modal wire:model="createItems" class="backdrop-blur" box-class="w-full lg:min-w-[800px] md:min-w-[800px]">
         <p class="text-sm">Press `ESC` or click outside to close.</p>

@@ -1,7 +1,7 @@
 <div class="min-h-[85vh]">
     <!-- FIX THIS UI!!!!! -->
 
-    <x-button label="See all items" link="/in-items" icon="c-chevron-left" class="text-sm text-white bg-dark btn-outline btn-sm" spinner />
+    <x-button label="See all items" link="/out-items" icon="c-chevron-left" class="text-sm text-white bg-dark btn-outline btn-sm" spinner />
     <div class="grid w-full grid-cols-1 gap-4 py-3 md:grid-cols-3 lg:grid-cols-3">
         @forelse ($items as $item)
         <x-card title="{{ $item->item->name }} ({{ $item->item->type }})" class="my-2">
@@ -31,9 +31,9 @@
                 <x-badge value="{{ $item->item->category->aliases ?? 'null' }}" class="btn-ghost btn-outline" />
             </x-slot:menu>
             <div class="w-full mt-3">
-                <x-button icon="o-wrench-screwdriver"
-                    wire:click="save({{ $item->item->id }}, {{ $item->incoming_item_code }})" label="Edit"
-                    class="w-full btn-outline btn-ghost btn-sm" spinner aria-label="save item" />
+                {{-- <x-button icon="o-wrench-screwdriver"
+                    wire:click="delete({{ $item->item->id }}, {{ $item->incoming_item_code }})" label="Remove"
+                    class="w-full btn-outline btn-ghost btn-sm" spinner aria-label="delete item" /> --}}
             </div>
         </x-card>
     

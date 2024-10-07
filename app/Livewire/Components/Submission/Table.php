@@ -64,6 +64,7 @@ class Table extends Component
             ->when($this->selectedUser, fn(Builder $q) => $q->where('nip', $this->selectedUser))
             ->when($this->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
             ->when($this->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
+            ->orderBy('status', 'ASC')
             ->orderBy(...array_values($this->sortBy))
             ->paginate($this->perPage, ['id', 'users_name', 'total_items', 'status', 'regarding']);
     }
