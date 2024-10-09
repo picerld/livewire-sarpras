@@ -52,9 +52,11 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('requests', RequestController::class);
     });
     
-    // route for admin and pengawas
-    Route::resource('items', ItemController::class);
-    Route::resource('out-items', OutItemController::class);
+    // Route::middleware(['can:isAdmin'])->group(function () {
+        // route for admin and pengawas
+        Route::resource('items', ItemController::class);
+        Route::resource('out-items', OutItemController::class);
+    // });
 });
 
 // Users will be redirected to this route if not logged in

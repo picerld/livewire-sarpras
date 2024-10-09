@@ -34,14 +34,12 @@ class Detail extends Component
 
 
         if ($item) {
-            // Update item stock on item table
             $item->update(['stock' => abs($item->stock - $totalQty)]);
 
             IncomingItemDetail::where('item_code', $itemId)
                 ->where('incoming_item_code', $incomingItemCode)
                 ->delete();
 
-            // Update total item on incoming_item
             $totalItems = IncomingItemDetail::where('incoming_item_code', $incomingItemCode)
                 ->sum('qty');
 

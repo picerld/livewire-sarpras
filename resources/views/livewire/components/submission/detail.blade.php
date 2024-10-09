@@ -25,7 +25,7 @@
                     <x-icon name="o-tag" label="{{ $submission->item->merk ?? $submission->custom_item }}" />
                     <p class="text-sm font-semibold">
                         {{ $submission->qty_accepted > 0 && $submission->qty_accepted !== $submission->qty ? $submission->qty_accepted : $submission->qty }}
-                        {{ $submission->item->unit ?? "" }}
+                        {{ $submission->item->unit ?? '' }}
                     </p>
                     <x-slot:figure>
                         <img src="{{ !empty($submission->item->images) ? asset('/storage/' . $submission->item->images) : asset('img/submission.webp') }}"
@@ -52,7 +52,8 @@
                                 <x-button label="Accept" wire:click="approval({{ $submission->id }})" icon="o-check-circle"
                                     class="w-full mt-3 text-sm btn-outline btn-sm" spinner />
                             @else
-                                <x-button icon="o-bell-alert" class="w-full mt-3 text-sm btn-outline btn-sm" />
+                                <x-button icon="o-bell-alert" class="w-2/3 mt-3 text-sm text-white btn-outline bg-dark btn-sm" />
+                                <x-button icon="o-wrench-screwdriver" class="w-1/3 mt-3 text-sm btn-outline btn-sm" />
                             @endcan
                             <!-- END -->
                         @else

@@ -37,14 +37,14 @@ class TransactionChart extends Component
                     [
                         'label' => 'Incoming Items',
                         'data' => $incomingData,
-                        'backgroundColor' => '#09090b',
+                        'backgroundColor' => '#1E201E',
                         'borderRadius' => 5,
                         'barThickness' => 23,
                     ],
                     [
                         'label' => 'Outgoing Items',
                         'data' => $outgoingData,
-                        'backgroundColor' => '#333333',
+                        'backgroundColor' => '#3C3D37',
                         'borderRadius' => 5,
                         'barThickness' => 23,
                     ],

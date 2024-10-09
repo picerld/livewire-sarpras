@@ -23,9 +23,27 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased dark:bg-black dark:text-gray-400">
-    <div class="relative bg-gradient-to-b from-black to-gray-900">
-        <header class="absolute inset-x-0 top-0 z-10 w-full">
+<script>
+    window.onscroll = function() {
+        const header = document.querySelector("header");
+        const fixedNav = header.offsetTop;
+        const toTop = document.querySelector("#to-top");
+
+        if (window.pageYOffset > fixedNav) {
+            header?.classList.add("nav-fixed");
+            toTop?.classList.remove("hidden");
+            toTop?.classList.add("flex");
+        } else {
+            header?.classList.remove("nav-fixed");
+            toTop?.classList.remove("flex");
+            toTop?.classList.add("hidden");
+        }
+    };
+</script>
+
+<body class="font-sans antialiased bg-gradient-to-b from-black to-gray-900">
+    <div class="relative">
+        <header class="fixed inset-x-0 top-0 z-10 w-full transition-all duration-300 bg-transparent nav-fixed">
             <livewire:components.landing.header />
         </header>
 
@@ -41,10 +59,12 @@
                         ease using Sarana Prasarana. Streamline operations and stay productive effortlessly.
                     </p>
                     <div class="flex justify-center gap-5">
-                        <x-button label="Bergabung 🚀" link="#features"
-                            class="mt-10 text-base text-white transition-all duration-300 bg-purple-800 border-none outline-none hover:bg-purple-800/80" />
-                        <x-button label="Lihat guide 👀" link="#features"
-                            class="mt-10 text-base text-white transition-all duration-300 bg-gray-800 border-none outline-none hover:bg-gray-800/80" />
+                        <a href="#item"
+                            class="mt-10 text-base text-white transition-all duration-300 bg-purple-800 border-none outline-none btn hover:bg-purple-800/80">
+                            Let's Start 🚀</a>
+                        <a href="#faq" responsive
+                            class="mt-10 text-base text-white transition-all duration-300 bg-gray-800 border-none outline-none btn hover:bg-gray-800/80">
+                            Lihat guide 👀</a>
                     </div>
 
                     <div class="grid grid-cols-1 px-20 mt-24 text-left gap-x-12 gap-y-8 sm:grid-cols-2 sm:px-0">
@@ -55,6 +75,91 @@
                     </div>
                 </div>
             </div>
+        </section>
+
+        <section class="min-h-screen px-10" id="features">
+            <div class="grid grid-cols-2 gap-6 px-10">
+                <livewire:utils.stats title="Pengajuan" model="Submission" icon="o-arrow-trending-up"
+                    class="hover:scale-[99%] transition-all duration-200" />
+                <livewire:utils.stats title="Permintaan" model="Request" icon="o-arrow-trending-down"
+                    class="hover:scale-[99%] transition-all duration-200" />
+            </div>
+
+            <div class="py-10 sm:py-16 lg:py-24" id="faq">
+                <div class="max-w-5xl px-4 mx-auto sm:px-6 lg:px-8">
+                    <div class="max-w-2xl mx-auto text-center">
+                        <h2 class="text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">Questions &
+                            Answers</h2>
+                        <p class="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-300">Explore the common
+                            questions about Sarana Prasarana!</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 mt-12 md:mt-20 md:grid-cols-2 gap-y-16 gap-x-20">
+                        <div class="flex items-start">
+                            <div
+                                class="flex items-center justify-center flex-shrink-0 w-8 h-8 bg-gray-700 rounded-full">
+                                <span class="text-lg font-semibold text-white">?</span>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-xl font-semibold text-white">How to create an account?</p>
+                                <p class="mt-4 text-base text-gray-400">Amet minim mollit non deserunt ullamco est sit
+                                    aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div
+                                class="flex items-center justify-center flex-shrink-0 w-8 h-8 bg-gray-700 rounded-full">
+                                <span class="text-lg font-semibold text-white">?</span>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-xl font-semibold text-white">How can I make payment?</p>
+                                <p class="mt-4 text-base text-gray-400">Amet minim mollit non deserunt ullamco est sit
+                                    aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div
+                                class="flex items-center justify-center flex-shrink-0 w-8 h-8 bg-gray-700 rounded-full">
+                                <span class="text-lg font-semibold text-white">?</span>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-xl font-semibold text-white">Do you provide discounts?</p>
+                                <p class="mt-4 text-base text-gray-400">Amet minim mollit non deserunt ullamco est sit
+                                    aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div
+                                class="flex items-center justify-center flex-shrink-0 w-8 h-8 bg-gray-700 rounded-full">
+                                <span class="text-lg font-semibold text-white">?</span>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-xl font-semibold text-white">How do you provide support?</p>
+                                <p class="mt-4 text-base text-gray-400">Amet minim mollit non deserunt ullamco est sit
+                                    aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-center mt-12 md:mt-20">
+                        <div class="px-8 py-4 text-center bg-gray-800 rounded-full">
+                            <p class="text-gray-50">Didn’t find the answer you are looking for?
+                                <a href="#" title=""
+                                    class="text-yellow-300 transition-all duration-200 hover:text-yellow-400 focus:text-yellow-400 hover:underline">Contact
+                                    our support
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="min-h-screen px-10" id="item">
+            <livewire:components.unit.listItem />
         </section>
     </div>
 </body>

@@ -12,36 +12,27 @@
     <meta name="author" content="Picerld">
 
     <title>{{ config('app.name', 'Laravel') }} - Sarpras</title>
-    
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-
-        <!-- Page Heading -->
-        @if (isset($header))
-            <header class="bg-white shadow dark:bg-gray-800">
-                <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+<body class="transition-colors duration-300">
+    <livewire:components.unit.navbar />
+    <x-main with-nav full-width>
+            <livewire:components.unit.sidebar />
+        <x-slot:content class="flex-1 px-6 pt-4 overflow-y-auto md:pt-4">
+            @if (isset($header))
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {{ $header }}
-                    <x-menu-item title="Logout" icon="o-power"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();" />
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                        <!-- CSRF Protection -->
-                    </form>
                 </div>
-            </header>
-        @endif
-
-        <!-- Page Content -->
-        <main>
+            @endif
             {{ $slot }}
-        </main>
-    </div>
+        </x-slot:content>
+    </x-main>
+
+    <x-toast />
+
 </body>
 
 </html>

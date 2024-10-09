@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nip', 20);
             $table->foreignId('supplier_id')->constrained('suppliers')->onDelete('cascade');
             $table->integer('total_items')->default(0);
+            $table->string('image')->nullable();
             $table->timestamps();
             
             $table->foreign('nip')->references('id')->on('employees')->onDelete('cascade');
