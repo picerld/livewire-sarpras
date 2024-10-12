@@ -1,6 +1,6 @@
 <div class="grid grid-cols-1 gap-5 px-10 lg:grid-cols-4 md:grid-cols-2">
     @forelse ($items as $item)
-        <x-card title="{{ $item->name }} ({{ $item->type }})" class="my-2">
+        <x-card title="{{ $item->name }} ({{ $item->type }})" class="my-2 bg-gray-200">
             <h3 class="text-base font-semibold">
                 ({{ $item->qty }} {{ $item->unit }})
             </h3>
@@ -22,8 +22,12 @@
             </x-slot:menu>
 
             <div class="w-full mt-3">
-                <x-button icon="o-wrench-screwdriver" label="Pengajuan"
-                    class="w-full btn-outline btn-ghost btn-sm" spinner aria-label="save item" />
+                @auth
+                    <x-button icon="o-wrench-screwdriver" label="Pengajuan" class="w-full btn-outline btn-ghost btn-sm"
+                        spinner aria-label="save item" />
+                @else
+                    
+                @endauth
             </div>
         </x-card>
 

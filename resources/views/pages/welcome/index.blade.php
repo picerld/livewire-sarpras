@@ -59,7 +59,7 @@
                         ease using Sarana Prasarana. Streamline operations and stay productive effortlessly.
                     </p>
                     <div class="flex justify-center gap-5">
-                        <a href="#item"
+                        <a href="#faq"
                             class="mt-10 text-base text-white transition-all duration-300 bg-purple-800 border-none outline-none btn hover:bg-purple-800/80">
                             Let's Start 🚀</a>
                         <a href="#faq" responsive
@@ -78,12 +78,14 @@
         </section>
 
         <section class="min-h-screen px-10" id="features">
-            <div class="grid grid-cols-2 gap-6 px-10">
-                <livewire:utils.stats title="Pengajuan" model="Submission" icon="o-arrow-trending-up"
-                    class="hover:scale-[99%] transition-all duration-200" />
-                <livewire:utils.stats title="Permintaan" model="Request" icon="o-arrow-trending-down"
-                    class="hover:scale-[99%] transition-all duration-200" />
-            </div>
+            @auth
+                <div class="grid grid-cols-2 gap-6 px-10">
+                    <livewire:utils.stats title="Pengajuan" model="Submission" icon="o-arrow-trending-up"
+                        class="hover:scale-[99%] transition-all duration-200" />
+                    <livewire:utils.stats title="Permintaan" model="Request" icon="o-arrow-trending-down"
+                        class="hover:scale-[99%] transition-all duration-200" />
+                </div>
+            @endauth
 
             <div class="py-10 sm:py-16 lg:py-24" id="faq">
                 <div class="max-w-5xl px-4 mx-auto sm:px-6 lg:px-8">
@@ -101,7 +103,7 @@
                                 <span class="text-lg font-semibold text-white">?</span>
                             </div>
                             <div class="ml-4">
-                                <p class="text-xl font-semibold text-white">How to create an account?</p>
+                                <p class="text-xl font-semibold text-white">Bagaimana cara melakukan pengadaan?</p>
                                 <p class="mt-4 text-base text-gray-400">Amet minim mollit non deserunt ullamco est sit
                                     aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</p>
                             </div>
@@ -113,7 +115,7 @@
                                 <span class="text-lg font-semibold text-white">?</span>
                             </div>
                             <div class="ml-4">
-                                <p class="text-xl font-semibold text-white">How can I make payment?</p>
+                                <p class="text-xl font-semibold text-white">Bagaimana cara melakukan permintaan?</p>
                                 <p class="mt-4 text-base text-gray-400">Amet minim mollit non deserunt ullamco est sit
                                     aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</p>
                             </div>

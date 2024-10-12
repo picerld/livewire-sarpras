@@ -138,7 +138,7 @@ class Table extends Component
     {
         // try {
         $this->newItem['id'] = GenerateCodeHelper::handleGenerateCode();
-        
+
         $this->validate();
         
         $this->newItem['images'] = ImageHelper::handleImage($this->newItem['images']);

@@ -27,6 +27,8 @@ return new class extends Migration
             $table->text('description');
             $table->timestamps();
 
+            // soft delete
+            // $table->softDeletesTz('deleted_at', precision: 0);
             $table->foreign('category_id')->references('id')->on('category')->onDelete('set null');
         });
     }
