@@ -19,7 +19,7 @@ export default {
             colors: {
                 // #09090b',
                 dark: '#1d232a',
-                accent: 'rgba(153, 102, 255, 0.7)'
+                accent: '#6d28d9',
             },
             fontFamily: {
                 // sans: ['Figtree', ...defaultTheme.fontFamily.sans],

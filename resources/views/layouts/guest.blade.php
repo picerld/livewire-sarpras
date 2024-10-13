@@ -26,7 +26,7 @@
 <script>
     window.onscroll = function() {
         const header = document.querySelector("header");
-        const fixedNav = header.offsetTop;
+        const fixedNav = header?.offsetTop;
         const toTop = document.querySelector("#to-top");
 
         if (window.pageYOffset > fixedNav) {
@@ -43,9 +43,11 @@
 
 <body class="font-sans antialiased bg-gradient-to-b from-black to-gray-900">
     <div class="relative">
-        <nav class="fixed inset-x-0 top-0 z-10 w-full transition-all duration-300 bg-transparent nav-fixed">
-            <livewire:components.landing.header />
-        </nav>
+        @if (isset($header))
+            <header class="fixed inset-x-0 top-0 z-10 w-full transition-all duration-300 bg-transparent nav-fixed">
+                {{ $header }}
+            </header>
+        @endif
 
         <main>
             {{ $slot }}
