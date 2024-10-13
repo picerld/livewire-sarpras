@@ -31,4 +31,8 @@ class Item extends Model
     public function outgoingItem(): HasMany {
         return $this->hasMany(OutgoingItem::class, 'id');
     }
+
+    public function cart(): HasMany {
+        return $this->hasMany(Cart::class, 'id');
+    }
 }

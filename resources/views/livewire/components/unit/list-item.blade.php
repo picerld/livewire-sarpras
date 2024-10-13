@@ -14,7 +14,7 @@
 
             <x-slot:figure>
                 <img src="{{ asset('/storage/' . $item->images) }}" height="200" width="230"
-                    class="object-cover w-full min-h-40 max-h-40" aria-labelledby="{{ $item->id }}"
+                    class="object-cover w-full min-h-32 max-h-32" aria-labelledby="{{ $item->id }}"
                     alt="{{ $item->name }}" />
             </x-slot:figure>
             <x-slot:menu>
