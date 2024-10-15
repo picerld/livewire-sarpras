@@ -88,17 +88,17 @@
         <p class="text-sm">Press `ESC` or click outside to close.</p>
         <x-card>
             @if (isset($itemDetail))
+                {{ $itemDetail->id }}
                 <div class="flex flex-col gap-3 mb-2">
                     <h3 class="text-2xl font-semibold">{{ $itemDetail->name }}</h3>
                 </div>
-                <x-form wire:submit.prevent="cart" no-separator>
+                <x-form wire:submit.prevent="cart({{ $itemDetail->id }})" no-separator>
                     <x-input label="Quantity" wire:model="newCart.qty" icon="o-user" inline />
+                    <x-slot:actions>
+                        <x-button label="Add to cart!" class="text-white btn-primary hover:opacity-80" type="submit"
+                            spinner="cart" />
+                    </x-slot:actions>
                 </x-form>
-
-                <x-slot:actions>
-                    <x-button label="Add to cart!" class="text-white btn-primary hover:opacity-80" type="submit"
-                        spinner="cart" wire:click="cart({{ $itemDetail->id }})" />
-                </x-slot:actions>
             @endif
         </x-card>
     </x-modal>

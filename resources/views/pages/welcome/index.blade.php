@@ -2,6 +2,8 @@
     <x-slot name="header">
         <livewire:components.landing.header />
     </x-slot>
+
+    <livewire:components.unit.sidebar />
     
     <!-- MOVE TO LANDING/FEATURES FOR ALL SECTION -->
     <livewire:components.landing.applicationSection />

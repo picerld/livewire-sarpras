@@ -14,6 +14,7 @@ class ListItem extends Component
     use Toast;
 
     public $newCart = [
+        'item_code' => '',
         'qty' => null,
     ];
 
@@ -40,37 +41,42 @@ class ListItem extends Component
         $this->itemCode = $itemCode;
         $this->itemDetail = Item::where('id', $itemCode)->first();
     }
-
+    
     public function cart($itemCode)
     {
-        $this->newCart['item_code'] = $itemCode;
+        try {
+            $this->newCart['item_code'] = $itemCode;
 
-        $carts = Cart::where('nip', Auth::id())->where('item_code', $itemCode)->first();
+            $carts = Cart::where('nip', Auth::user()->nip)->where('item_code', $itemCode)->first();
 
-        $this->validate([
-            'newCart.qty' => 'required|integer|min:1',
-        ]);
-
-        if ($carts) {
-            $carts->update([
-                'qty' => $carts->qty + $this->newCart['qty'],
+            $this->validate([
+                'newCart.qty' => 'required|integer|min:1',
             ]);
+
+            if ($carts) {
+                $carts->update([
+                    'qty' => $carts->qty + $this->newCart['qty'],
+                ]);
+                $this->success("Cart successfully created!", 'Success!', position: 'toast-bottom');
+                $this->cartModal = false;
+                $this->newCart = ['item_code' => null, 'qty' => null];
+                return;
+            }
+
+            Cart::create([
+                'id' => GenerateCodeHelper::handleGenerateCode(),
+                'nip' => Auth::user()->nip,
+                'item_code' => $this->newCart['item_code'],
+                'qty' => $this->newCart['qty'],
+            ]);
+
             $this->success("Cart successfully created!", 'Success!', position: 'toast-bottom');
+            $this->newCart = ['item_code' => null, 'qty' => null];
             $this->cartModal = false;
-            $this->newCart['qty'] = null;
-            return;
+        } catch (\Throwable $th) {
+            $this->cartModal = false;
+            $this->error('Try again later ...', 'Something wrong!!', position: 'toast-bottom');
         }
-
-        Cart::create([
-            'id' => GenerateCodeHelper::handleGenerateCode(),
-            'nip' => Auth::user()->nip,
-            'item_code' => $this->newCart['item_code'],
-            'qty' => $this->newCart['qty'],
-        ]);
-
-        $this->success("Cart successfully created!", 'Success!', position: 'toast-bottom');
-        $this->newCart['qty'] = null;
-        $this->cartModal = false;
     }
 
     public function mount()
