@@ -48,7 +48,7 @@
                         <div class="flex gap-3">
                             <x-button icon="o-information-circle" class="w-1/3 text-white btn-outline btn-sm bg-dark"
                                 wire:click="detailItemModal({{ $item->id }})" spinner />
-                            <x-button icon="o-squares-plus" class="w-2/3 text-white btn-outline btn-sm bg-dark"
+                            <x-button icon="o-tag" class="w-2/3 text-white btn-outline btn-sm bg-dark"
                                 wire:click="createCartModal({{ $item->id }})" spinner />
                         </div>
                     @else
@@ -57,7 +57,6 @@
                     @endauth
                 </div>
             </x-card>
-
 
         @empty
             <x-alert title="Nothing here!" description="Try to remove some filters." icon="o-exclamation-triangle"

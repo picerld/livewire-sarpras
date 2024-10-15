@@ -45,9 +45,21 @@ class ListItem extends Component
     {
         $this->newCart['item_code'] = $itemCode;
 
+        $carts = Cart::where('nip', Auth::id())->where('item_code', $itemCode)->first();
+
         $this->validate([
             'newCart.qty' => 'required|integer|min:1',
         ]);
+
+        if ($carts) {
+            $carts->update([
+                'qty' => $carts->qty + $this->newCart['qty'],
+            ]);
+            $this->success("Cart successfully created!", 'Success!', position: 'toast-bottom');
+            $this->cartModal = false;
+            $this->newCart['qty'] = null;
+            return;
+        }
 
         Cart::create([
             'id' => GenerateCodeHelper::handleGenerateCode(),
@@ -57,14 +69,15 @@ class ListItem extends Component
         ]);
 
         $this->success("Cart successfully created!", 'Success!', position: 'toast-bottom');
+        $this->newCart['qty'] = null;
         $this->cartModal = false;
     }
 
     public function mount()
     {
         $this->items = Item::query()
-                        ->orderBy('name', 'ASC')
-                        ->get();
+            ->orderBy('name', 'ASC')
+            ->get();
     }
 
     public function render()

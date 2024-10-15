@@ -12,6 +12,7 @@ use App\Http\Controllers\Items\StockController;
 use App\Http\Controllers\Request\RequestController;
 use App\Http\Controllers\Submission\SubmissionController;
 use App\Http\Controllers\Supplier\SupplierController;
+use App\Http\Controllers\Unit\CartController;
 use App\Http\Controllers\Unit\UnitController;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +57,10 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('items', ItemController::class);
         Route::resource('out-items', OutItemController::class);
     // });
+
+    Route::middleware(['can:isUnit'])->group(function () {
+        Route::resource('carts', CartController::class);
+    });
 });
 
 // Users will be redirected to this route if not logged in
