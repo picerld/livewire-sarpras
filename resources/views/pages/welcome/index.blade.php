@@ -1,63 +1,67 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="light" class="scroll-smooth">
+<x-guest-layout>
+    <x-slot name="header">
+        <livewire:components.landing.header />
+    </x-slot>
+    
+    <!-- MOVE TO LANDING/FEATURES FOR ALL SECTION -->
+    <livewire:components.landing.applicationSection />
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <section class="min-h-screen px-10" id="features">
+        @auth
+            <div class="grid grid-cols-2 gap-6 px-10">
+                <livewire:utils.stats title="Pengajuan" model="Submission" icon="o-arrow-trending-up"
+                    class="hover:scale-[99%] transition-all duration-200" />
+                <livewire:utils.stats title="Permintaan" model="Request" icon="o-arrow-trending-down"
+                    class="hover:scale-[99%] transition-all duration-200" />
+            </div>
+        @endauth
 
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Sarpras - Sistem Informasi Manajemen Sarana dan Prasarana.">
-    <meta name="keywords" content="Sarpras, Manajemen, Sarana, Prasarana, Laravel, Livewire">
-    <meta name="author" content="Picerld">
+        <div class="py-10 sm:py-16 lg:py-24" id="faq">
+            <div class="max-w-5xl px-4 mx-auto sm:px-6 lg:px-8">
+                <div class="max-w-2xl mx-auto text-center">
+                    <h2 class="text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">Questions &
+                        Answers</h2>
+                    <p class="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-300">Explore the common
+                        questions about Sarana Prasarana!</p>
+                </div>
 
-    <title>Laravel - Sarpras</title>
+                <div class="grid grid-cols-1 mt-12 md:mt-20 md:grid-cols-2 gap-y-16 gap-x-20">
+                    <livewire:components.landing.faqCard question="Bagaimana cara melakukan pengadaan?"
+                    answer="Amet minim mollit non deserunt ullamco est sit
+                    aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit." />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+                    <livewire:components.landing.faqCard question="Bagaimana cara melakukan permintaan?"
+                    answer="Amet minim mollit non deserunt ullamco est sit
+                    aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit." />
 
-    {{-- <link rel="stylesheet" href="{{ mix('/resources/css/app.css') }}">
-    <script src="{{ mix('/resources/js/app.js') }}"></script> --}}
+                    <livewire:components.landing.faqCard question="Do you provide discounts?"
+                    answer="Amet minim mollit non deserunt ullamco est sit
+                    aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit." />
 
-    <!-- PRODUCTION -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
+                    <livewire:components.landing.faqCard question="How do you provide support?"
+                    answer="Amet minim mollit non deserunt ullamco est sit
+                    aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit." />
+                </div>
 
-<body class="font-sans antialiased dark:bg-black dark:text-gray-400">
-    <div class="relative bg-gradient-to-b from-black to-gray-900">
-        <header class="absolute inset-x-0 top-0 z-10 w-full">
-            <livewire:components.landing.header />
-        </header>
-
-        <section class="relative lg:min-h-[800px] pb-10 lg:pt-48 md:pt-32 pt-40">
-            <div class="relative z-20 px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="max-w-xl mx-auto text-center">
-                    <h1 class="text-6xl font-bold">
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-white"><span
-                                class="text-purple-800">Sarana</span> Prasarana
-                        </span>
-                    </h1>
-                    <p class="mt-5 text-base text-gray-300 sm:text-xl">No more hassle taking loans and making payments.
-                        Try
-                        Postcrats credit card, make your life simple.</p>
-
-                    <div class="flex justify-center gap-5">
-                        <x-button label="Bergabung 🚀" link="#features"
-                            class="mt-10 text-base text-white transition-all duration-300 bg-purple-800 border-none outline-none hover:bg-purple-800/80" />
-                        <x-button label="Lihat guide 👀" link="#features"
-                            class="mt-10 text-base text-white transition-all duration-300 bg-gray-800 border-none outline-none hover:bg-gray-800/80" />
-                    </div>
-
-                    <div
-                        class="grid grid-cols-1 px-20 mt-24 text-left gap-x-12 gap-y-8 sm:grid-cols-2 sm:px-0">
-                        <livewire:components.landing.card icon="s-computer-desktop" title="Simple dashboard"
-                            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, alias." />
-                        <livewire:components.landing.card icon="o-chart-bar-square" title="Realtime analytics"
-                            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, alias." />
+                <div class="flex items-center justify-center mt-12 md:mt-20">
+                    <div class="px-8 py-4 text-center bg-gray-800 rounded-full">
+                        <p class="text-gray-50">Didn’t find the answer you are looking for?
+                            <a href="#"
+                                class="text-yellow-300 transition-all duration-200 hover:text-yellow-400 focus:text-yellow-400 hover:underline">Contact
+                                our support
+                            </a>
+                        </p>
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
-</body>
-</html>
+        </div>
+    </section>
+
+    <section class="min-h-screen px-10" id="item">
+        <div class="flex flex-col items-start text-start">
+            <h2 class="text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">Explore Item's</h2>
+            <p class="mt-4 text-base leading-relaxed text-gray-300">Explore the existing items in Sarana Prasarana!</p>
+        </div>
+        <livewire:components.unit.listItem />
+    </section>
+</x-guest-layout>

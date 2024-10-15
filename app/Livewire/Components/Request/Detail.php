@@ -4,6 +4,7 @@ namespace App\Livewire\Components\Request;
 
 use App\Helpers\GenerateCodeHelper;
 use App\Models\OutgoingItem;
+use App\Models\OutgoingItemDetail;
 use App\Models\Request;
 use App\Models\RequestDetail;
 use Illuminate\Support\Facades\Auth;
@@ -49,7 +50,7 @@ class Detail extends Component
     {
         $item = $this->requestItem->item;
 
-        // check if stock is 0 
+        // check if stock is 0
         if ($this->requestItem->item->stock == 0) {
             $this->approvalModal = false;
             $this->error("Stok untuk $item->name habis!", 'Oops!', position: 'toast-bottom');
@@ -81,10 +82,10 @@ class Detail extends Component
         }
 
         // STORE TO OUTGOING AND DETAIL TABLE
-        $this->createOutgoingItem($item);
+        $this->createOutgoingItem($requestDetail);
 
         // validate if stock < stock min
-        if ($item->stock <= $item->minimum_stock) {
+        if ($item->stock <= $item->mxinimum_stock) {
             $this->approvalModal = false;
             $this->warning("Jumlah stock $item->name, kurang dari stock minimum!", 'Success!', redirectTo: "/requests/{$this->requestCode}", position: 'toast-bottom');
         }
@@ -93,15 +94,36 @@ class Detail extends Component
         $this->approvalModal = false;
     }
 
-    // helper method to create outgoing item and detail
-    private function createOutgoingItem($item): void
+    private function createOutgoingItem($requestDetail): void
     {
-        $outgoingItem = OutgoingItem::create([
+        $outgoingItem = OutgoingItem::where('request_code', $requestDetail->request_code)->first();
+
+        if (!$outgoingItem) {
+            $outgoingItem = OutgoingItem::create([
+                'id' => GenerateCodeHelper::handleGenerateCode(),
+                'request_code' => $requestDetail->request_code,
+                'nip' => $this->nip,
+                'total_items' => $this->requestApproved['qty'],
+                'updated_at' => null
+            ]);
+            $this->createOutgoingItemDetail($outgoingItem, $requestDetail->item);
+            return;
+        }
+
+        $this->createOutgoingItemDetail($outgoingItem, $requestDetail->item);
+    
+        $outgoingItem->update([
+            'total_items' => $outgoingItem->total_items + $this->requestApproved['qty'],
+        ]);
+    }
+    
+    private function createOutgoingItemDetail($outgoingItem, $item): void
+    {
+        OutgoingItemDetail::create([
             'id' => GenerateCodeHelper::handleGenerateCode(),
-            'nip' => $this->nip,
+            'outgoing_item_code' => $outgoingItem->id,
             'item_code' => $item->id,
-            'total_items' => $this->requestApproved['qty'],
-            'updated_at' => null
+            'qty' => $this->requestApproved['qty'],
         ]);
     }
 

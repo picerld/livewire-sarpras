@@ -41,6 +41,7 @@
         <x-form wire:submit="itemsOut" no-separator>
             <!-- User Filter -->
             <x-choices-offline label="User" wire:model="selectedUser" :options="$users" searchable inline single />
+            <x-choices-offline label="Status" wire:model="selectedStatus" :options="$status" searchable inline single />
 
             <!-- Date Range Filter -->
             <x-input type="date" label="From Date" wire:model="fromDate" />

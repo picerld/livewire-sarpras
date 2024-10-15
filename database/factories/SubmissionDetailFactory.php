@@ -17,10 +17,15 @@ class SubmissionDetailFactory extends Factory
     public function definition(): array
     {
         return [
-            'submission_id' => $this->faker->numberBetween(1, 10),
-            'item_id' => $this->faker->numberBetween(1, 10),
+            'id' => $this->faker->unique()->randomNumber(9),
+            'submission_code' => $this->faker->numberBetween(1, 10),
+            'item_code' => $this->faker->numberBetween(1, 10),
             'qty' => $this->faker->numberBetween(1, 10),
+            'custom_item' => null,
+            'qty' => null,
             'qty_accepted' => $this->faker->numberBetween(1, 10),
+            'accepted_by' => $this->faker->numberBetween(1, 10),
+            'status_note' => null,
         ];
     }
 }

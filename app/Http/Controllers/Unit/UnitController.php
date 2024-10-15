@@ -8,6 +8,6 @@ class UnitController extends Controller
 {
     public function __invoke()
     {
-        return view('pages.unit.index');
+        return view('pages.welcome.index');
     }
 }

@@ -1,37 +1,61 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="light">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="light" class="scroll-smooth">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- SEO Meta Tags -->
     <meta name="description" content="Sarpras - Sistem Informasi Manajemen Sarana dan Prasarana.">
     <meta name="keywords" content="Sarpras, Manajemen, Sarana, Prasarana, Laravel, Livewire">
     <meta name="author" content="Picerld">
 
-    <title>{{ 'Login - ' . 'Sarpras' }}</title>
+    <title>Laravel - Sarpras</title>
 
-    <!-- CHANGE THE ICON -->
-    <link rel="icon" href="{{ asset('avatars/04.png') }}">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
-    <!-- !!! DEPLOYMENT !!! -->
+    {{-- <link rel="stylesheet" href="{{ mix('/resources/css/app.css') }}">
+    <script src="{{ mix('/resources/js/app.js') }}"></script> --}}
+
+    <!-- PRODUCTION -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased text-gray-900">
-    <div class="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0">
-        {{-- <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 text-gray-500 fill-current" />
-                </a>
-            </div> --}}
+<script>
+    window.onscroll = function() {
+        const header = document.querySelector("header");
+        const fixedNav = header?.offsetTop;
+        const toTop = document.querySelector("#to-top");
 
-        <div class="w-full overflow-hidden">
+        if (window.pageYOffset > fixedNav) {
+            header?.classList.add("nav-fixed");
+            toTop?.classList.remove("hidden");
+            toTop?.classList.add("flex");
+        } else {
+            header?.classList.remove("nav-fixed");
+            toTop?.classList.remove("flex");
+            toTop?.classList.add("hidden");
+        }
+    };
+</script>
+
+<body class="font-sans antialiased bg-gradient-to-b from-black to-gray-900">
+    <div class="relative">
+        @if (isset($header))
+            <header class="fixed inset-x-0 top-0 z-10 w-full transition-all duration-300 bg-transparent nav-fixed">
+                {{ $header }}
+            </header>
+        @endif
+
+        <main>
             {{ $slot }}
-        </div>
+        </main>
+
     </div>
+    
+    <x-toast />
 </body>
 
 </html>

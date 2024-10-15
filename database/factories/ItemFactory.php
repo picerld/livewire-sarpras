@@ -30,7 +30,7 @@ class ItemFactory extends Factory
             'stock' => $this->faker->numberBetween(10, 100),
             'minimum_stock' => $this->faker->numberBetween(10, 100),
             'category_id' => $this->faker->numberBetween(1, 5),
-            'description' => $this->faker->paragraph(1) 
+            'description' => $this->faker->paragraph(1)
         ];
     }
 }

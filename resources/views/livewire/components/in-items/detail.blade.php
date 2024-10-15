@@ -32,8 +32,8 @@
             </x-slot:menu>
             <div class="w-full mt-3">
                 <x-button icon="o-wrench-screwdriver"
-                    wire:click="delete({{ $item->item->id }}, {{ $item->incoming_item_code }})" label="Remove"
-                    class="w-full btn-outline btn-ghost btn-sm" spinner aria-label="delete item" />
+                    wire:click="save({{ $item->item->id }}, {{ $item->incoming_item_code }})" label="Edit"
+                    class="w-full btn-outline btn-ghost btn-sm" spinner aria-label="save item" />
             </div>
         </x-card>
     

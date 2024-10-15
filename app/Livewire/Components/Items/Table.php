@@ -44,13 +44,12 @@ class Table extends Component
         ['key' => 'category_aliases', 'label' => 'Kategori', 'class' => 'dark:text-slate-300'],
         ['key' => 'stock', 'label' => 'Stok', 'class' => 'dark:text-slate-300'],
         ['key' => 'minimum_stock', 'label' => 'Stok Min', 'class' => 'dark:text-slate-300 text-center'],
-        ['key' => 'created_at', 'label' => 'Tanggal', 'class' => 'dark:text-slate-300'],
     ];
 
     public int $perPage = 5;
 
     public $search = "";
-    public $sortBy = ['column' => 'created_at', 'direction' => 'DESC'];
+    public $sortBy = ['column' => 'name', 'direction' => 'ASC'];
 
     // drawer
     public bool $drawerIsOpen = false;
@@ -59,8 +58,8 @@ class Table extends Component
 
     // filters
     public $selectedCategory = null;
-    public $fromDate = null;
-    public $toDate = null;
+    public $fromStock = null;
+    public $toStock = null;
 
     // Validation
     public function rules()
@@ -115,10 +114,10 @@ class Table extends Component
             ->withAggregate('category', 'aliases')
             ->when($this->search, fn(Builder $q) => $q->whereAny(['id', 'name', 'merk', 'price', 'stock'], 'LIKE', "%$this->search%"))
             ->when($this->selectedCategory, fn(Builder $q) => $q->where('category_id', $this->selectedCategory))
-            ->when($this->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $this->fromDate))
-            ->when($this->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
+            ->when($this->fromStock, fn(Builder $q) => $q->where('stock', '>=', $this->fromStock))
+            ->when($this->toStock, fn(Builder $q) => $q->where('stock', '<=', $this->toStock))
             ->orderBy(...array_values($this->sortBy))
-            ->paginate($this->perPage, ['id', 'name', 'price', 'stock', 'minimum_stock', 'category->name', 'created_at']);
+            ->paginate($this->perPage, ['id', 'name', 'price', 'stock', 'minimum_stock', 'category->name']);
     }
 
     public function updated($property): void
@@ -139,7 +138,7 @@ class Table extends Component
     {
         // try {
         $this->newItem['id'] = GenerateCodeHelper::handleGenerateCode();
-        
+
         $this->validate();
         
         $this->newItem['images'] = ImageHelper::handleImage($this->newItem['images']);

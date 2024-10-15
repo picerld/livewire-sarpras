@@ -15,25 +15,32 @@
 
         <!-- Centered navigation links -->
         <div class="flex-grow hidden lg:flex lg:items-center lg:justify-center lg:space-x-10">
-            <a href="#" title=""
-                class="text-base text-white transition-all duration-200 hover:text-gray-300">Features</a>
+            <a href="/" title=""
+                class="text-base text-white transition-all duration-200 hover:text-gray-300">Home</a>
 
             <a href="#" title=""
-                class="text-base text-white transition-all duration-200 hover:text-gray-300">Solutions</a>
+                class="text-base text-white transition-all duration-200 hover:text-gray-300">Pengadaan</a>
 
             <a href="#" title=""
-                class="text-base text-white transition-all duration-200 hover:text-gray-300">Resources</a>
+                class="text-base text-white transition-all duration-200 hover:text-gray-300">Permintaan</a>
 
             <a href="#" title=""
-                class="text-base text-white transition-all duration-200 hover:text-gray-300">Pricing</a>
+                class="text-base text-white transition-all duration-200 hover:text-gray-300">Riwayat</a>
         </div>
+
+        <form id="logout-form" class="hidden" action="{{ route('logout') }}" method="POST">
+            @csrf
+        </form>
 
         <!-- Right side login/auth items -->
         <div class="lg:flex lg:items-center lg:justify-end lg:space-x-6 sm:ml-auto">
             @auth
-                <a href="{{ route(Auth::user()->role) }}"
+                <x-button icon="o-shopping-cart" class="text-black bg-white" />
+                {{-- <a href="{{ route(Auth::user()->role) }}"
                     class="inline-flex items-center justify-center px-3 sm:px-5 py-2.5 text-sm sm:text-base font-semibold transition-all duration-200 text-white bg-gray-600 hover:bg-gray-700 focus:bg-gray-700 rounded-lg"
-                    role="button">Dashboard</a>
+                    role="button">Profil</a> --}}
+                <x-button icon="o-power"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();" />
             @else
                 <a href="{{ route('login') }}"
                     class="inline-flex items-center justify-center px-10 py-1.5 text-sm font-semibold text-white transition-all duration-200 bg-gray-800 rounded-md sm:text-base hover:bg-gray-900/95 focus:bg-gray-900/95"

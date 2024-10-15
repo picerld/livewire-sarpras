@@ -1,8 +1,10 @@
 <?php
 
 use Livewire\Volt\Component;
+use Mary\Traits\Toast;
 
 new #[Title('Login')] class extends Component {
+    use Toast;
     #[Rule('required|email')]
     public string $username = '';
 
@@ -42,10 +44,8 @@ new #[Title('Login')] class extends Component {
                 return redirect()->route('admin');
             case 'pengawas':
                 return redirect()->route('pengawas');
-            case 'unit':
-                return redirect()->route('unit');
             default:
-                return redirect()->intended('/');
+                return $this->success('Login success!', 'Success!', redirectTo: route('unit'), position: 'toast-bottom');
         }
     }
 };

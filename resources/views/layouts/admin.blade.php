@@ -48,5 +48,4 @@
     <x-toast />
 
 </body>
-
 </html>

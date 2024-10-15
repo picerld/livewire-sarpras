@@ -20,29 +20,28 @@
         </livewire:utils.header>
     </x-slot>
 
-    <div id="stats" class="grid grid-cols-1 gap-6 mt-7 lg:grid-cols-4 md:grid-cols-2">
+    <div id="stats" class="grid grid-cols-1 gap-4 mt-7 lg:grid-cols-4 md:grid-cols-4">
         <!-- param 'model' for models -->
-        <livewire:utils.stats title="User" model="User" icon="o-identification" />
-        <livewire:utils.stats title="Total Pengajuan" model="Submission" icon="o-arrow-trending-up" />
-        <livewire:utils.stats title="Total Permintaan" model="Request" icon="o-arrow-trending-down" />
-        <livewire:utils.stats title="Barang" model="Item" icon="o-chart-pie" />
+        <livewire:utils.stats title="Item" model="Item" icon="o-puzzle-piece" />
+        <livewire:utils.stats title="In Item" model="incomingItem" icon="o-arrow-trending-up" />
+        <livewire:utils.stats title="Out Item" model="outgoingItem" icon="o-arrow-trending-down" />
+        <livewire:utils.stats title="Item" model="Item" icon="o-chart-pie" />
     </div>
 
     <div id="charts" class="flex flex-wrap w-full gap-4 pt-3 sm:flex-nowrap">
         <!-- dinamis chart -->
-        <div class="w-full shadow md:w-2/3 lg:w-2/3">
+        <div class="w-full shadow md:w-3/4 lg:w-3/4">
             <!-- 'type' for type chart -->
-            <livewire:utils.charts class="flex items-center w-full h-full" type="bar" />
+            <livewire:utils.transactionChart />
         </div>
-        <div class="w-full shadow md:w-1/3 lg:w-1/3">
-            <livewire:utils.charts class="flex items-center w-full h-full" type="pie" />
+        <div class="w-full shadow md:w-1/4 lg:w-1/4">
+            <livewire:utils.unitChart />
         </div>
     </div>
 
     <div id="overview" class="grid grid-cols-1 gap-3 mt-4 lg-grid-cols-2 md:grid-cols-2">
-        <!-- param 'model' for models -->
-        <livewire:components.admin.items title="Items" link="items" model="Item" />
-        <livewire:components.admin.items title="Users" link="users" model="User" />
+        <livewire:components.admin.items title="Pengadaan" link="submissions" model="Submission" />
+        <livewire:components.admin.items title="Permintaan" link="requests" model="Request" />
     </div>
 
     <div id="user-tabel" class="w-full py-3">

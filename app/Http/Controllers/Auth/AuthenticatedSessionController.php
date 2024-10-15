@@ -8,9 +8,12 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Mary\Traits\Toast;
 
 class AuthenticatedSessionController extends Controller
 {
+    use Toast;
+
     /**
      * Display the login view.
      */
@@ -36,7 +39,7 @@ class AuthenticatedSessionController extends Controller
             return redirect(route('pengawas'));
         }
 
-        return redirect()->intended(route('unit', absolute: false));
+        $this->success('Login success!', 'Success!', redirectTo: route('unit') , position: 'toast-bottom');
     }
 
     /**

@@ -17,7 +17,11 @@ class SubmissionFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => fake()->numberBetween(1, 10),
+            'id' => $this->faker->unique()->randomNumber(9),
+            'nip' => $this->faker->unique()->randomNumber(9),
+            'status' => $this->faker->randomElement(['pending', 'accepted', 'rejected']),
+            'regarding' => $this->faker->sentence(3),
+            'total_items' => $this->faker->numberBetween(10, 100),
         ];
     }
 }

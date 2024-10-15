@@ -8,6 +8,10 @@
   box-sizing: border-box;
 }
 
+.nav-fixed {
+  @apply fixed z-[9999] bg-opacity-70 bg-gray-950 backdrop-blur-md
+}
+
 /* Active page highlight */
 .mary-table-pagination span[aria-current="page"]>span {
   @apply bg-black dark:bg-slate-200 text-base-100

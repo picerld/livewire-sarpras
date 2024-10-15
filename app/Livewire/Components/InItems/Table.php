@@ -6,8 +6,10 @@ use App\Models\IncomingItem;
 use App\Models\IncomingItemDetail;
 use App\Models\Item;
 use App\Models\Supplier;
+use App\Models\User;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Mary\Traits\Toast;
@@ -26,6 +28,10 @@ class Table extends Component
 
     public int $perPage = 5;
 
+    public $itemIn;
+    #[Rule('nullable|image|max:10')]
+    public $image;
+
     // search
     public $search = "";
     public $sortBy = ['column' => 'created_at', 'direction' => 'DESC'];
@@ -34,6 +40,7 @@ class Table extends Component
     public bool $drawerIsOpen = false;
     // modal
     public bool $createItems = false;
+    public bool $inItemImage = false;
 
     // filters
     public $fromDate = null;
@@ -49,6 +56,12 @@ class Table extends Component
     public function createItemsModal()
     {
         $this->createItems = true;
+    }
+
+    public function inItemImageModal($id)
+    {
+        $this->inItemImage = true;
+        $this->itemIn = IncomingItem::find($id);
     }
 
     public function itemsIn(): LengthAwarePaginator
@@ -105,17 +118,15 @@ class Table extends Component
         $suppliers = Supplier::all();
 
         // manualy option role
-        $users = [
-            [
-                'id' => '111',
-                'name' => 'Admin'
-            ],
-            [
-                'id' => '222',
-                'name' => 'Pengawas'
-            ],
-        ];
+        $users = User::where('role', '!=', 'unit')->get();
 
+        $users = $users->map(function (User $user) {
+            return [
+                'id' => $user->nip,
+                'name' => $user->employee->name
+            ];
+        });
+        
         return view('livewire.components.in-items.table', [
             'headers' => $this->headers,
             'sortBy' => $this->sortBy,
