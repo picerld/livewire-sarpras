@@ -9,10 +9,12 @@ use Livewire\Component;
 class ListItem extends Component
 {
     public $items;
+    public $totalQty;
 
     public function mount()
     {
-        $this->items = Cart::where('nip', Auth::id())->get();
+        $this->items = Cart::where('nip', Auth::user()->nip)->get();
+        $this->totalQty = Cart::where('nip', Auth::user()->nip)->sum('qty');
     }
 
     public function render()

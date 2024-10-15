@@ -53,7 +53,7 @@
                         </div>
                     @else
                         <x-button icon="o-information-circle" class="w-full text-white btn-outline btn-sm bg-dark"
-                            spinner />
+                            wire:click="detailItemModal({{ $item->id }})" spinner />
                     @endauth
                 </div>
             </x-card>
@@ -68,7 +68,7 @@
         @endforelse
     </div>
 
-    <x-modal wire:model="detailItem" class="backdrop-blur" box-class="w-full lg:min-w-[800px] md:min-w-[800px]">
+    <x-modal wire:model="detailItem" class="backdrop-blur" box-class="w-full lg:min-w-[400px] md:min-w-[300px]">
         <p class="text-sm">Press `ESC` or click outside to close.</p>
         <x-card>
             @if (isset($itemDetail))
@@ -84,7 +84,7 @@
         </x-card>
     </x-modal>
 
-    <x-modal wire:model="cartModal" class="backdrop-blur" box-class="w-full lg:min-w-[800px] md:min-w-[800px]">
+    <x-modal wire:model="cartModal" class="backdrop-blur" box-class="w-full lg:min-w-[400px] md:min-w-[300px]">
         <p class="text-sm">Press `ESC` or click outside to close.</p>
         <x-card>
             @if (isset($itemDetail))

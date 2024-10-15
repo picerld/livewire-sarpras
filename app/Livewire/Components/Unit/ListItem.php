@@ -63,7 +63,7 @@ class ListItem extends Component
 
         Cart::create([
             'id' => GenerateCodeHelper::handleGenerateCode(),
-            'nip' => Auth::id(),
+            'nip' => Auth::user()->nip,
             'item_code' => $this->newCart['item_code'],
             'qty' => $this->newCart['qty'],
         ]);
