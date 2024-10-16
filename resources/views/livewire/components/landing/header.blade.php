@@ -16,9 +16,10 @@
         <!-- Centered navigation links -->
         <div class="flex-grow hidden lg:flex lg:items-center lg:justify-center lg:space-x-10">
             <a href="{{ route(Auth::check() ? Auth::user()->role : 'dashboard') }}"
-                class="text-base text-white transition-all duration-200 hover:text-gray-300 {{ request()->routeIs('unit') ? 'font-bold' : '' }}">Home</a>
+                class="text-base text-white transition-all duration-200 hover:text-gray-300 {{ request()->routeIs('unit') ? 'font-semibold' : '' }}">Home</a>
 
-            <a href="#" class="text-base text-white transition-all duration-200 hover:text-gray-300">Pengadaan</a>
+            <a href="{{ route('submissions.index') }}"
+                class="text-base text-white transition-all duration-200 hover:text-gray-300 {{ request()->routeIs('submissions.index') ? 'font-semibold' : '' }}">Pengadaan</a>
 
             <a href="#"
                 class="text-base text-white transition-all duration-200 hover:text-gray-300">Permintaan</a>

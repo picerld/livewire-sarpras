@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Submission;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SubmissionController extends Controller
 {
@@ -12,7 +13,13 @@ class SubmissionController extends Controller
      */
     public function index()
     {
-        return view('pages.submission.index');
+        $role = Auth::user()->role;
+        
+        if ($role == 'admin' || $role == 'pengawas') {
+            return view('pages.submission.index');
+        }
+
+        return view('pages.submission.unit.index');
     }
 
     /**
@@ -36,7 +43,15 @@ class SubmissionController extends Controller
      */
     public function show(string $id)
     {
-        return view('pages.submission.show', [
+        $role = Auth::user()->role;
+
+        if ($role == 'admin' || $role == 'pengawas') {
+            return view('pages.submission.show', [
+                'submissionCode' => $id
+            ]);
+        }
+
+        return view('pages.submission.unit.show', [
             'submissionCode' => $id
         ]);
     }

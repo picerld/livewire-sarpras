@@ -1,7 +1,6 @@
 <div class="flex flex-col gap-3 px-10 lg:flex-row">
     <!-- Main content area -->
     <div class="flex flex-col w-full gap-5 mt-5 lg:w-2/3">
-        <!-- Header with select all and delete button -->
         <div class="flex items-center justify-between p-5 border rounded-lg bg-base-100 dark:border-none">
             <div class="flex gap-3">
                 <input id="pilih-semua" aria-label="Check all"
