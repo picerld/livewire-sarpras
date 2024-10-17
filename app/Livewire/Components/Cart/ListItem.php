@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Submission;
 use App\Models\SubmissionDetail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Mary\Traits\Toast;
 
@@ -29,13 +30,25 @@ class ListItem extends Component
     public function delete(Cart $cart): void
     {
         $cart->delete();
-        $this->success("Cart successfully deleted!", 'Success!', redirectTo: route('carts.index'), position: 'toast-bottom');
+        $this->success("Item successfully deleted!", 'Success!', redirectTo: route('carts.index'), position: 'toast-bottom');
     }
 
     public function store(): void
     {
-        if($this->items->isEmpty()) {
-            $this->error('Cart is empty!', 'Failed!', position: 'toast-bottom');
+        $validator = Validator::make([
+            'regarding' => $this->regarding,
+            'items' => $this->items,
+        ], [
+            'regarding' => 'required|string|min:5|max:200',
+            'items' => 'required',
+        ], [
+            'regarding.required' => 'Perihal harus diisi',
+            'regarding.min' => 'Perihal minimal 5 karakter',
+            'items.required' => 'Belum ada item!',
+        ]);
+
+        if ($validator->fails()) {
+            $this->error($validator->errors()->first(), 'Warning!!', position: 'toast-bottom');
             return;
         }
 

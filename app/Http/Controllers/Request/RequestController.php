@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Request;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RequestController extends Controller
 {
@@ -12,7 +13,13 @@ class RequestController extends Controller
      */
     public function index()
     {
-        return view("pages.request.index");
+        $role = Auth::user()->role;
+        
+        if($role == 'admin' || $role == 'pengawas') {
+            return view("pages.request.index");
+        }
+
+        return view('pages.request.unit.index');
     }
 
     /**

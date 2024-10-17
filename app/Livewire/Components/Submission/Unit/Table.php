@@ -3,6 +3,7 @@
 namespace App\Livewire\Components\Submission\Unit;
 
 use App\Models\Submission;
+use App\Models\SubmissionDetail;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
@@ -26,9 +27,18 @@ class Table extends Component
     public $search = "";
     public $sortBy = ['column' => 'created_at', 'direction' => 'DESC'];
 
+    public $item;
+    public $detailSubmission = false;
+
     public $selectedStatus = null;
     public $fromDate = null;
     public $toDate = null;
+
+    public function detailSubmissionModal($submissionCode)
+    {
+        $this->detailSubmission = true;
+        $this->item = SubmissionDetail::where('submission_code', $submissionCode)->get();
+    }
 
     public function submissions(): LengthAwarePaginator
     {

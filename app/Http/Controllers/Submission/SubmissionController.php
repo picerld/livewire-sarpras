@@ -51,9 +51,11 @@ class SubmissionController extends Controller
             ]);
         }
 
-        return view('pages.submission.unit.show', [
-            'submissionCode' => $id
-        ]);
+        // return view('pages.submission.unit.show', [
+        //     'submissionCode' => $id
+        // ]);
+
+        return redirect()->back();
     }
 
     /**

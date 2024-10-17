@@ -47,10 +47,10 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // route for submission 'pengawas or admin'
-    Route::middleware(['can:createTransaction'])->group(function () {
-        Route::resource('requests', RequestController::class);
-    });
-
+    // Route::middleware(['can:createTransaction'])->group(function () {
+    // });
+    
+    Route::resource('requests', RequestController::class);
     Route::resource('submissions', SubmissionController::class);
 
     // Route::middleware(['can:isAdmin'])->group(function () {

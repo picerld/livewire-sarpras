@@ -106,6 +106,7 @@ class Detail extends Component
                 'total_items' => $this->requestApproved['qty'],
                 'updated_at' => null
             ]);
+            
             $this->createOutgoingItemDetail($outgoingItem, $requestDetail->item);
             return;
         }

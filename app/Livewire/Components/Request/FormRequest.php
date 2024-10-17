@@ -81,6 +81,7 @@ class FormRequest extends Component
                 'accepted_by' => null,
                 'qty' => $input['qty'],
             ]);
+            
             $totalItems += $input['qty'];
         }
 

@@ -21,8 +21,8 @@
             <a href="{{ route('submissions.index') }}"
                 class="text-base text-white transition-all duration-200 hover:text-gray-300 {{ request()->routeIs('submissions.index') ? 'font-semibold' : '' }}">Pengadaan</a>
 
-            <a href="#"
-                class="text-base text-white transition-all duration-200 hover:text-gray-300">Permintaan</a>
+            <a href="{{ route('requests.index') }}"
+                class="text-base text-white transition-all duration-200 hover:text-gray-300 {{ request()->routeIs('requests.index') ? 'font-semibold' : '' }}">Permintaan</a>
 
             <a href="#" class="text-base text-white transition-all duration-200 hover:text-gray-300">Riwayat</a>
         </div>
