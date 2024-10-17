@@ -73,7 +73,7 @@ class Detail extends Component
         if ($requestDetail) {
             $requestDetail->update([
                 'qty_accepted' => $this->requestApproved['qty'],
-                'accepted_by' => Auth::user()->id,
+                'accepted_by' => Auth::user()->nip,
             ]);
 
             $requestDetail->item->update([

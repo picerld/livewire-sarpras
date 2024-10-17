@@ -64,7 +64,7 @@ class FormItemIn extends Component
             // Store to incoming_item table
             $incomingItem = IncomingItem::create([
                 'id' => GenerateCodeHelper::handleGenerateCode(),
-                'nip' => Auth::id(),
+                'nip' => Auth::user()->nip,
                 'supplier_id' => $this->supplierId,
                 'total_items' => 0, // Default value
             ]);
