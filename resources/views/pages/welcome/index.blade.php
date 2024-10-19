@@ -66,4 +66,13 @@
         </div>
         <livewire:components.unit.listItem />
     </section>
+
+    <script>
+        document.addEventListener('livewire:load', function () {
+            Livewire.on('scrollToItem', function () {
+                // Scroll to the #item section
+                window.location.hash = '#item';
+            });
+        });
+    </script>
 </x-guest-layout>

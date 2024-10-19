@@ -35,7 +35,9 @@
         <div class="lg:flex lg:items-center lg:justify-end lg:space-x-2 sm:ml-auto">
             @auth
                 <x-button icon="o-shopping-cart" link="{{ route('carts.index') }}" aria-label="cart"
-                    class="inline-flex items-center justify-center text-sm font-semibold text-white transition-all duration-200 bg-gray-900 border-none rounded-md px-7 btn-sm sm:text-base hover:bg-gray-900/95" />
+                    class="inline-flex items-center justify-center text-sm font-semibold text-white transition-all duration-200 bg-gray-900 border-none rounded-md px-7 btn-sm sm:text-base hover:bg-gray-900/95">
+                    <x-badge value="{{ $value }}" class="text-white border-none bg-accent indicator-item {{ $value > 0 ? '' : 'hidden' }}" />
+                </x-button>
                 {{-- <a href="{{ route(Auth::user()->role) }}"
                     class="inline-flex items-center justify-center px-3 sm:px-5 py-2.5 text-sm sm:text-base font-semibold transition-all duration-200 text-white bg-gray-600 hover:bg-gray-700 focus:bg-gray-700 rounded-lg"
                     role="button">Profil</a> --}}

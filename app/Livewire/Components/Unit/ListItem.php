@@ -4,7 +4,9 @@ namespace App\Livewire\Components\Unit;
 
 use App\Helpers\GenerateCodeHelper;
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\Item;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Mary\Traits\Toast;
@@ -19,12 +21,16 @@ class ListItem extends Component
     ];
 
     public $items;
+    public $defaultItems;
+
     public $detailItem;
 
     public $itemDetail;
     public $itemCode;
 
     public $cartModal;
+
+    public $selectedCategory = [];
 
     public function detailItemModal($itemCode)
     {
@@ -41,7 +47,7 @@ class ListItem extends Component
         $this->itemCode = $itemCode;
         $this->itemDetail = Item::where('id', $itemCode)->first();
     }
-    
+
     public function cart($itemCode)
     {
         try {
@@ -81,13 +87,34 @@ class ListItem extends Component
 
     public function mount()
     {
-        $this->items = Item::query()
-            ->orderBy('name', 'ASC')
-            ->get();
+        $this->defaultItems = Item::orderBy('name', 'ASC')->get();
+        $this->items = $this->defaultItems;
+    }
+
+    public function updatedSelectedCategory()
+    {
+        $this->applyFilters();
+    }
+
+    public function applyFilters()
+    {
+        $selectedCategoryIds = array_keys(array_filter($this->selectedCategory));
+
+        if (empty($selectedCategoryIds)) {
+            $this->items = $this->defaultItems;
+        } else {
+            $this->items = Item::whereIn('category_id', $selectedCategoryIds)
+                ->orderBy('category_id', 'ASC')
+                ->get();
+        }
     }
 
     public function render()
     {
-        return view('livewire.components.unit.list-item');
+        $categories = Category::all();
+        return view('livewire.components.unit.list-item', [
+            'categories' => $categories,
+            'items' => $this->items
+        ]);
     }
 }

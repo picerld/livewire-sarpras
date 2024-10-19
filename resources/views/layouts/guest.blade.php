@@ -41,7 +41,7 @@
     };
 </script>
 
-<body class="font-sans antialiased bg-gradient-to-b from-black via-gray-900 to-[#1a0524]">
+<body class="font-sans antialiased bg-gradient-to-b from-black via-gray-950 to-[#1a0524]">
     <div class="relative">
         @if (isset($header))
             <header class="fixed inset-x-0 top-0 z-10 w-full transition-all duration-300 bg-transparent nav-fixed">

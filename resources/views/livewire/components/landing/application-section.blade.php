@@ -10,7 +10,7 @@
                 ease using Sarana Prasarana. Streamline operations and stay productive effortlessly.
             </p>
             <div class="flex justify-center gap-5">
-                <a href="#faq"
+                <a href="#item"
                     class="mt-10 text-base text-white transition-all duration-300 border-none outline-none bg-accent btn hover:bg-accent/80">
                     Let's Start 🚀</a>
                 <a href="#faq" responsive
