@@ -57,9 +57,17 @@
             <x-spotlight />
 
             <x-modal wire:model="detailSubmission" class="backdrop-blur"
-                box-class="w-full lg:min-w-[800px] md:min-w-[800px]">
+                box-class="w-full lg:min-w-[800px] md:min-w-[800px] max-h-[70vh]">
                 <p class="pb-5 text-sm">Press `ESC` or click outside to close.</p>
                 @if (isset($item))
+                    <div class="p-4 bg-gray-900 border-l-4 border-collapse border-gray-600 rounded-lg">
+                        <article class="prose text-white">
+                            <h1 class="text-base font-semibold">Perihal</h1>
+                            <p class="text-sm italic">{{ $item[0]->submission_regarding }}</p>
+                        </article>
+                    </div>
+
+
                     <div class="grid w-full grid-cols-1 py-4 md:grid-cols-2 lg:grid-cols-3">
                         @foreach ($item as $submission)
                             <div class="m-2">

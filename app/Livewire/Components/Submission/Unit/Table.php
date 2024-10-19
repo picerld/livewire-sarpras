@@ -37,7 +37,7 @@ class Table extends Component
     public function detailSubmissionModal($submissionCode)
     {
         $this->detailSubmission = true;
-        $this->item = SubmissionDetail::where('submission_code', $submissionCode)->get();
+        $this->item = SubmissionDetail::withAggregate('submission', 'regarding')->where('submission_code', $submissionCode)->get();
     }
 
     public function submissions(): LengthAwarePaginator
@@ -59,7 +59,7 @@ class Table extends Component
             ->when($this->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $this->toDate))
             ->orderBy('status', 'ASC')
             ->orderBy(...array_values($this->sortBy))
-            ->paginate($this->perPage, ['id', 'total_items', 'status']);
+            ->paginate($this->perPage, ['id', 'total_items', 'status'])->withQueryString();
     }
 
     public function updated($property): void

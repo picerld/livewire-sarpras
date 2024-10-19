@@ -1,4 +1,4 @@
-<x-form id="submissionForm" wire:submit.prevent="store" class="space-y-2" autocomplete="off" no-separator>
+<x-form id="requestForm" wire:submit.prevent="store" class="space-y-2" autocomplete="off" no-separator>
     <div class="grid w-full grid-cols-1 gap-4">
         @can('createTransaction')
             <x-choices-offline label="Unit" :options="$users" id="unit_id" wire:model="nip" hint="Please select an item"

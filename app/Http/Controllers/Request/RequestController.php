@@ -43,9 +43,15 @@ class RequestController extends Controller
      */
     public function show(string $id)
     {
-        return view('pages.request.show', [
-            'requestCode' => $id
-        ]);
+        $role = Auth::user()->role;
+
+        if($role == 'admin' || $role == 'pengawas') {
+            return view('pages.request.show', [
+                'requestCode' => $id
+            ]);
+        }
+
+        return redirect()->back();
     }
 
     /**
