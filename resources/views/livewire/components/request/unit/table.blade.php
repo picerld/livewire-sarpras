@@ -53,12 +53,13 @@
     <x-spotlight />
 
     <x-modal wire:model="createRequest" class="backdrop-blur" box-class="w-full lg:min-w-[800px] md:min-w-[800px]">
-        <p class="pb-5 text-sm">Press `ESC` or click outside to close.</p>
+        <p class="pb-5 text-sm text-black">Press `ESC` or click outside to close.</p>
 
         <livewire:components.request.unit.formRequest />
     </x-modal>
 
-    <x-modal wire:model="detailRequest" class="backdrop-blur" box-class="w-full lg:min-w-[800px] md:min-w-[800px]">
+    <x-modal wire:model="detailRequest" class="backdrop-blur"
+        box-class="w-full lg:min-w-[700px] md:min-w-[700px] max-h-[70vh]">
         <p class="pb-5 text-sm">Press `ESC` or click outside to close.</p>
         @if (isset($item))
             <div class="p-4 bg-gray-900 border-l-4 border-collapse border-gray-600 rounded-lg">
