@@ -1,13 +1,16 @@
-<x-form id="submissionForm" wire:submit.prevent="store" class="space-y-2" autocomplete="off" no-separator>
+<x-form id="requestForm" wire:submit.prevent="store" class="space-y-2" autocomplete="off" no-separator>
     <div class="grid w-full grid-cols-1 gap-4">
-        <x-choices-offline label="Unit" :options="$users" id="unit_id" wire:model="nip" hint="Please select an item"
-            class="w-full" icon="o-radio" inline single searchable />
+        @can('createTransaction')
+            <x-choices-offline label="Unit" :options="$users" id="unit_id" wire:model="nip" hint="Please select an item"
+                class="w-full" icon="o-radio" inline single searchable />
+        @endcan
         <div class="flex w-full gap-5 flex-nowrap">
             <div class="w-1/2">
                 <x-textarea label="Perihal" wire:model="regarding" placeholder="Type here ..." rows="3" inline />
             </div>
             <div class="w-1/2">
-                <x-textarea label="Sifat" wire:model="characteristic" placeholder="Type here ..." rows="3" inline />
+                <x-textarea label="Sifat" wire:model="characteristic" placeholder="Type here ..." rows="3"
+                    inline />
             </div>
         </div>
         <!-- Dynamic Inputs Loop -->

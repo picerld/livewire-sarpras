@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Livewire\Components\Request;
+namespace App\Livewire\Components\Request\Unit;
 
 use App\Helpers\GenerateCodeHelper;
 use App\Models\Item;
 use App\Models\Request;
 use App\Models\RequestDetail;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Mary\Traits\Toast;
 
@@ -20,7 +20,6 @@ class FormRequest extends Component
 
     public $items;
     public $requests;
-    public $nip;
     public $regarding;
     public $characteristic;
 
@@ -49,7 +48,6 @@ class FormRequest extends Component
     public function store(): void
     {
         $this->validate([
-            'nip' => 'required|exists:employees,id',
             'regarding' => 'required|string|min:10|max:100',
             'characteristic' => 'required|string|min:3|max:50',
             'inputs.*.item_code' => 'required|exists:items,id',
@@ -57,7 +55,6 @@ class FormRequest extends Component
         ], [
             'regarding.required' => 'Keterangan harus diisi',
             'characteristic.required' => 'Sifat harus diisi',
-            'nip.required' => 'Unit harus dipilih',
             'inputs.*.item_code.required' => 'Item harus dipilih',
             'inputs.*.qty.required' => 'Jumlah harus diisi',
             'inputs.*.qty.min' => 'Jumlah minimal 1',
@@ -65,14 +62,14 @@ class FormRequest extends Component
 
         $request = Request::create([
             'id' => GenerateCodeHelper::handleGenerateCode(),
-            'nip' => $this->nip,
+            'nip' => Auth::user()->nip,
             'regarding' => $this->regarding,
             'total_items' => 0, // Default value
             'characteristic' => $this->characteristic
         ]);
 
         $totalItems = 0;
-
+        
         foreach ($this->inputs as $input) {
             RequestDetail::create([
                 'request_code' => $request->id,
@@ -81,7 +78,7 @@ class FormRequest extends Component
                 'accepted_by' => null,
                 'qty' => $input['qty'],
             ]);
-
+            
             $totalItems += $input['qty'];
         }
 
@@ -90,23 +87,11 @@ class FormRequest extends Component
         ]);
 
         $this->success("Request successfully created", 'Success!!', position: 'toast-bottom', redirectTo: '/requests');
-        $this->reset(['inputs', 'nip']);
+        $this->reset(['inputs']);
     }
 
     public function render()
     {
-        $users = User::withAggregate('employee', 'name')->get();
-
-        // mapping users for select with 'nip' as 'id' an 'employee.name' as 'name' for value
-        $userMap = $users->map(function (User $user) {
-            return [
-                'id' => $user->nip,
-                'name' => strtoupper(trim(explode('@', $user->username)[0])),
-            ];
-        });
-
-        return view('livewire.components.request.form-request', [
-            'users' => $userMap
-        ]);
+        return view('livewire.components.request.unit.form-request');
     }
 }

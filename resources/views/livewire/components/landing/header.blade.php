@@ -15,17 +15,16 @@
 
         <!-- Centered navigation links -->
         <div class="flex-grow hidden lg:flex lg:items-center lg:justify-center lg:space-x-10">
-            <a href="/" title=""
-                class="text-base text-white transition-all duration-200 hover:text-gray-300">Home</a>
+            <a href="{{ route(Auth::check() ? Auth::user()->role : 'dashboard') }}"
+                class="text-base text-white transition-all duration-200 hover:text-gray-300 {{ request()->routeIs('unit') ? 'font-semibold' : '' }}">Home</a>
 
-            <a href="#" title=""
-                class="text-base text-white transition-all duration-200 hover:text-gray-300">Pengadaan</a>
+            <a href="{{ route('submissions.index') }}"
+                class="text-base text-white transition-all duration-200 hover:text-gray-300 {{ request()->routeIs('submissions.index') ? 'font-semibold' : '' }}">Pengadaan</a>
 
-            <a href="#" title=""
-                class="text-base text-white transition-all duration-200 hover:text-gray-300">Permintaan</a>
+            <a href="{{ route('requests.index') }}"
+                class="text-base text-white transition-all duration-200 hover:text-gray-300 {{ request()->routeIs('requests.index') ? 'font-semibold' : '' }}">Permintaan</a>
 
-            <a href="#" title=""
-                class="text-base text-white transition-all duration-200 hover:text-gray-300">Riwayat</a>
+            <a href="#" class="text-base text-white transition-all duration-200 hover:text-gray-300">Riwayat</a>
         </div>
 
         <form id="logout-form" class="hidden" action="{{ route('logout') }}" method="POST">
@@ -33,34 +32,27 @@
         </form>
 
         <!-- Right side login/auth items -->
-        <div class="lg:flex lg:items-center lg:justify-end lg:space-x-6 sm:ml-auto">
+        <div class="lg:flex lg:items-center lg:justify-end lg:space-x-2 sm:ml-auto">
             @auth
-                <x-button icon="o-shopping-cart" class="text-black bg-white" />
+                <x-button icon="o-shopping-cart" link="{{ route('carts.index') }}" aria-label="cart"
+                    class="inline-flex items-center justify-center text-sm font-semibold text-white transition-all duration-200 bg-gray-900 border-none rounded-md px-7 btn-sm sm:text-base hover:bg-gray-900/95">
+                    <x-badge value="{{ $value }}" class="text-white border-none bg-accent indicator-item {{ $value > 0 ? '' : 'hidden' }}" />
+                </x-button>
                 {{-- <a href="{{ route(Auth::user()->role) }}"
                     class="inline-flex items-center justify-center px-3 sm:px-5 py-2.5 text-sm sm:text-base font-semibold transition-all duration-200 text-white bg-gray-600 hover:bg-gray-700 focus:bg-gray-700 rounded-lg"
                     role="button">Profil</a> --}}
-                <x-button icon="o-power"
+                <x-button icon="o-power" aria-label="logout"
+                    class="inline-flex items-center justify-center text-sm font-semibold text-black transition-all duration-200 bg-white border-none rounded-md px-7 btn-sm sm:text-base hover:bg-gray-200"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();" />
             @else
                 <a href="{{ route('login') }}"
-                    class="inline-flex items-center justify-center px-10 py-1.5 text-sm font-semibold text-white transition-all duration-200 bg-gray-800 rounded-md sm:text-base hover:bg-gray-900/95 focus:bg-gray-900/95"
+                    class="inline-flex items-center justify-center px-10 py-1.5 text-sm font-semibold text-white transition-all duration-200 bg-gray-800 rounded-md sm:text-base hover:bg-gray-900/95"
                     role="button">Login</a>
             @endauth
         </div>
 
-        <!-- Mobile menu button -->
-        <button type="button" name="mobile-menu" aria-label="mobile-menu"
-            class="inline-flex p-2 ml-1 text-white transition-all duration-200 rounded-md sm:ml-4 lg:hidden focus:bg-gray-800 hover:bg-gray-800">
-            <!-- Menu open: "hidden", Menu closed: "block" -->
-            <svg class="block w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-            </svg>
-            <!-- Menu open: "block", Menu closed: "hidden" -->
-            <svg class="hidden w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-        </button>
+        <label for="main-drawer" class="mr-3 lg:hidden">
+            <x-icon name="o-bars-3-bottom-left" class="cursor-pointer" />
+        </label>
     </div>
 </div>

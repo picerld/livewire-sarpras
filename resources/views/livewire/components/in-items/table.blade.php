@@ -16,6 +16,7 @@
     <!-- USING TABLE -->
     <x-table :headers="$headers" :rows="$itemsIn" :sort-by="$sortBy" link="/in-items/{id}"
         class="bg-white rounded dark:bg-dark" with-pagination per-page="perPage" :per-page-values="[5, 20, 50]">
+
         @scope('actions', $itemsIn)
             <div class="flex gap-3">
                 <x-button icon="o-folder-open" class="btn-sm btn-ghost dark:text-slate-300 btn-outline"
@@ -32,18 +33,46 @@
         </x-slot:empty>
     </x-table>
 
+
     <x-spotlight />
 
-    <x-modal wire:model="inItemImage" class="backdrop-blur" box-class="w-full lg:min-w-[800px] md:min-w-[800px]">
+    <x-modal wire:model="inItemImage" class="backdrop-blur"
+        box-class="w-full lg:min-w-[700px] md:min-w-[700px] max-h-[65vh]">
         <p class="text-sm">Press `ESC` or click outside to close.</p>
-        <x-card>
-            @if (isset($itemIn))
-                <x-file wire:model="image" accept="image/png, image/jpeg">
-                    {{-- <img src="{{ asset('img/submission.webp') }}" class="h-40 rounded-lg" /> --}}
-                </x-file>
+
+        <!-- FIX UX WHILE UPDATING THE IMAGE -->
+
+        <x-card class="w-full">
+            @if ($itemInDetail)
+                <x-form wire:submit.prevent="save" class="w-full" no-separator>
+                    {{ $itemInDetail->id }}
+
+                    @if ($itemInDetail->image)
+                    <div class="flex flex-col gap-5">
+                        <img src="{{ asset('storage/' . $itemInDetail->image) }}" class="w-full"
+                            aria-labelledby="{{ $itemInDetail->id }}" alt="{{ $itemInDetail->name }}" />
+
+                        <x-file wire:model="newIncomingItem.image"
+                            accept="image/png, image/jpeg, image/jpg, image/webp">
+                        </x-file>
+                    </div>
+                    @else
+                        <x-file wire:model="newIncomingItem.image"
+                            accept="image/png, image/jpeg, image/jpg, image/webp">
+                        </x-file>
+                    @endif
+
+                    <x-slot:actions>
+                        <x-button label="Save" icon="c-paper-airplane" class="text-white btn-primary" type="submit"
+                            spinner="save" />
+                    </x-slot:actions>
+                </x-form>
+            @else
+                <p>No image available for this item.</p>
             @endif
         </x-card>
     </x-modal>
+
 
     <x-modal wire:model="createItems" class="backdrop-blur" box-class="w-full lg:min-w-[800px] md:min-w-[800px]">
         <p class="text-sm">Press `ESC` or click outside to close.</p>

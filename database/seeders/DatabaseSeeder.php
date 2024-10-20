@@ -40,6 +40,12 @@ class DatabaseSeeder extends Seeder
             'name' => 'Picerld',
         ]);
 
+        Employee::factory()->create([
+            'id' => '444',
+            'avatar' => 'avatars/01.png',
+            'name' => 'Anita Nuraeni'
+        ]);
+
         User::factory()->create([
             'id' => '111',
             'username' => 'admin@localhost',
@@ -65,6 +71,16 @@ class DatabaseSeeder extends Seeder
             'role' => 'unit',
             'nip' => '333',
             'id' => '333'
+        ]);
+
+        // seeder for unit
+
+        User::factory()->create([
+            'id' => '12312312321',
+            'username' => 'rpl@localhost',
+            'password' => Hash::make('password'),
+            'nip' => '444',
+            'role' => 'unit',
         ]);
 
         $employees = Employee::factory(10)->create();

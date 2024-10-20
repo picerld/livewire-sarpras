@@ -1,5 +1,5 @@
 <x-nav sticky full-width class="h-20 bg-white">
-    <x-slot:brand class="flex">
+    {{-- <x-slot:brand class="flex">
         <label for="main-drawer" class="mr-3 lg:hidden">
             <x-icon name="o-bars-3-bottom-left" class="cursor-pointer" />
         </label>
@@ -17,7 +17,7 @@
         <div class="mx-auto">
             <h1>tes</h1>
         </div>
-    </x-slot:brand>
+    </x-slot:brand> --}}
 
     <x-slot:actions>
         <x-dropdown>

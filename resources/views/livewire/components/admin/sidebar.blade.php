@@ -55,10 +55,11 @@
                     link="{{ route('requests.index') }}" />
             </x-menu-sub>
 
-            <livewire:utils.navLink title="Laporan" icon="o-chart-pie" link="{{ route('stock.index') }}" />
-            {{-- <x-menu-sub title="Stok" icon="o-clipboard-document"> --}}
-                {{-- <livewire:utils.navLink title="Opname" icon="o-chart-bar-square" link="opname" /> --}}
-            {{-- </x-menu-sub> --}}
+            {{-- <livewire:utils.navLink title="Laporan" icon="o-chart-pie" link="{{ route('stock.index') }}" /> --}}
+            
+            <x-menu-sub title="Laporan" icon="o-chart-pie" open>
+                <livewire:utils.navLink title="Laporam ..." icon="o-chart-bar-square" link="#" />
+            </x-menu-sub>
 
             @can('isAdmin')
             <x-menu-sub title="Kelola Akun" icon="o-tv" open>

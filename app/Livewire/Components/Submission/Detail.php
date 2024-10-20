@@ -63,7 +63,7 @@ class Detail extends Component
         if ($submissionDetail) {
             $submissionDetail->update([
                 'qty_accepted' => $this->submissionApproved['qty'],
-                'accepted_by' => Auth::user()->id,
+                'accepted_by' => Auth::user()->nip,
             ]);
 
         }

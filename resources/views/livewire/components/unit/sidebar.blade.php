@@ -34,7 +34,7 @@
         @endif
 
         <x-menu activate-by-route>
-            <livewire:utils.navLink title="Dashboard" icon="o-rectangle-group" link="/{{ $user->role }}" />
+            {{-- <livewire:utils.navLink title="Dashboard" icon="o-rectangle-group" link="/{{ $user->role }}" /> --}}
 
             <x-menu-sub title="Barang" icon="o-cube" class="text-black" open>
                 <livewire:utils.navLink title="Data Barang" icon="o-document-chart-bar"

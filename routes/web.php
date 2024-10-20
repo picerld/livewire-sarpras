@@ -45,17 +45,18 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('suppliers', SupplierController::class);
         Route::resource('employees', EmployeeController::class);
     });
-    
+
     // route for submission 'pengawas or admin'
-    Route::middleware(['can:createTransaction'])->group(function () {
-        Route::resource('submissions', SubmissionController::class);
-        Route::resource('requests', RequestController::class);
-    });
+    // Route::middleware(['can:createTransaction'])->group(function () {
+    // });
     
+    Route::resource('requests', RequestController::class);
+    Route::resource('submissions', SubmissionController::class);
+
     // Route::middleware(['can:isAdmin'])->group(function () {
-        // route for admin and pengawas
-        Route::resource('items', ItemController::class);
-        Route::resource('out-items', OutItemController::class);
+    // route for admin and pengawas
+    Route::resource('items', ItemController::class);
+    Route::resource('out-items', OutItemController::class);
     // });
 
     Route::middleware(['can:isUnit'])->group(function () {
