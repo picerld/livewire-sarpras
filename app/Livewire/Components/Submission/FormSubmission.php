@@ -145,7 +145,7 @@ class FormSubmission extends Component
         $userMap = $users->map(function (User $user) {
             return [
                 'id' => $user->nip,
-                'name' => $user->employee->name
+                'name' => strtoupper(trim(explode('@', $user->username)[0])),
             ];
         });
 

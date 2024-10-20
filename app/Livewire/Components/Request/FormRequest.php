@@ -72,7 +72,7 @@ class FormRequest extends Component
         ]);
 
         $totalItems = 0;
-        
+
         foreach ($this->inputs as $input) {
             RequestDetail::create([
                 'request_code' => $request->id,
@@ -81,7 +81,7 @@ class FormRequest extends Component
                 'accepted_by' => null,
                 'qty' => $input['qty'],
             ]);
-            
+
             $totalItems += $input['qty'];
         }
 
@@ -101,7 +101,7 @@ class FormRequest extends Component
         $userMap = $users->map(function (User $user) {
             return [
                 'id' => $user->nip,
-                'name' => $user->employee->name
+                'name' => strtoupper(trim(explode('@', $user->username)[0])),
             ];
         });
 

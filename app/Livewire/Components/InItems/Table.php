@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components\InItems;
 
+use App\Helpers\ImageHelper;
 use App\Models\IncomingItem;
 use App\Models\IncomingItemDetail;
 use App\Models\Item;
@@ -9,14 +10,16 @@ use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Livewire\WithPagination;
 use Mary\Traits\Toast;
 
 class Table extends Component
 {
-    use WithPagination, Toast;
+    use WithPagination, Toast, WithFileUploads;
 
     // header table
     public $headers = [
@@ -29,8 +32,19 @@ class Table extends Component
     public int $perPage = 5;
 
     public $itemIn;
+    public $itemInDetail;
+
     #[Rule('nullable|image|max:10')]
-    public $image;
+    public $newIncomingItem = [
+        'image' => ""
+    ];
+
+    public $image = "";
+
+    public function mount()
+    {
+        $this->image = $this->newIncomingItem['image'];
+    }
 
     // search
     public $search = "";
@@ -61,7 +75,7 @@ class Table extends Component
     public function inItemImageModal($id)
     {
         $this->inItemImage = true;
-        $this->itemIn = IncomingItem::find($id);
+        $this->itemInDetail = IncomingItem::find($id);
     }
 
     public function itemsIn(): LengthAwarePaginator
@@ -112,6 +126,31 @@ class Table extends Component
         $this->success("Item $incomingItem->name deleted", 'Good bye!', position: 'toast-bottom');
     }
 
+    public function save()
+    {
+        $this->validate([
+            'newIncomingItem.image' => 'required|image|max:2048',
+        ], [
+            'newIncomingItem.image.required' => 'Image is required',
+        ]);
+
+        if (!empty($this->newIncomingItem['image'])) {
+            $url = ImageHelper::handleImage($this->newIncomingItem['image']);
+
+            if ($url) {
+                if (!empty($this->itemInDetail->image) && $this->itemInDetail->image !== $url) {
+                    Storage::delete($this->itemInDetail->image);
+                }
+
+                $this->itemInDetail->update(['image' => $url]);
+            }
+        }
+
+        $this->success('Item image updated', 'Good bye!', position: 'toast-bottom');
+        $this->inItemImage = false;
+        $this->newIncomingItem = ['image' => ""];
+    }
+
     public function render()
     {
         $itemsIn = $this->itemsIn();
@@ -126,11 +165,12 @@ class Table extends Component
                 'name' => $user->employee->name
             ];
         });
-        
+
         return view('livewire.components.in-items.table', [
             'headers' => $this->headers,
             'sortBy' => $this->sortBy,
             'itemsIn' => $itemsIn,
+            'itemInDetail' => $this->itemInDetail,
             'users' => $users,
             'suppliers' => $suppliers
         ]);
