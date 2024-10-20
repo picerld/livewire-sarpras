@@ -10,6 +10,10 @@
             <x-button icon-right="m-plus" label="Add" wire:click="createItemsModal"
                 class="text-white bg-dark dark:bg-slate-100 hover:bg-dark hover:opacity-90 dark:text-black" responsive
                 aria-label="create item" />
+            <x-dropdown class="text-white btn-outline bg-dark hover:opacity-90">
+                <x-menu-item title="Import" icon="o-arrow-down-on-square-stack" />
+                <x-menu-item title="Export" icon="o-arrow-up-on-square-stack" />
+            </x-dropdown>
         </x-slot:actions>
     </x-header>
 
@@ -19,9 +23,9 @@
         @scope('cell_stock', $item)
             <p>{{ $item->stock > $item->minimum_stock ? $item->stock : $item->stock . ' !!' }}</p>
         @endscope
-        
+
         @scope('cell_category_aliases', $item)
-            <x-badge :value="$item->category->aliases ?? 'null'" class="btn-ghost btn-outline" />
+            <x-badge :value="$item->category->aliases ?? 'null'" class="text-white btn-ghost btn-outline bg-dark" />
         @endscope
 
         <x-slot:empty>
