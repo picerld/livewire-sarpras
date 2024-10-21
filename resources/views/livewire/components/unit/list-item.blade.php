@@ -18,11 +18,7 @@
                         {{ $item->stock }} ({{ $item->unit }})
                     </h3>
                     <div class="mb-5">
-                        @if (Str::length($item->description) > 40)
-                            {{ Str::limit($item->description, 40) }}
-                        @else
-                            {{ $item->description }}
-                        @endif
+                        {{ Str::limit($item->description, 40) }}
                     </div>
                 </div>
 

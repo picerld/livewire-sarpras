@@ -9,11 +9,7 @@
                 ({{ $item->qty }} {{ $item->item->unit }})
             </h3>
             <div class="mb-5">
-                @if (Str::length($item->item->description) > 20)
-                    {{ Str::limit($item->item->description, 20) }}
-                @else
-                    {{ $item->item->description }}
-                @endif
+                {{ Str::limit($item->description, 40) }}
             </div>
             <p class="text-sm font-semibold">
                 {{ $item->created_at->format('H:i:s d/m/Y') }}
