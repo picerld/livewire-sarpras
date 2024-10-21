@@ -5,6 +5,7 @@ use Mary\Traits\Toast;
 
 new #[Title('Login')] class extends Component {
     use Toast;
+    
     #[Rule('required|email')]
     public string $username = '';
 

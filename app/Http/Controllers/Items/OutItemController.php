@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Items;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OutItemController extends Controller
 {
@@ -12,7 +13,12 @@ class OutItemController extends Controller
      */
     public function index()
     {
-        return view("pages.outItems.index");
+        $role = Auth::user()->role;
+        if ($role == 'admin' || $role == 'pengawas') {
+            return view("pages.outItems.index");
+        }
+
+        return view('pages.outItems.unit.index');
     }
 
     /**

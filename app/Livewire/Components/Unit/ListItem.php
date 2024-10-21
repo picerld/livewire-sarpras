@@ -6,19 +6,22 @@ use App\Helpers\GenerateCodeHelper;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Item;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Mary\Traits\Toast;
 
 class ListItem extends Component
 {
-    use Toast;
+    use Toast, WithPagination;
 
     public $newCart = [
         'item_code' => '',
         'qty' => null,
     ];
+
+    public int $perPage = 8;
 
     public $items;
     public $defaultItems;
@@ -87,8 +90,28 @@ class ListItem extends Component
 
     public function mount()
     {
-        $this->defaultItems = Item::orderBy('name', 'ASC')->get();
-        $this->items = $this->defaultItems;
+        $this->defaultItems = $this->items()->items();
+        $this->items = $this->items()->items();
+    }
+
+    public function items(): LengthAwarePaginator
+    {
+        return Item::orderBy('name', 'ASC')
+            ->paginate($this->perPage)->withQueryString();
+    }
+
+    public function updated($property): void
+    {
+        if (!is_array($property) && $property != "") {
+            $this->resetPage();
+        }
+    }
+
+    public function clear(): void
+    {
+        $this->reset();
+        $this->resetPage();
+        $this->success('Filters cleared.', position: 'toast-bottom');
     }
 
     public function updatedSelectedCategory()
@@ -112,9 +135,10 @@ class ListItem extends Component
     public function render()
     {
         $categories = Category::all();
+
         return view('livewire.components.unit.list-item', [
             'categories' => $categories,
-            'items' => $this->items
+            'items' => $this->items,
         ]);
     }
 }
