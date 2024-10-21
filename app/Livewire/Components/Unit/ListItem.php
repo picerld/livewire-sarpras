@@ -24,6 +24,8 @@ class ListItem extends Component
 
     public int $perPage = 8;
 
+    public int $maxItems;
+
     public $items;
     public $defaultItems;
 
@@ -50,6 +52,18 @@ class ListItem extends Component
 
         $this->itemCode = $itemCode;
         $this->itemDetail = Item::where('id', $itemCode)->first();
+    }
+
+    public function loadMore()
+    {
+        if ($this->perPage <= $this->maxItems) {
+            $this->perPage += 4;
+            $this->resetPage();
+
+            $this->items = $this->items()->items();
+        }
+
+        return $this->items()->items();
     }
 
     public function cart($itemCode)
@@ -93,6 +107,8 @@ class ListItem extends Component
     {
         $this->defaultItems = $this->items()->items();
         $this->items = $this->items()->items();
+
+        $this->maxItems = Item::count();
     }
 
     public function items(): LengthAwarePaginator

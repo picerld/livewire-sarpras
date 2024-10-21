@@ -59,20 +59,12 @@
         </div>
     </section>
 
-    <section class="min-h-screen px-10" id="item">
+    <section class="min-h-screen px-10 py-5" id="item">
         <div class="flex flex-col items-start text-start">
             <h2 class="text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">Explore Item's</h2>
             <p class="mt-4 text-base leading-relaxed text-gray-300">Explore the existing items in Sarana Prasarana!</p>
         </div>
         <livewire:components.unit.listItem />
     </section>
-
-    <script>
-        document.addEventListener('livewire:load', function () {
-            Livewire.on('scrollToItem', function () {
-                // Scroll to the #item section
-                window.location.hash = '#item';
-            });
-        });
-    </script>
+    
 </x-guest-layout>

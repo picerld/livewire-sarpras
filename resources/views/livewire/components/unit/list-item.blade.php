@@ -3,17 +3,12 @@
         <h3 class="text-lg font-semibold">Kategori</h3>
         <div class="flex flex-col gap-3 mt-3">
             @foreach ($categories as $category)
-                <x-checkbox
-                    label="{{ $category->aliases }}"
+                <x-checkbox label="{{ $category->aliases }}"
                     class="transition-all duration-200 border-none outline-dashed checkbox checked:outline-none"
-                    wire:model.live="selectedCategory.{{ $category->id }}"
-                    hint="{{ $category->name }}"
-                    type="checkbox"
-                />
+                    wire:model.live="selectedCategory.{{ $category->id }}" hint="{{ $category->name }}" type="checkbox" />
             @endforeach
         </div>
     </div>
-    
 
     <div class="grid grid-cols-1 gap-5 px-10 lg:grid-cols-4 md:grid-cols-2">
         @forelse ($items as $item)
@@ -33,7 +28,7 @@
 
                 <x-slot:figure>
                     <img src="{{ asset('/storage/' . $item->images) }}" height="200" width="230"
-                        class="object-cover w-full min-h-32 max-h-32" aria-labelledby="{{ $item->id }}"
+                        class="object-cover w-full h-36" aria-labelledby="{{ $item->id }}"
                         alt="{{ $item->name }}" />
                 </x-slot:figure>
 
@@ -64,7 +59,15 @@
                 </x-slot:actions>
             </x-alert>
         @endforelse
+
+        <!-- LOAD MORE BUTTON -->
+        <div class="flex justify-center col-span-full">
+            <!-- CONDITIONAL BUTTON PERPAGE -->
+            <x-button class="rounded-full btn-md {{ $perPage > count($items) ? 'hidden' : '' }}" label="Load More"
+                wire:click="loadMore" />
+        </div>
     </div>
+
 
     <x-modal wire:model="detailItem" class="backdrop-blur" box-class="w-full lg:min-w-[400px] md:min-w-[300px]">
         <p class="text-sm">Press `ESC` or click outside to close.</p>
