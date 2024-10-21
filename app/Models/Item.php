@@ -16,23 +16,33 @@ class Item extends Model
     protected $guarded = ['created_at', 'updated_at'];
     protected $keyType = 'string';
 
-    public function category(): BelongsTo {
+    public function category(): BelongsTo
+    {
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function incomingItemsDetail(): HasMany {
+    public function incomingItemsDetail(): HasMany
+    {
         return $this->hasMany(IncomingItemDetail::class, 'id');
     }
 
-    public function submissionDetail(): HasMany {
+    public function submissionDetail(): HasMany
+    {
         return $this->hasMany(SubmissionDetail::class, 'id');
     }
 
-    public function outgoingItem(): HasMany {
+    public function outgoingItem(): HasMany
+    {
         return $this->hasMany(OutgoingItem::class, 'id');
     }
 
-    public function cart(): HasMany {
+    public function cart(): HasMany
+    {
         return $this->hasMany(Cart::class, 'id');
+    }
+
+    public function requests(): HasMany
+    {
+        return $this->hasMany(RequestDetail::class, 'id');
     }
 }

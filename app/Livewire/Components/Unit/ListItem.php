@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Item;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Mary\Traits\Toast;
@@ -96,8 +97,13 @@ class ListItem extends Component
 
     public function items(): LengthAwarePaginator
     {
-        return Item::orderBy('name', 'ASC')
-            ->paginate($this->perPage)->withQueryString();
+        return Item::leftJoin('request_detail', 'items.id', '=', 'request_detail.item_code')
+            ->select('items.*', DB::raw('COUNT(request_detail.id) as request_count'))
+            ->groupBy('items.id')
+            ->orderBy('request_count', 'DESC')
+            ->orderBy('items.name', 'ASC')
+            ->paginate($this->perPage)
+            ->withQueryString();
     }
 
     public function updated($property): void
