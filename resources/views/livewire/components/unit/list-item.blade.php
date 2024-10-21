@@ -63,8 +63,11 @@
         <!-- LOAD MORE BUTTON -->
         <div class="flex justify-center col-span-full">
             <!-- CONDITIONAL BUTTON PERPAGE -->
-            <x-button class="rounded-full btn-md {{ $perPage > count($items) ? 'hidden' : '' }}" label="Load More"
-                wire:click="loadMore" />
+            @if ($perPage < $maxItems)
+                <x-button class="rounded-full btn-md" label="Load More" wire:click="loadItems('more')" />
+            @else
+                <x-button class="rounded-full btn-md" label="Show Less" wire:click="loadItems('less')" />
+            @endif
         </div>
     </div>
 

@@ -54,17 +54,20 @@ class ListItem extends Component
         $this->itemDetail = Item::where('id', $itemCode)->first();
     }
 
-    public function loadMore()
+    public function loadItems($context)
     {
-        if ($this->perPage <= $this->maxItems) {
-            $this->perPage += 4;
-            $this->resetPage();
-
-            $this->items = $this->items()->items();
+        if ($context === "more") {
+            $this->perPage = min($this->perPage + 4, $this->maxItems);
+        } elseif ($context === "less") {
+            $this->perPage = max($this->perPage - 4, 4);
         }
 
-        return $this->items()->items();
+        $this->resetPage();
+        $this->items = $this->items()->items();
+
+        return $this->items;
     }
+
 
     public function cart($itemCode)
     {
@@ -161,6 +164,7 @@ class ListItem extends Component
         return view('livewire.components.unit.list-item', [
             'categories' => $categories,
             'items' => $this->items,
+            'maxItems' => $this->maxItems
         ]);
     }
 }
