@@ -1,7 +1,7 @@
 <div class="flex flex-col w-full gap-3 mt-10 md:flex-row">
     <div class="w-full mb-6 text-white md:w-1/6 md:mb-0">
         <h3 class="text-lg font-semibold">Kategori</h3>
-        <div class="flex flex-col gap-3 mt-3">
+        <div class="flex flex-row gap-3 mt-3 lg:flex-col md:flex-row">
             @foreach ($categories as $category)
                 <x-checkbox label="{{ $category->aliases }}"
                     class="transition-all duration-200 border-none outline-dashed checkbox checked:outline-none"
@@ -12,7 +12,8 @@
 
     <div class="grid grid-cols-1 gap-5 px-10 lg:grid-cols-4 md:grid-cols-2">
         @forelse ($items as $item)
-            <x-card title="{{ $item->name }} ({{ $item->type }})" class="flex flex-col justify-between my-2 h-80">
+            <x-card title="{{ $item->name }} ({{ $item->type }})"
+                class="relative flex flex-col justify-between my-2 h-80">
                 <div>
                     <h3 class="text-base font-semibold">
                         {{ $item->stock }} ({{ $item->unit }})
@@ -28,9 +29,8 @@
                         alt="{{ $item->name }}" />
                 </x-slot:figure>
 
-                <x-slot:menu>
-                    <x-badge value="{{ $item->category->aliases ?? 'null' }}" class="text-white btn-outline bg-dark" />
-                </x-slot:menu>
+                <x-badge value="{{ $item->category->aliases ?? 'null' }}"
+                    class="absolute text-white right-3 top-2 btn-outline bg-dark" />
 
                 <div class="w-full mt-3">
                     @auth
