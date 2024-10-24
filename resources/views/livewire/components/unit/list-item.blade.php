@@ -10,63 +10,76 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 gap-5 px-10 lg:grid-cols-4 md:grid-cols-2">
-        @forelse ($items as $item)
-            <x-card title="{{ $item->name }} ({{ $item->type }})"
-                class="relative flex flex-col justify-between my-2 h-80">
-                <div>
-                    <h3 class="text-base font-semibold">
-                        {{ $item->stock }} ({{ $item->unit }})
-                    </h3>
-                    <div class="mb-5">
-                        {{ Str::limit($item->description, 40) }}
-                    </div>
-                </div>
+    <div class="flex flex-col w-full">
+        <!-- SEARCH BAR -->
+        <div class="px-10 mb-4">
+            <x-input icon="o-magnifying-glass" placeholder="Search items..." wire:model.live.debounce.500ms="search"
+                class="w-full" auto-complete="off" />
+        </div>
 
-                <x-slot:figure>
-                    <img src="{{ asset('/storage/' . $item->images) }}" height="200" width="230"
-                        class="object-cover w-full h-36" aria-labelledby="{{ $item->id }}"
-                        alt="{{ $item->name }}" />
-                </x-slot:figure>
+        <div wire:loading wire:target="search">
+            <x-loading class="text-primary loading-lg" />
+        </div>
 
-                <x-badge value="{{ $item->category->aliases ?? 'null' }}"
-                    class="absolute text-white right-3 top-2 btn-outline bg-dark" />
-
-                <div class="w-full mt-3">
-                    @auth
-                        <div class="flex gap-3">
-                            <x-button icon="o-information-circle" class="w-1/3 text-white btn-outline btn-sm bg-dark"
-                                wire:click="detailItemModal({{ $item->id }})" aria-label="detail item" spinner />
-                            <x-button icon="o-tag" class="w-2/3 text-white btn-outline btn-sm bg-dark"
-                                wire:click="createCartModal({{ $item->id }})" aria-label="add to cart" spinner />
+        <div class="grid grid-cols-1 gap-5 px-10 lg:grid-cols-4 md:grid-cols-2">
+            @forelse ($items as $item)
+                <x-card title="{{ $item->name }} ({{ $item->type }})"
+                    class="relative flex flex-col justify-between my-2 h-80">
+                    <div>
+                        <h3 class="text-base font-semibold">
+                            {{ $item->stock }} ({{ $item->unit }})
+                        </h3>
+                        <div class="mb-5">
+                            {{ Str::limit($item->description, 40) }}
                         </div>
+                    </div>
+
+                    <x-slot:figure>
+                        <img src="{{ asset('/storage/' . $item->images) }}" height="200" width="230"
+                            class="object-cover w-full h-36" aria-labelledby="{{ $item->id }}"
+                            alt="{{ $item->name }}" />
+                    </x-slot:figure>
+
+                    <x-badge value="{{ $item->category->aliases ?? 'null' }}"
+                        class="absolute text-white right-3 top-2 btn-outline bg-dark" />
+
+                    <div class="w-full mt-3">
+                        @auth
+                            <div class="flex gap-3">
+                                <x-button icon="o-information-circle" class="w-1/3 text-white btn-outline btn-sm bg-dark"
+                                    wire:click="detailItemModal({{ $item->id }})" aria-label="detail item" spinner />
+                                <x-button icon="o-tag" class="w-2/3 text-white btn-outline btn-sm bg-dark"
+                                    wire:click="createCartModal({{ $item->id }})" aria-label="add to cart" spinner />
+                            </div>
+                        @else
+                            <x-button icon="o-information-circle" class="w-full text-white btn-outline btn-sm bg-dark"
+                                wire:click="detailItemModal({{ $item->id }})" aria-label="detail item" spinner />
+                        @endauth
+                    </div>
+                </x-card>
+
+            @empty
+                <x-alert title="No items found!" description="Try adjusting your search or filters."
+                    icon="o-exclamation-triangle" class="border-none bg-base-100 col-span-full">
+                    <x-slot:actions>
+                        <x-button label="Clear filters" icon="o-x-mark" class="btn-outline" wire:click="clear"
+                            spinner />
+                    </x-slot:actions>
+                </x-alert>
+            @endforelse
+
+            <!-- LOAD MORE BUTTON -->
+            @if (!$items->isEmpty())
+                <div class="flex justify-center col-span-full">
+                    @if ($perPage < $maxItems)
+                        <x-button class="rounded-full btn-md" label="Load More" wire:click="loadItems('more')" />
                     @else
-                        <x-button icon="o-information-circle" class="w-full text-white btn-outline btn-sm bg-dark"
-                            wire:click="detailItemModal({{ $item->id }})" aria-label="detail item" spinner />
-                    @endauth
+                        <x-button class="rounded-full btn-md" label="Show Less" wire:click="loadItems('less')" />
+                    @endif
                 </div>
-            </x-card>
-
-        @empty
-            <x-alert title="Nothing here!" description="Try to remove some filters." icon="o-exclamation-triangle"
-                class="border-none bg-base-100">
-                <x-slot:actions>
-                    <x-button label="Clear filters" icon="o-x-mark" class="btn-outline" spinner />
-                </x-slot:actions>
-            </x-alert>
-        @endforelse
-
-        <!-- LOAD MORE BUTTON -->
-        <div class="flex justify-center col-span-full">
-            <!-- CONDITIONAL BUTTON PERPAGE -->
-            @if ($perPage < $maxItems)
-                <x-button class="rounded-full btn-md" label="Load More" wire:click="loadItems('more')" />
-            @else
-                <x-button class="rounded-full btn-md" label="Show Less" wire:click="loadItems('less')" />
             @endif
         </div>
     </div>
-
 
     <x-modal wire:model="detailItem" class="backdrop-blur" box-class="w-full lg:min-w-[400px] md:min-w-[300px]">
         <p class="text-sm">Press `ESC` or click outside to close.</p>
