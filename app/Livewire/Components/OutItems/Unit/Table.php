@@ -3,6 +3,7 @@
 namespace App\Livewire\Components\OutItems\Unit;
 
 use App\Models\OutgoingItem;
+use App\Models\OutgoingItemDetail;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Livewire\Component;
@@ -25,9 +26,25 @@ class Table extends Component
     public $search = "";
     public $sortBy = ['column' => 'created_at', 'direction' => 'DESC'];
 
+    public $item;
+    public $detailOutgoingItem = false;
+
     public $selectedStatus = null;
     public $fromDate = null;
     public $toDate = null;
+
+    public function detailOutgoingItemModal($id)
+    {
+        $this->detailOutgoingItem = true;
+        $this->item = OutgoingItemDetail::where('outgoing_item_code', $id)->get();
+    }
+
+    public function updateStatus($id)
+    {
+        OutgoingItem::where('id', $id)->update(['status' => 'taken']);
+
+        $this->success('Status updated.', 'Success!!', redirectTo: route('out-items.index'), position: 'toast-bottom');
+    }
 
     public function itemsOut(): LengthAwarePaginator
     {
@@ -38,7 +55,7 @@ class Table extends Component
             ->when($this->selectedStatus, fn(Builder $q) => $q->where('status', $this->selectedStatus))
             ->orderBy('status', 'DESC')
             ->orderBy(...array_values($this->sortBy))
-            ->paginate($this->perPage, ['id', 'status', 'total_items', 'created_at']);
+            ->paginate($this->perPage, ['id', 'status', 'total_items', 'created_at'])->withQueryString();
     }
 
     public function updated($property): void

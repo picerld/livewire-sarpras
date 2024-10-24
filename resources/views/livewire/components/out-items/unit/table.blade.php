@@ -7,9 +7,6 @@
                 autocomplete="off" />
             <x-button icon="o-funnel" class="text-black dark:text-white/80" wire:click="tableDrawer"
                 aria-label="filter submission" responsive />
-            <x-button icon-right="m-plus" label="Add" wire:click="createRequestModal"
-                class="text-white bg-dark dark:bg-slate-100 hover:bg-dark hover:opacity-90 dark:text-black" responsive
-                aria-label="create submission" />
         </x-slot:actions>
     </x-header>
 
@@ -22,6 +19,11 @@
                 class=" btn-ghost btn-outline {{ $itemsOut->status == 'not taken' ? '' : 'bg-dark text-white' }}" />
         @endscope
 
+        @scope('actions', $itemsOut)
+            <x-button icon="o-information-circle" wire:click="detailOutgoingItemModal({{ $itemsOut->id }})"
+                class="text-white btn-sm btn-ghost bg-dark btn-outline" aria-label="delete item" spinner />
+        @endscope
+
         <x-slot:empty>
             <x-alert title="Nothing here!" description="There is no data yet." icon="o-exclamation-triangle"
                 class="border-none bg-base-100">
@@ -30,6 +32,52 @@
     </x-table>
 
     <x-spotlight />
+
+    <x-modal wire:model="detailOutgoingItem" class="backdrop-blur"
+        box-class="w-full lg:min-w-[800px] md:min-w-[800px] max-h-[70vh]">
+        <p class="pb-5 text-sm text-black">Press `ESC` or click outside to close.</p>
+        @if (isset($item))
+            {{-- <div class="p-4 bg-gray-900 border-l-4 border-collapse border-gray-600 rounded-lg">
+                <article class="prose text-white">
+                    <h1 class="text-base font-semibold">Perihal</h1>
+                    <x-button label="Update Status!" class="w-full text-white btn-outline bg-dark" />
+                </article>
+            </div> --}}
+
+            <div class="p-4 rounded-lg">
+                <x-button label="Update Status!" wire:click.prevent="updateStatus({{ $item[0]->outgoing_item_code }})"
+                    class="w-full text-white btn-outline bg-dark" spinner />
+            </div>
+
+
+            <div class="grid w-full grid-cols-1 py-4 md:grid-cols-2 lg:grid-cols-3">
+                @foreach ($item as $outgoingItem)
+                    <div class="m-2">
+                        <x-card
+                            title="{{ $outgoingItem->item->name ?? $outgoingItem->custom_item }} ({{ $outgoingItem->item->type ?? 'null' }})"
+                            class="border shadow">
+                            <x-icon name="o-tag"
+                                label="{{ $outgoingItem->item->merk ?? $outgoingItem->custom_item }}" />
+                            <p class="text-sm font-semibold">
+                                {{ $outgoingItem->qty }}
+                                {{ $outgoingItem->item->unit ?? '' }}
+                            </p>
+                            <x-slot:figure>
+                                <img src="{{ !empty($outgoingItem->item->images) ? asset('/storage/' . $outgoingItem->item->images) : asset('img/outgoingItem.webp') }}"
+                                    class="object-cover w-full h-40"
+                                    aria-labelledby="{{ $outgoingItem->item->id ?? $outgoingItem->custom_item }}"
+                                    alt="{{ $outgoingItem->item->name ?? $outgoingItem->custom_item }}" />
+                            </x-slot:figure>
+                            <x-slot:menu>
+                                <x-button icon="m-shield-check" class="btn-circle btn-ghost btn-sm"
+                                    aria-label="accepted outgoingItem" />
+                            </x-slot:menu>
+                        </x-card>
+                    </div>
+                @endforeach
+            </div>
+        @endif
+    </x-modal>
 
     <x-drawer title="Filter" wire:model="drawerIsOpen" class="w-1/2 lg:w-1/3" right separator with-close-button
         close-on-escape>

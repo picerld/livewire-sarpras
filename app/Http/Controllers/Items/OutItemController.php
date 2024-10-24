@@ -42,9 +42,14 @@ class OutItemController extends Controller
      */
     public function show(string $id)
     {
-        return view('pages.outItems.show', [
-            'outgoingItemCode' => $id
-        ]);
+        $role = Auth::user()->role;
+        if ($role == 'admin' || $role == 'pengawas') {
+            return view('pages.outItems.show', [
+                'outgoingItemCode' => $id
+            ]);
+        }
+
+        return redirect()->back();
     }
 
     /**
