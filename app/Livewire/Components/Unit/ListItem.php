@@ -69,7 +69,7 @@ class ListItem extends Component
                         ->orWhere('items.stock', 'LIKE', $searchTerm);
                 });
             })
-            ->when(!empty($this->selectedCategory), function (Builder $query) {
+            ->when(!empty(array_filter($this->selectedCategory)), function (Builder $query) {
                 $query->whereIn('category_id', array_keys(array_filter($this->selectedCategory)));
             })
             ->groupBy('items.id')
@@ -149,6 +149,7 @@ class ListItem extends Component
     {
         $this->resetPage();
     }
+
 
     public function render()
     {

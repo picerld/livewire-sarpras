@@ -14,7 +14,7 @@
         <!-- SEARCH BAR -->
         <div class="px-10 mb-4">
             <x-input icon="o-magnifying-glass" placeholder="Search items..." wire:model.live.debounce.500ms="search"
-                class="w-full" auto-complete="off" />
+                class="w-full" auto-complete="false" clearable />
         </div>
 
         <div wire:loading wire:target="search">
