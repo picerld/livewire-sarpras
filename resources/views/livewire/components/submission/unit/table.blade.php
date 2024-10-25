@@ -17,7 +17,7 @@
         </x-card>
     </div>
 
-    <div class="w-full md:w-3/4 lg:3/4">
+    <div class="w-full md:w-3/4 lg:w-3/4">
         <x-card>
             <x-header wire:model.live.debounce="search" title="My Submissions" class="px-3 pt-3" size="text-4xl"
                 subtitle="My submission trasaction" progress-indicator separator>

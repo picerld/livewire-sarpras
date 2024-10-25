@@ -13,7 +13,11 @@
     <div class="flex flex-col w-full">
         <!-- SEARCH BAR -->
         <div class="px-10 mb-4">
-            <x-input icon="o-magnifying-glass" placeholder="Search items..." wire:model.live.debounce.500ms="search"
+            <!-- WITH DEBOUNCE -->
+            {{-- <x-input icon="o-magnifying-glass" placeholder="Search items..." wire:model.live.debounce.500ms="search"
+                class="w-full" auto-complete="false" clearable /> --}}
+                
+            <x-input icon="o-magnifying-glass" placeholder="Search items..." wire:model.live="search"
                 class="w-full" auto-complete="false" clearable />
         </div>
 
