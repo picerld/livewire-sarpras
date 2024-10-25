@@ -58,7 +58,7 @@
             {{-- <livewire:utils.navLink title="Laporan" icon="o-chart-pie" link="{{ route('stock.index') }}" /> --}}
             
             <x-menu-sub title="Laporan" icon="o-chart-pie" open>
-                <livewire:utils.navLink title="Laporam ..." icon="o-chart-bar-square" link="#" />
+                <livewire:utils.navLink title="Laporan ..." icon="o-chart-bar-square" link="#" />
             </x-menu-sub>
 
             @can('isAdmin')

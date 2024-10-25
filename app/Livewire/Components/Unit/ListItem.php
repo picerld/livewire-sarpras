@@ -7,114 +7,156 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Item;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Mary\Traits\Toast;
 
 class ListItem extends Component
 {
-    use Toast;
+    use Toast, WithPagination;
 
     public $newCart = [
         'item_code' => '',
         'qty' => null,
     ];
 
-    public $items;
-    public $defaultItems;
+    public int $perPage = 8;
+    public int $maxItems;
+    public string $search = '';
+    public array $selectedCategory = [];
 
-    public $detailItem;
-
+    // Modals
+    public $detailItem = false;
+    public $cartModal = false;
     public $itemDetail;
     public $itemCode;
 
-    public $cartModal;
+    protected $updatesQueryString = ['search'];
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'page' => ['except' => 1],
+    ];
 
-    public $selectedCategory = [];
+    protected $rules = [
+        'newCart.qty' => 'required|integer|min:1',
+    ];
+
+    public function mount()
+    {
+        $this->maxItems = Item::count();
+    }
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function items(): LengthAwarePaginator
+    {
+        return Item::query()
+            ->leftJoin('request_detail', 'items.id', '=', 'request_detail.item_code')
+            ->select('items.*', DB::raw('COUNT(request_detail.id) as request_count'))
+            ->when($this->search, function (Builder $query) {
+                $searchTerm = '%' . addcslashes($this->search, '%_') . '%';
+                $query->where(function (Builder $q) use ($searchTerm) {
+                    $q->where('items.id', 'LIKE', $searchTerm)
+                        ->orWhere('items.name', 'LIKE', $searchTerm)
+                        ->orWhere('items.merk', 'LIKE', $searchTerm)
+                        ->orWhere('items.price', 'LIKE', $searchTerm)
+                        ->orWhere('items.stock', 'LIKE', $searchTerm);
+                });
+            })
+            ->when(!empty(array_filter($this->selectedCategory)), function (Builder $query) {
+                $query->whereIn('category_id', array_keys(array_filter($this->selectedCategory)));
+            })
+            ->groupBy('items.id')
+            ->orderBy('request_count', 'DESC')
+            ->orderBy('items.name', 'ASC')
+            ->paginate($this->perPage);
+    }
+
+    public function loadItems($context)
+    {
+        $this->perPage = match ($context) {
+            'more' => min($this->perPage + 4, $this->maxItems),
+            'less' => max($this->perPage - 4, 4),
+            default => $this->perPage,
+        };
+
+        $this->resetPage();
+    }
 
     public function detailItemModal($itemCode)
     {
-        $this->detailItem = true;
-
         $this->itemCode = $itemCode;
-        $this->itemDetail = Item::where('id', $itemCode)->first();
+        $this->itemDetail = Item::findOrFail($itemCode);
+        $this->detailItem = true;
     }
 
     public function createCartModal($itemCode)
     {
-        $this->cartModal = true;
-
         $this->itemCode = $itemCode;
-        $this->itemDetail = Item::where('id', $itemCode)->first();
+        $this->itemDetail = Item::findOrFail($itemCode);
+        $this->cartModal = true;
     }
 
     public function cart($itemCode)
     {
         try {
             $this->newCart['item_code'] = $itemCode;
+            $this->validate();
 
-            $carts = Cart::where('nip', Auth::user()->nip)->where('item_code', $itemCode)->first();
-
-            $this->validate([
-                'newCart.qty' => 'required|integer|min:1',
-            ]);
-
-            if ($carts) {
-                $carts->update([
-                    'qty' => $carts->qty + $this->newCart['qty'],
+            DB::transaction(function () use ($itemCode) {
+                $cart = Cart::firstOrNew([
+                    'nip' => Auth::user()->nip,
+                    'item_code' => $itemCode,
                 ]);
-                $this->success("Cart successfully created!", 'Success!', position: 'toast-bottom');
-                $this->cartModal = false;
-                $this->newCart = ['item_code' => null, 'qty' => null];
-                return;
-            }
 
-            Cart::create([
-                'id' => GenerateCodeHelper::handleGenerateCode(),
-                'nip' => Auth::user()->nip,
-                'item_code' => $this->newCart['item_code'],
-                'qty' => $this->newCart['qty'],
-            ]);
+                if ($cart->exists) {
+                    $cart->increment('qty', $this->newCart['qty']);
+                } else {
+                    $cart->fill([
+                        'id' => GenerateCodeHelper::handleGenerateCode(),
+                        'qty' => $this->newCart['qty'],
+                    ])->save();
+                }
+            });
 
-            $this->success("Cart successfully created!", 'Success!', position: 'toast-bottom');
-            $this->newCart = ['item_code' => null, 'qty' => null];
-            $this->cartModal = false;
+            $this->success('Cart successfully created!', 'Success!', position: 'toast-bottom');
+            $this->resetCart();
         } catch (\Throwable $th) {
-            $this->cartModal = false;
             $this->error('Try again later ...', 'Something wrong!!', position: 'toast-bottom');
         }
     }
 
-    public function mount()
+    protected function resetCart(): void
     {
-        $this->defaultItems = Item::orderBy('name', 'ASC')->get();
-        $this->items = $this->defaultItems;
+        $this->cartModal = false;
+        $this->newCart = ['item_code' => null, 'qty' => null];
+    }
+
+    public function clear(): void
+    {
+        $this->reset(['search', 'selectedCategory']);
+        $this->resetPage();
+        $this->success('Filters cleared.', position: 'toast-bottom');
     }
 
     public function updatedSelectedCategory()
     {
-        $this->applyFilters();
+        $this->resetPage();
     }
 
-    public function applyFilters()
-    {
-        $selectedCategoryIds = array_keys(array_filter($this->selectedCategory));
-
-        if (empty($selectedCategoryIds)) {
-            $this->items = $this->defaultItems;
-        } else {
-            $this->items = Item::whereIn('category_id', $selectedCategoryIds)
-                ->orderBy('category_id', 'ASC')
-                ->get();
-        }
-    }
 
     public function render()
     {
-        $categories = Category::all();
         return view('livewire.components.unit.list-item', [
-            'categories' => $categories,
-            'items' => $this->items
+            'categories' => Category::all(),
+            'items' => $this->items(),
+            'maxItems' => $this->maxItems
         ]);
     }
 }

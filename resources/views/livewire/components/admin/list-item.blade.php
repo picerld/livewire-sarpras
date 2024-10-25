@@ -9,7 +9,7 @@
     </x-header>
     <div class="bg-white rounded dark:bg-dark">
         @forelse ($items as $item)
-            <x-list-item :item="$item" :link="url('/item/' . $item->id)">
+            <x-list-item :item="$item" :link="url('/items/' . $item->id)">
                 <x-slot:avatar>
                     <img src="{{ $item->images ? asset('/storage/' . $item->images) : asset('img/submission.webp') }}"
                         width="44" height="44" alt="{{ $item->name }}" class="rounded-full w-11 avatar" />

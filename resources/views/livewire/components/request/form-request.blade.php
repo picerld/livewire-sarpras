@@ -18,9 +18,25 @@
             <div
                 class="grid w-full gap-4 p-5 border border-gray-400 border-dashed rounded-md md:grid-cols-6 md:items-center">
                 <div class="col-span-6">
-                    <x-choices-offline label="Items" :options="$items" option-label="name" option-sub-label="type"
+                    <x-choices-offline label="Items" :options="$items"
                         wire:model="inputs.{{ $key }}.item_code" hint="Please select an item" class="w-full"
-                        icon="o-radio" inline single searchable />
+                        icon="o-radio" inline single searchable>
+
+                        @scope('item', $item)
+                            <x-list-item :item="$item" sub-value="type">
+                                <x-slot:avatar>
+                                    <x-icon name="o-user" class="w-8 h-8 p-2 bg-orange-100 rounded-full" />
+                                </x-slot:avatar>
+                                <x-slot:actions>
+                                    <x-badge :value="$item->category->aliases" />
+                                </x-slot:actions>
+                            </x-list-item>
+                        @endscope
+
+                        @scope('selection', $item)
+                            {{ $item->name }} ({{ $item->type }})
+                        @endscope
+                    </x-choices-offline>
                 </div>
                 <div class="col-span-4">
                     <x-input type="number" wire:model="inputs.{{ $key }}.qty" class="w-full" icon="o-funnel"
