@@ -18,10 +18,11 @@ class Stats extends Component
         $modelClass = '\App\Models\\' . $model;
 
         if ($model && Schema::hasColumn((new $modelClass)->getTable(), 'total_items')) {
-            $this->value = $modelClass::sum('total_items');
+            $this->value = $modelClass::whereYear('created_at', '=', date('Y'))->sum('total_items');
         } else {
             $this->value = $modelClass::count();
         }
+        
         $this->title = $title;
         $this->icon = $icon;
     }

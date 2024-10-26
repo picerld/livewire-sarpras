@@ -4,15 +4,19 @@ namespace App\Livewire\Components\Admin;
 
 use App\Models\Item;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ListItem extends Component
 {
+    use WithPagination;
+
     // search
     public $search = "";
     public $sortBy = ['column' => 'stock', 'direction' => 'ASC'];
 
-    public function items()
+    public function items(): LengthAwarePaginator
     {
         return Item::query()
             ->withAggregate('category', 'aliases')

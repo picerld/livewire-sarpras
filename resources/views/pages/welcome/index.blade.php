@@ -4,17 +4,22 @@
     </x-slot>
 
     <livewire:components.unit.sidebar />
-    
+
     <!-- MOVE TO LANDING/FEATURES FOR ALL SECTION -->
     <livewire:components.landing.applicationSection />
 
     <section class="min-h-screen px-10" id="features">
         @auth
             <div class="grid grid-cols-2 gap-6 px-10">
-                <livewire:utils.stats title="Pengajuan" model="Submission" icon="o-arrow-trending-up"
-                    class="hover:scale-[99%] transition-all duration-200" />
-                <livewire:utils.stats title="Permintaan" model="Request" icon="o-arrow-trending-down"
-                    class="hover:scale-[99%] transition-all duration-200" />
+                <livewire:components.unit.stats title="Pengajuan" model="Submission" icon="o-arrow-trending-up" />
+                <livewire:components.unit.stats title="Permintaan" model="Request" icon="o-arrow-trending-down" />
+
+                <!-- UNIT CHART -->
+                
+                {{-- <div class="col-span-full">
+                    <livewire:utils.transactionChart />
+                </div>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script> --}}
             </div>
         @endauth
 
@@ -29,19 +34,19 @@
 
                 <div class="grid grid-cols-1 mt-12 md:mt-20 md:grid-cols-2 gap-y-16 gap-x-20">
                     <livewire:components.landing.faqCard question="Bagaimana cara melakukan pengadaan?"
-                    answer="Amet minim mollit non deserunt ullamco est sit
+                        answer="Amet minim mollit non deserunt ullamco est sit
                     aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit." />
 
                     <livewire:components.landing.faqCard question="Bagaimana cara melakukan permintaan?"
-                    answer="Amet minim mollit non deserunt ullamco est sit
+                        answer="Amet minim mollit non deserunt ullamco est sit
                     aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit." />
 
                     <livewire:components.landing.faqCard question="Do you provide discounts?"
-                    answer="Amet minim mollit non deserunt ullamco est sit
+                        answer="Amet minim mollit non deserunt ullamco est sit
                     aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit." />
 
                     <livewire:components.landing.faqCard question="How do you provide support?"
-                    answer="Amet minim mollit non deserunt ullamco est sit
+                        answer="Amet minim mollit non deserunt ullamco est sit
                     aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit." />
                 </div>
 
@@ -66,5 +71,5 @@
         </div>
         <livewire:components.unit.listItem />
     </section>
-    
+
 </x-guest-layout>

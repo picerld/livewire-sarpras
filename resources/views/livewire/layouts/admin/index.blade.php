@@ -25,7 +25,7 @@
         <livewire:utils.stats title="Item" model="Item" icon="o-puzzle-piece" />
         <livewire:utils.stats title="In Item" model="IncomingItem" icon="o-arrow-trending-up" />
         <livewire:utils.stats title="Out Item" model="OutgoingItem" icon="o-arrow-trending-down" />
-        <livewire:utils.stats title="Item" model="Item" icon="o-chart-pie" />
+        <livewire:utils.stats title="Pengadaan" model="Submission" icon="o-chart-pie" />
     </div>
 
     <div id="charts" class="flex flex-wrap w-full gap-4 pt-3 sm:flex-nowrap">
