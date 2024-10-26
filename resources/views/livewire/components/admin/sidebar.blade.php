@@ -11,7 +11,10 @@
                         class="rounded-full w-11 avatar" />
                 </x-slot:avatar>
                 <x-slot:value>
-                    {{ $user->employee->name }}
+                    <div class="flex gap-1">
+                        {{ $user->employee->name }}
+                        <x-badge value="{{ $user->role }}" class="text-white bg-dark btn-outline btm-xs" />
+                    </div>
                 </x-slot:value>
                 <x-slot:sub-value>
                     <p class="text-black dark:text-slate-300">
@@ -33,6 +36,10 @@
             </x-list-item>
         @endif
 
+        <div class="mx-3">
+            <x-button label="Search" @click.stop="$dispatch('mary-search-open')"
+                class="justify-start w-full text-white btn-outline bg-dark btn-sm" icon="o-magnifying-glass" />
+        </div>
         <x-menu activate-by-route>
             <livewire:utils.navLink title="Dashboard" icon="o-rectangle-group" link="/{{ $user->role }}" />
 
@@ -56,17 +63,18 @@
             </x-menu-sub>
 
             {{-- <livewire:utils.navLink title="Laporan" icon="o-chart-pie" link="{{ route('stock.index') }}" /> --}}
-            
+
             <x-menu-sub title="Laporan" icon="o-chart-pie" open>
                 <livewire:utils.navLink title="Laporan ..." icon="o-chart-bar-square" link="#" />
             </x-menu-sub>
 
             @can('isAdmin')
-            <x-menu-sub title="Kelola Akun" icon="o-tv" open>
-                <livewire:utils.navLink title="Supplier" icon="o-truck" link="{{ route('suppliers.index') }}" />
-                <livewire:utils.navLink title="Pegawai" icon="o-computer-desktop" link="{{ route('employees.index') }}" />
-                <livewire:utils.navLink title="Akun" icon="o-identification" link="{{ route('users.index') }}" />
-            </x-menu-sub>
+                <x-menu-sub title="Kelola Akun" icon="o-tv" open>
+                    <livewire:utils.navLink title="Supplier" icon="o-truck" link="{{ route('suppliers.index') }}" />
+                    <livewire:utils.navLink title="Pegawai" icon="o-computer-desktop"
+                        link="{{ route('employees.index') }}" />
+                    <livewire:utils.navLink title="Akun" icon="o-identification" link="{{ route('users.index') }}" />
+                </x-menu-sub>
             @endcan
         </x-menu>
     </x-slot:sidebar>

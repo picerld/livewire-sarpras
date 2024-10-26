@@ -44,7 +44,7 @@ class TransactionChart extends Component
                     [
                         'label' => 'Outgoing Items',
                         'data' => $outgoingData,
-                        'backgroundColor' => '#3C3D37',
+                        'backgroundColor' => '#5E5E5E',
                         'borderRadius' => 5,
                         'barThickness' => 23,
                     ],
@@ -57,7 +57,7 @@ class TransactionChart extends Component
                             'display' => true,
                         ],
                         'ticks' => [
-                            'color' => '#999999',
+                            'color' => '#000000',
                         ],
                         'barPercentage' => 0.5,
                         'categoryPercentage' => 0.5,
@@ -69,7 +69,7 @@ class TransactionChart extends Component
                         ],
                         'ticks' => [
                             'color' => '#999999',
-                            'stepSize' => 50,
+                            'stepSize' => 100,
                         ],
                     ]
                 ],

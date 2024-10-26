@@ -31,14 +31,14 @@ class UnitChart extends Component
                     [
                         'label' => 'Incoming Items',
                         'data' => [$incomingItem],
-                        'backgroundColor' => '#09090b',
+                        'backgroundColor' => '#1E201E',
                         'borderRadius' => 5,
                         'barThickness' => 75,
                     ],
                     [
                         'label' => 'Outgoing Items',
                         'data' => [$outgoingItem],
-                        'backgroundColor' => '#333333',
+                        'backgroundColor' => '#5E5E5E',
                         'borderRadius' => 5,
                         'barThickness' => 75
                     ],
@@ -51,7 +51,7 @@ class UnitChart extends Component
                             'display' => true,
                         ],
                         'ticks' => [
-                            'color' => '#999999',
+                            'color' => '#000000',
                         ],
                         'barPercentage' => 0.6,
                         'categoryPercentage' => 0.25,

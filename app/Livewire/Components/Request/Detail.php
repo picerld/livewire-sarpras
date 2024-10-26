@@ -85,7 +85,7 @@ class Detail extends Component
         $this->createOutgoingItem($requestDetail);
 
         // validate if stock < stock min
-        if ($item->stock <= $item->mxinimum_stock) {
+        if ($item->stock <= $item->minimum_stock) {
             $this->approvalModal = false;
             $this->warning("Jumlah stock $item->name, kurang dari stock minimum!", 'Success!', redirectTo: "/requests/{$this->requestCode}", position: 'toast-bottom');
         }

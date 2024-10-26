@@ -1,6 +1,6 @@
 <div class="min-h-[76vh]">
-    <x-button label="Go back!" link="/users" icon="c-arrow-left-start-on-rectangle" class="mb-4 btn-outline btn-sm"
-        spinner />
+    <x-button label="Go back!" link="/users" icon="c-arrow-left-start-on-rectangle"
+        class="mb-4 text-white btn-outline btn-sm bg-dark" spinner />
     <x-card>
         <x-avatar :image="asset($user->employee->avatar ?? $user->username)" class="!w-28">
             <x-slot:title class="pl-2 text-3xl">
@@ -23,9 +23,11 @@
             <x-tab name="users-tab" label="Profile" icon="o-cake" aria-label="tab profile">
                 <livewire:components.account.form-profile :userId="$user->id" />
             </x-tab>
-            <x-tab name="tricks-tab" icon="o-ticket" label="Histori"
-                aria-label="tab stats">
+            <x-tab name="tricks-tab" icon="o-ticket" label="Histori" aria-label="tab stats">
                 <livewire:components.account.stats :userId="$user->id" />
+
+                <!-- REMOVE THIS -->
+                <livewire:components.account.form-profile :userId="$user->id" />
             </x-tab>
         </x-tabs>
     </x-card>

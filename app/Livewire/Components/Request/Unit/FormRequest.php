@@ -47,47 +47,53 @@ class FormRequest extends Component
 
     public function store(): void
     {
-        $this->validate([
-            'regarding' => 'required|string|min:10|max:100',
-            'characteristic' => 'required|string|min:3|max:50',
-            'inputs.*.item_code' => 'required|exists:items,id',
-            'inputs.*.qty' => 'required|integer|min:1'
-        ], [
-            'regarding.required' => 'Keterangan harus diisi',
-            'characteristic.required' => 'Sifat harus diisi',
-            'inputs.*.item_code.required' => 'Item harus dipilih',
-            'inputs.*.qty.required' => 'Jumlah harus diisi',
-            'inputs.*.qty.min' => 'Jumlah minimal 1',
-        ]);
-
-        $request = Request::create([
-            'id' => GenerateCodeHelper::handleGenerateCode(),
-            'nip' => Auth::user()->nip,
-            'regarding' => $this->regarding,
-            'total_items' => 0, // Default value
-            'characteristic' => $this->characteristic
-        ]);
-
-        $totalItems = 0;
-        
-        foreach ($this->inputs as $input) {
-            RequestDetail::create([
-                'request_code' => $request->id,
-                'item_code' => $input['item_code'],
-                'qty_accepted' => 0,
-                'accepted_by' => null,
-                'qty' => $input['qty'],
+        // try {
+            $this->validate([
+                'regarding' => 'required|string|min:10|max:100',
+                'characteristic' => 'required|string|min:3|max:20',
+                'inputs.*.item_code' => 'required|exists:items,id',
+                'inputs.*.qty' => 'required|integer|min:1'
+            ], [
+                'regarding.required' => 'Keterangan harus diisi',
+                'characteristic.required' => 'Sifat harus diisi',
+                'inputs.*.item_code.required' => 'Item harus dipilih',
+                'inputs.*.qty.required' => 'Jumlah harus diisi',
+                'inputs.*.qty.min' => 'Jumlah minimal 1',
+                'characteristic.min' => 'Sifat minimal 3 karakter',
+                'characteristic.max' => 'Sifat maksimal 20 karakter'
             ]);
-            
-            $totalItems += $input['qty'];
-        }
 
-        $request->update([
-            'total_items' => $totalItems
-        ]);
+            $request = Request::create([
+                'id' => GenerateCodeHelper::handleGenerateCode(),
+                'nip' => Auth::user()->nip,
+                'regarding' => $this->regarding,
+                'total_items' => 0, // Default value
+                'characteristic' => $this->characteristic
+            ]);
 
-        $this->success("Request successfully created", 'Success!!', position: 'toast-bottom', redirectTo: '/requests');
-        $this->reset(['inputs']);
+            $totalItems = 0;
+
+            foreach ($this->inputs as $input) {
+                RequestDetail::create([
+                    'request_code' => $request->id,
+                    'item_code' => $input['item_code'],
+                    'qty_accepted' => 0,
+                    'accepted_by' => null,
+                    'qty' => $input['qty'],
+                ]);
+
+                $totalItems += $input['qty'];
+            }
+
+            $request->update([
+                'total_items' => $totalItems
+            ]);
+
+            $this->success("Request successfully created", 'Success!!', position: 'toast-bottom', redirectTo: '/requests');
+            $this->reset(['inputs']);
+        // } catch (\Throwable $th) {
+        //     $this->error($th->getMessage(), 'Oops!', position: 'toast-bottom');
+        // }
     }
 
     public function render()

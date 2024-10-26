@@ -30,10 +30,11 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="transition-colors duration-300">
+<body class="transition-colors duration-300" x-data>
     <livewire:components.admin.navbar />
     <x-main with-nav full-width class="bg-base-100">
         <livewire:components.admin.sidebar />
+
 
         <x-slot:content class="flex-1 px-6 pt-4 overflow-y-auto md:pt-4 bg-base-200">
             @if (isset($header))
@@ -47,5 +48,9 @@
 
     <x-toast />
 
+    <x-spotlight shortcut="ctrl.f" search-text="Find docs, app actions or users" no-results-text="Ops! Nothing here."
+        url="{{ route('users.index') }}" />
+
 </body>
+
 </html>
