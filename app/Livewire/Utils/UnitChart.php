@@ -51,7 +51,7 @@ class UnitChart extends Component
                             'display' => true,
                         ],
                         'ticks' => [
-                            'color' => '#999999',
+                            'color' => '#000000',
                         ],
                         'barPercentage' => 0.6,
                         'categoryPercentage' => 0.25,

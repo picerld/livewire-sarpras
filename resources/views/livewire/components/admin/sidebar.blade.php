@@ -36,6 +36,10 @@
             </x-list-item>
         @endif
 
+        <div class="mx-3">
+            <x-button label="Search" @click.stop="$dispatch('mary-search-open')"
+                class="justify-start w-full text-white btn-outline bg-dark btn-sm" icon="o-magnifying-glass" />
+        </div>
         <x-menu activate-by-route>
             <livewire:utils.navLink title="Dashboard" icon="o-rectangle-group" link="/{{ $user->role }}" />
 
