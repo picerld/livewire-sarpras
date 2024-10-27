@@ -46,10 +46,10 @@
         </x-slot:content>
     </x-main>
 
-    <x-toast />
-
     <x-spotlight shortcut="ctrl.f" search-text="Find docs, app actions or users" no-results-text="Ops! Nothing here."
-        url="{{ route('users.index') }}" />
+        url="{{ route('spotlight.search') }}" />
+
+    <x-toast />
 
 </body>
 

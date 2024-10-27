@@ -1,6 +1,6 @@
 <x-card class="shadow">
-    <x-header wire:model.live.debounce="search" title="Item Overview" subtitle="Item with minimum stock!" class="px-3 pt-3" separator
-        progress-indicator>
+    <x-header wire:model.live.debounce="search" title="Item Overview" subtitle="Item with minimum stock!" class="px-3 pt-3"
+        separator progress-indicator>
         <x-slot:actions>
             <x-input wire:model="search" id="search" icon="o-magnifying-glass"
                 class="border-dark focus:outline-black placeholder:font-semibold" placeholder="Search..."
@@ -29,6 +29,7 @@
                     </div>
                 </x-slot:sub-value>
             </x-list-item>
+
         @empty
             <x-alert title="Nothing here!" description="Try to remove some filters." icon="o-exclamation-triangle"
                 class="border-none bg-base-100">
@@ -37,5 +38,9 @@
                 </x-slot:actions>
             </x-alert>
         @endforelse
+        
+        <div class="mt-4">
+            {{ $items->links() }}
+        </div>
     </div>
 </x-card>
