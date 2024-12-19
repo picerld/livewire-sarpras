@@ -5,6 +5,7 @@ namespace App\Livewire\Components\Items;
 use App\Helpers\ImageHelper;
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\Supplier;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
@@ -31,6 +32,7 @@ class FormItem extends Component
         'stock' => '',
         'minimum_stock' => '',
         'category_id' => '',
+        'supplier_id' => '',
         'description' => '',
         'images' => '',
     ];
@@ -58,6 +60,7 @@ class FormItem extends Component
             'stock',
             'minimum_stock',
             'category_id',
+            'supplier_id',
             'description',
             'images'
         ]);
@@ -81,6 +84,7 @@ class FormItem extends Component
                     'stock' => 'required|integer|min:1',
                     'minimum_stock' => 'required|integer|min:1',
                     'category_id' => 'required|exists:category,id',
+                    'supplier_id' => 'required|exists:suppliers,id',
                     'description' => 'required|string|max:300|min:10',
                     'images' => 'nullable',
                 ]
@@ -132,6 +136,7 @@ class FormItem extends Component
     public function render()
     {
         $categories = Category::all();
+        $suppliers = Supplier::all();
 
         $units = [
             [
@@ -150,6 +155,7 @@ class FormItem extends Component
 
         return view('livewire.components.items.form-item', [
             "categories" => $categories,
+            'suppliers' => $suppliers,
             'units' => $units
         ]);
     }

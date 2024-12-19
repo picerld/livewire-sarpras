@@ -52,8 +52,9 @@
                                 <x-button label="Accept" wire:click="approval({{ $submission->id }})" icon="o-check-circle"
                                     class="w-full mt-3 text-sm btn-outline btn-sm" spinner />
                             @else
-                                <x-button icon="o-bell-alert" class="w-2/3 mt-3 text-sm text-white btn-outline bg-dark btn-sm" />
-                                <x-button icon="o-wrench-screwdriver" class="w-1/3 mt-3 text-sm btn-outline btn-sm" />
+                                <x-button icon="o-bell-alert" class="w-full mt-3 text-sm text-white btn-outline bg-dark btn-sm" />
+                                {{-- <x-button icon="o-bell-alert" class="w-2/3 mt-3 text-sm text-white btn-outline bg-dark btn-sm" /> --}}
+                                {{-- <x-button icon="o-wrench-screwdriver" class="w-1/3 mt-3 text-sm btn-outline btn-sm" /> --}}
                             @endcan
                             <!-- END -->
                         @else

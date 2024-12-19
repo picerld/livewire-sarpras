@@ -16,10 +16,10 @@
 
                 <!-- UNIT CHART -->
                 
-                {{-- <div class="col-span-full">
+                <div class="col-span-full">
                     <livewire:utils.transactionChart />
                 </div>
-                <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script> --}}
+                <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
             </div>
         @endauth
 

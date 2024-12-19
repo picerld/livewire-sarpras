@@ -91,12 +91,6 @@ class Table extends Component
         $this->success('Filters cleared.', position: 'toast-bottom');
     }
 
-    public function delete(Supplier $supplier): void
-    {
-        $supplier->delete();
-        $this->success("Supplier $supplier->name deleted", 'Good bye!', position: 'toast-bottom');
-    }
-
     public function render()
     {
         return view('livewire.components.supplier.table', [
