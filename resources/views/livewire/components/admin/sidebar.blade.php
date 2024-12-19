@@ -13,7 +13,7 @@
                 <x-slot:value>
                     <div class="flex gap-1">
                         {{ $user->employee->name }}
-                        <x-badge value="{{ $user->role }}" class="text-white bg-dark btn-outline btm-xs" />
+                        <x-badge value="{{ $user->role }}" class="text-white bg-dark btn-outline btn-xs" />
                     </div>
                 </x-slot:value>
                 <x-slot:sub-value>

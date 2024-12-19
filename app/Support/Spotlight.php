@@ -3,54 +3,90 @@
 namespace App\Support;
 
 use App\Models\User;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 class Spotlight
 {
-    public function search(Request $request)
+    public function search(Request $request): JsonResponse
     {
-        // Ensure only authenticated users can search
-        if (!auth()->check()) {
-            return [];
-        }
+        try {
+            // Check authentication
+            if (!auth()->check()) {
+                return response()->json([], 200);
+            }
 
-        // Use a collection to merge user and action results
-        return collect()
-            ->merge($this->actions($request->input('search', '')))
-            ->merge($this->users($request->input('search', '')));
+            $searchTerm = $request->input('search', '');
+
+            // Get results
+            $actions = $this->actions($searchTerm);
+            Log::info('Actions retrieved:', ['actions' => $actions]);
+
+            $users = $this->users($searchTerm);
+
+            $results = collect()
+                ->merge($actions)
+                ->merge($users)
+                ->values();
+
+            return response()->json($results, 200);
+        } catch (\Exception $e) {
+            Log::error('Spotlight search error: ' . $e->getMessage(), [
+                'search' => $request->input('search'),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json(['error' => 'Search failed'], 500);
+        }
     }
 
-    // Database search for users
-    public function users(string $search = '')
+    protected function users(string $search = ''): array
     {
         return User::query()
-            ->where('username', 'like', "%$search%")
+            ->where('username', 'like', "%{$search}%")
+            ->orWhere('role', 'like', "%{$search}%")
+            ->orWhereHas('employee', function (Builder $query) use ($search) {
+                $query->where('name', 'like', "%{$search}%");
+            })
             ->take(5)
             ->get()
             ->map(function (User $user) {
                 return [
-                    'avatar' => $user->employee->avatar ?? null, // Use null coalescing to avoid errors
-                    'name' => $user->username,
+                    'avatar' => $user->employee->avatar ?? null,
+                    'name' => $user->employee->name,
                     'description' => $user->username,
-                    'link' => route('users.show', ['user' => $user->id]) // Use route helper for links
+                    'link' => route('users.show', ['user' => $user->id])
                 ];
-            });
+            })
+            ->toArray();
     }
 
-    // Static search for actions
-    public function actions(string $search = '')
+    protected function actions(string $search = ''): array
     {
-        $icon = Blade::render("<x-icon name='o-bolt' class='p-2 rounded-full w-11 h-11 bg-yellow-50' />");
-
         return collect([
             [
                 'name' => 'Create user',
                 'description' => 'Create a new user',
-                'icon' => $icon,
-                'link' => route('users.create') // Use route helper for links
+                'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="p-2 rounded-full w-11 h-11 bg-yellow-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>',
+                'link' => route('users.create')
+            ],
+            [
+                'name' => 'User list',
+                'description' => 'View all users',
+                'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="p-2 rounded-full w-11 h-11 bg-blue-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>',
+                'link' => route('users.index')
             ],
             // Add more actions as needed
-        ])->filter(fn(array $item) => str($item['name'] . $item['description'])->contains($search, true));
+        ])
+            ->filter(function ($item) use ($search) {
+                return empty($search) ||
+                    str_contains(strtolower($item['name']), strtolower($search)) ||
+                    str_contains(strtolower($item['description']), strtolower($search));
+            })
+            ->values()
+            ->toArray();
     }
 }

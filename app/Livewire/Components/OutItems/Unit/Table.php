@@ -29,9 +29,16 @@ class Table extends Component
     public $item;
     public $detailOutgoingItem = false;
 
+    public $note = true;
+
     public $selectedStatus = null;
     public $fromDate = null;
     public $toDate = null;
+
+    public function hideNote()
+    {
+        $this->note = false;
+    }
 
     public function detailOutgoingItemModal($id)
     {

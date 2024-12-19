@@ -7,10 +7,11 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Mary\Traits\Toast;
 
 class ListItem extends Component
 {
-    use WithPagination;
+    use WithPagination, Toast;
 
     // search
     public $search = "";

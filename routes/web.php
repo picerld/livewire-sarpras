@@ -20,6 +20,11 @@ Route::get('/', function () {
     return view("pages.welcome.index");
 })->name('dashboard');
 
+// route for search
+Route::get('/spotlight/search', [\App\Support\Spotlight::class, 'search'])
+    ->name('spotlight.search')
+    ->middleware(['auth']);
+    
 Route::middleware(['auth'])->group(function () {
     // route for admin
     Route::group(['prefix' => '/admin', 'middleware' => ['can:isAdmin']], function () {
