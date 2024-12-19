@@ -27,9 +27,9 @@
                 <x-badge value="{{ $item->item->category->aliases ?? 'null' }}" class="btn-ghost btn-outline" />
             </x-slot:menu>
             <div class="w-full mt-3">
-                <x-button icon="o-wrench-screwdriver"
+                {{-- <x-button icon="o-wrench-screwdriver"
                     wire:click="save({{ $item->item->id }}, {{ $item->incoming_item_code }})" label="Edit"
-                    class="w-full btn-outline btn-ghost btn-sm" spinner aria-label="save item" />
+                    class="w-full btn-outline btn-ghost btn-sm" spinner aria-label="save item" /> --}}
             </div>
         </x-card>
     

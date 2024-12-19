@@ -23,7 +23,7 @@ class RequestDetail extends Model
         return $this->belongsTo(Item::class, 'item_code');
     }
 
-    public function user(): BelongsTo {
-        return $this->belongsTo(User::class, 'nip');
+    public function employee(): BelongsTo {
+        return $this->belongsTo(Employee::class, 'nip');
     }
 }

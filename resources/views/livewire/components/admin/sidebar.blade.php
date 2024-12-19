@@ -46,11 +46,11 @@
             <x-menu-sub title="Barang" icon="o-cube" class="text-black" open>
                 <livewire:utils.navLink title="Data Barang" icon="o-document-chart-bar"
                     link="{{ route('items.index') }}" />
+                <livewire:utils.navLink title="Barang Masuk" icon="o-arrow-down-on-square-stack"
+                    link="{{ route('in-items.index') }}" />
                 <livewire:utils.navLink title="Barang Keluar" icon="o-arrow-up-on-square-stack"
                     link="{{ route('out-items.index') }}" />
                 @can('isAdmin')
-                    <livewire:utils.navLink title="Barang Masuk" icon="o-arrow-down-on-square-stack"
-                        link="{{ route('in-items.index') }}" />
                     <livewire:utils.navLink title="Kategori" icon="o-puzzle-piece" link="{{ route('category.index') }}" />
                 @endcan
             </x-menu-sub>

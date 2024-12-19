@@ -64,14 +64,16 @@ class Spotlight
             ->toArray();
     }
 
-    protected function actions(string $search = ''): array
+    protected function actions(): array
     {
+        // string $search = '' , for param if needed
+        
         return collect([
             [
                 'name' => 'Create user',
                 'description' => 'Create a new user',
-                'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="p-2 rounded-full w-11 h-11 bg-yellow-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>',
-                'link' => route('users.create')
+                'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="p-2 rounded-full w-11 h-11 bg-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>',
+                'link' => route('users.index')
             ],
             [
                 'name' => 'User list',
@@ -81,11 +83,11 @@ class Spotlight
             ],
             // Add more actions as needed
         ])
-            ->filter(function ($item) use ($search) {
-                return empty($search) ||
-                    str_contains(strtolower($item['name']), strtolower($search)) ||
-                    str_contains(strtolower($item['description']), strtolower($search));
-            })
+            // ->filter(function ($item) use ($search) {
+            //     return empty($search) ||
+            //         str_contains(strtolower($item['name']), strtolower($search)) ||
+            //         str_contains(strtolower($item['description']), strtolower($search));
+            // })
             ->values()
             ->toArray();
     }

@@ -54,8 +54,9 @@
                         inline />
                     <x-input wire:model="newItem.minimum_stock" id="minimum_stock" label="Stok minimum" type="number"
                         min="1" inline />
+                    <x-choices-offline wire:model="newItem.supplier_id" label="Supplier" :options="$suppliers" searchable single />
+                    <x-file wire:model="newItem.images" class="lg:mt-7" accept="image/png, image/jpg, image/jpeg, image/webp" />
                 </div>
-                <x-file wire:model="newItem.images" accept="image/png, image/jpg, image/jpeg, image/webp" />
                 <x-textarea label="Deskripsi" wire:model="newItem.description" placeholder="Type here ..."
                     rows="3" hint="Description of your item" inline />
                 {{-- <x-editor wire:model="newItem.description" label="Deskripsi" hint="The full product description"

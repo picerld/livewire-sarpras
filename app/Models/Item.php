@@ -16,6 +16,11 @@ class Item extends Model
     protected $guarded = ['created_at', 'updated_at'];
     protected $keyType = 'string';
 
+    public function supplier(): BelongsTo
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id');
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id');

@@ -17,6 +17,7 @@
                     <x-input wire:model="newItem.type" id="type" label="Type" inline />
                     <x-choices label="Satuan" wire:model="newItem.unit" :options="$units" single />
                     <x-choices label="Category" wire:model="newItem.category_id" :options="$categories" single />
+                    <x-choices-offline label="Supplier" wire:model="newItem.supplier_id" :options="$suppliers" searchable single />
                     <x-input label="Price" wire:model="newItem.price" prefix="Rp" money locale="id-ID" inline />
                     <x-input wire:model="newItem.stock" id="stock" type="number" label="Stock" min="1"
                         inline readonly />

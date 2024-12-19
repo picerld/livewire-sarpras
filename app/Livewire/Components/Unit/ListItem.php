@@ -66,7 +66,13 @@ class ListItem extends Component
                         ->orWhere('items.name', 'LIKE', $searchTerm)
                         ->orWhere('items.merk', 'LIKE', $searchTerm)
                         ->orWhere('items.price', 'LIKE', $searchTerm)
-                        ->orWhere('items.stock', 'LIKE', $searchTerm);
+                        ->orWhere('items.stock', 'LIKE', $searchTerm)
+                        ->orWhere('items.type', 'LIKE', $searchTerm)
+                        ->orWhere('items.unit', 'LIKE', $searchTerm);
+                });
+                $query->orWhereHas('category', function (Builder $q) use ($searchTerm) {
+                    $q->where('name', 'LIKE', $searchTerm)
+                        ->orWhere('aliases', 'LIKE', $searchTerm);
                 });
             })
             ->when(!empty(array_filter($this->selectedCategory)), function (Builder $query) {

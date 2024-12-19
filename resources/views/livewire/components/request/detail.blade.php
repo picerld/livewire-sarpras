@@ -25,6 +25,12 @@
                         {{ $request->qty_accepted > 0 && $request->qty_accepted !== $request->qty ? $request->qty_accepted : $request->qty }}
                         {{ $request->item->unit }}
                     </p>
+                    
+                    <!-- ACCEPTED BY -->
+                    {{-- @if (isset($request->qty_accepted))
+                        <p>Disetujui oleh {{ $request->employee_name }}</p>
+                    @endif --}}
+                    
                     <x-slot:figure>
                         <img src="{{ asset('/storage/' . $request->item->images) }}" height="200" width="230"
                             class="object-cover w-full min-h-40 max-h-40" aria-labelledby="{{ $request->item->id }}"
