@@ -29,6 +29,7 @@ class ItemFactory extends Factory
             'images' => $this->faker->imageUrl(640, 480, 'items', true),
             'stock' => $this->faker->numberBetween(10, 100),
             'minimum_stock' => $this->faker->numberBetween(10, 100),
+            'supplier_id' => $this->faker->numberBetween(1, 5),
             'category_id' => $this->faker->numberBetween(1, 5),
             'description' => $this->faker->paragraph(1)
         ];

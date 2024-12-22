@@ -106,11 +106,11 @@
             x-transition:leave="transition ease-in duration-500"
             x-transition:leave-start="opacity-100 transform translate-y-0"
             x-transition:leave-end="opacity-0 transform translate-y-4"
-            class="fixed z-50 hidden max-w-xs p-4 text-white rounded-lg shadow-md bottom-4 right-4 w-80 bg-neutral-900">
+            class="fixed z-50 max-w-md p-4 text-white rounded-lg shadow-md bottom-4 right-4 w-80 bg-neutral-900">
             <div class="flex items-start justify-between">
                 <div>
                     <h3 class="text-sm font-medium">Quick Information</h3>
-                    <p class="mt-1 text-xs text-neutral-300">Jangan lupa untuk mengubah status item jika sudah diambil!
+                    <p class="mt-1 text-sm text-neutral-300">Jangan lupa untuk mengubah status item jika sudah diambil!
                     </p>
                 </div>
                 <x-button icon="o-x-mark" class="rounded-full btn-ghost btn-xs" wire:click="hideNote"

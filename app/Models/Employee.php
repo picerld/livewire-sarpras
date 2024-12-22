@@ -22,4 +22,8 @@ class Employee extends Model
     public function submission(): HasMany {
         return $this->hasMany(Submission::class);
     }
+
+    public function requestDetail(): HasMany {
+        return $this->hasMany(RequestDetail::class);
+    }
 }

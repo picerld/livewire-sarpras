@@ -17,4 +17,9 @@ class Supplier extends Model
     public function incomingItems(): HasMany {
         return $this->hasMany(IncomingItem::class, 'id');
     }
+
+    public function item(): HasMany
+    {
+        return $this->hasMany(Item::class, 'id');
+    }
 }

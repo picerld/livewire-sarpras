@@ -6,6 +6,7 @@ use App\Helpers\GenerateCodeHelper;
 use App\Helpers\ImageHelper;
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\Supplier;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Contracts\Database\Eloquent\Builder;
@@ -33,17 +34,19 @@ class Table extends Component
         'category_id' => '',
         'description' => '',
         'images' => '',
+        'supplier_id' => '',
     ];
 
     // Table headers
     public $headers = [
-        ['key' => 'id', 'label' => 'Kode', 'class' => 'dark:text-slate-300'],
-        ['key' => 'name', 'label' => 'Nama', 'class' => 'dark:text-slate-300',],
-        ['key' => 'type', 'label' => 'Type', 'class' => 'dark:text-slate-300'],
-        ['key' => 'merk', 'label' => 'Merk', 'class' => 'dark:text-slate-300'],
-        ['key' => 'category_aliases', 'label' => 'Kategori', 'class' => 'dark:text-slate-300'],
-        ['key' => 'stock', 'label' => 'Stok', 'class' => 'dark:text-slate-300'],
-        ['key' => 'minimum_stock', 'label' => 'Stok Min', 'class' => 'dark:text-slate-300 text-center'],
+        ['key' => 'id', 'label' => 'Kode'],
+        ['key' => 'name', 'label' => 'Nama'],
+        ['key' => 'supplier_name', 'label' => 'Supplier'],
+        ['key' => 'type', 'label' => 'Type'],
+        ['key' => 'merk', 'label' => 'Merk'],
+        ['key' => 'category_aliases', 'label' => 'Kategori'],
+        ['key' => 'stock', 'label' => 'Stok'],
+        ['key' => 'minimum_stock', 'label' => 'Stok Min', 'class' => ' text-center'],
     ];
 
     public int $perPage = 5;
@@ -76,6 +79,7 @@ class Table extends Component
             'newItem.stock' => 'required|integer|min:1',
             'newItem.minimum_stock' => 'required|integer|min:1',
             'newItem.category_id' => 'required|exists:category,id',
+            'newItem.supplier_id' => 'required|exists:supplierS,id',
             'newItem.description' => 'required|string|max:300|min:10',
             'newItem.images' => 'nullable',
         ];
@@ -95,6 +99,7 @@ class Table extends Component
             'newItem.category_id.required' => 'kategori harus diisi',
             'newItem.description.required' => 'deskripsi harus diisi',
             'newItem.description.min' => 'deskripsi minimal 10 karakter',
+            'newItem.supplier_id.required' => 'supplier harus diisi',
         ];
     }
 
@@ -112,6 +117,7 @@ class Table extends Component
     {
         return Item::query()
             ->withAggregate('category', 'aliases')
+            ->withAggregate('supplier', 'name')
             ->when($this->search, fn(Builder $q) => $q->whereAny(['id', 'name', 'merk', 'price', 'stock'], 'LIKE', "%$this->search%"))
             ->when($this->selectedCategory, fn(Builder $q) => $q->where('category_id', $this->selectedCategory))
             ->when($this->fromStock, fn(Builder $q) => $q->where('stock', '>=', $this->fromStock))
@@ -155,6 +161,7 @@ class Table extends Component
             'stock' => $this->newItem['stock'],
             'minimum_stock' => $this->newItem['minimum_stock'],
             'category_id' => $this->newItem['category_id'],
+            'supplier_id' => $this->newItem['supplier_id'],
             'description' => $this->newItem['description'],
             'images' => $this->newItem['images'],
         ]);
@@ -173,6 +180,7 @@ class Table extends Component
     {
         $items = $this->items();
         $categories = Category::all();
+        $suppliers = Supplier::all();
 
         $units = [
             [
@@ -192,6 +200,7 @@ class Table extends Component
         return view('livewire.components.items.table', [
             'items' => $items,
             'categories' => $categories,
+            'suppliers' => $suppliers,
             'headers' => $this->headers,
             'sortBy' => $this->sortBy,
             'units' => $units
