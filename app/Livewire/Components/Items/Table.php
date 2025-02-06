@@ -11,6 +11,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Validate;
 use Mary\Traits\Toast;
 use Livewire\WithFileUploads;
@@ -123,7 +124,7 @@ class Table extends Component
             ->when($this->fromStock, fn(Builder $q) => $q->where('stock', '>=', $this->fromStock))
             ->when($this->toStock, fn(Builder $q) => $q->where('stock', '<=', $this->toStock))
             ->orderBy(...array_values($this->sortBy))
-            ->paginate($this->perPage, ['id', 'name', 'price', 'stock', 'minimum_stock', 'category->name']);
+            ->paginate($this->perPage, ['id', 'name', 'price', 'stock', 'minimum_stock', 'category.name']);
     }
 
     public function updated($property): void
@@ -146,7 +147,7 @@ class Table extends Component
         $this->newItem['id'] = GenerateCodeHelper::handleGenerateCode();
 
         $this->validate();
-        
+
         $this->newItem['images'] = ImageHelper::handleImage($this->newItem['images']);
 
         Item::create([
@@ -174,7 +175,6 @@ class Table extends Component
         $this->reset('newItem');
         $this->createItems = false;
     }
-
 
     public function render()
     {
