@@ -43,11 +43,12 @@
                     <x-badge value="{{ $value }}"
                         class="text-white border-none bg-accent indicator-item {{ $value > 0 ? '' : 'hidden' }}" />
                 </x-button>
+
                 {{-- <a href="{{ route(Auth::user()->role) }}"
                     class="inline-flex items-center justify-center px-3 sm:px-5 py-2.5 text-sm sm:text-base font-semibold transition-all duration-200 text-white bg-gray-600 hover:bg-gray-700 focus:bg-gray-700 rounded-lg"
                     role="button">Profil</a> --}}
                 <x-button icon="o-power" aria-label="logout"
-                    class="inline-flex items-center justify-center text-sm font-semibold text-black transition-all duration-200 bg-white border-none rounded-md px-7 btn-sm sm:text-base hover:bg-gray-200"
+                    class="inline-flex items-center justify-center text-sm font-semibold text-black transition-all duration-200 border-none rounded-md bg-white/98 px-7 btn-sm sm:text-base hover:bg-white/97"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();" />
             @else
                 <a href="{{ route('login') }}"
@@ -57,7 +58,7 @@
         </div>
 
         <label for="main-drawer" class="mr-3 lg:hidden">
-            <x-icon name="o-bars-3-bottom-left" class="cursor-pointer" />
+            <x-icon name="o-bars-3-bottom-left" class="text-white cursor-pointer" />
         </label>
     </div>
 </div>

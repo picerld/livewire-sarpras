@@ -10,6 +10,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Mary\Traits\Toast;
@@ -131,10 +132,12 @@ class ListItem extends Component
                 }
             });
 
-            $this->success('Cart successfully created!', 'Success!', position: 'toast-bottom');
+            $this->success('Item added to cart!', 'Success!', position: 'toast-bottom');
+
             $this->resetCart();
         } catch (\Throwable $th) {
-            $this->error('Try again later ...', 'Something wrong!!', position: 'toast-bottom');
+            Log::error($th);
+            $this->error('Failed to add item to cart!', 'Error!', position: 'toast-bottom');
         }
     }
 

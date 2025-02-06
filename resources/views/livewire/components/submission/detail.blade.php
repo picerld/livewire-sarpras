@@ -52,7 +52,8 @@
                                 <x-button label="Accept" wire:click="approval({{ $submission->id }})" icon="o-check-circle"
                                     class="w-full mt-3 text-sm btn-outline btn-sm" spinner />
                             @else
-                                <x-button icon="o-bell-alert" class="w-full mt-3 text-sm text-white btn-outline bg-dark btn-sm" />
+                                <x-button icon="o-bell-alert"
+                                    class="w-full mt-3 text-sm text-white btn-outline bg-dark btn-sm" />
                                 {{-- <x-button icon="o-bell-alert" class="w-2/3 mt-3 text-sm text-white btn-outline bg-dark btn-sm" /> --}}
                                 {{-- <x-button icon="o-wrench-screwdriver" class="w-1/3 mt-3 text-sm btn-outline btn-sm" /> --}}
                             @endcan
@@ -75,10 +76,18 @@
         <p class="text-sm">Press `ESC` or click outside to close.</p>
         @if (!empty($submissionItem))
             <div class="py-4">
-                <h1 class="text-lg font-bold">{{ $submissionItem->item->name }} ({{ $submissionItem->item->stock }}
-                    {{ $submissionItem->item->unit }}), ({{ $submissionItem->item->minimum_stock }}
-                    {{ $submissionItem->item->unit }})</h1>
-                <h3 class="text-base font-semibold">{{ $submissionItem->qty }} {{ $submissionItem->item->unit }}</h3>
+                <div class="flex items-baseline gap-2">
+                    <h1 class="text-lg font-bold">{{ $submissionItem->item->name }}</h1>
+                    <x-badge value="{{ $submissionItem->qty }} {{ $submissionItem->item->unit }}"
+                        class="text-xs text-white bg-dark" />
+                </div>
+                <div class="flex flex-col py-1">
+                    <h4 class="text-sm">Stock: {{ $submissionItem->item->stock }} {{ $submissionItem->item->unit }}
+                    </h4>
+                    <p class="text-sm">Stock Minimum: {{ $submissionItem->item->minimum_stock }}
+                        {{ $submissionItem->item->unit }}
+                    </p>
+                </div>
             </div>
             <x-form wire:submit="save" no-separator>
                 <x-input label="Quantity" wire:model="submissionApproved.qty" type="number" min="1"

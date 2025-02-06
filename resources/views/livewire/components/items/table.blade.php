@@ -12,7 +12,7 @@
                 aria-label="create item" />
             <x-dropdown class="text-white btn-outline bg-dark hover:opacity-90">
                 <x-menu-item title="Import" icon="o-arrow-down-on-square-stack" />
-                <x-menu-item title="Export" icon="o-arrow-up-on-square-stack" />
+                <x-menu-item title="Export" icon="o-arrow-up-on-square-stack" wire:click="export" />
             </x-dropdown>
         </x-slot:actions>
     </x-header>

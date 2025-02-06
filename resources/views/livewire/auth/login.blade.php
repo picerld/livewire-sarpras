@@ -5,7 +5,7 @@ use Mary\Traits\Toast;
 
 new #[Title('Login')] class extends Component {
     use Toast;
-    
+
     #[Rule('required|email')]
     public string $username = '';
 
@@ -79,8 +79,10 @@ new #[Title('Login')] class extends Component {
         <div class="w-full max-w-md">
             <!-- Form title -->
             <div class="flex flex-col items-center">
-                <h2 class="mb-4 text-3xl font-semibold text-gray-800">Login to Sarpras</h2>
-                <p class="mb-8 text-gray-600">Enter your email below to login to your account.</p>
+                <h2 class="mb-2 text-3xl font-bold text-gray-800">Welcome Back!</h2>
+                <p class="mb-8 text-center text-gray-600">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Pariatur cum
+                    iste animi temporibus dolorum consequatur?</p>
             </div>
 
             <x-form wire:submit.prevent="login" no-separator>
@@ -100,6 +102,11 @@ new #[Title('Login')] class extends Component {
                     </x-button>
                 </x-slot:actions>
             </x-form>
+
+            <div class="mt-16 text-center">
+                <p class="text-sm">By logging in, you agree to our <a href="#" class="underline">Terms and Conditions</a> and <a
+                        href="#" class="underline">Privacy Policy</a>.</p>
+            </div>
 
             {{-- <div class="relative my-6">
                 <div class="absolute inset-0 flex items-center">
