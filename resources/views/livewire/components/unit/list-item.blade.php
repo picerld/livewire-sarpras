@@ -1,7 +1,7 @@
 <div class="flex flex-col w-full gap-3 mt-10 md:flex-row">
     <div class="w-full mb-6 text-white md:w-1/6 md:mb-0">
         <h3 class="text-lg font-semibold">Kategori</h3>
-        <div class="flex flex-row gap-3 mt-3 lg:flex-col md:flex-row">
+        <div class="flex flex-row flex-wrap gap-4 mt-3 lg:flex-col md:flex-col lg:flex-nowrap md:flex-nowrap">
             @foreach ($categories as $category)
                 <x-checkbox label="{{ $category->aliases }}"
                     class="[--chkbg:theme(colors.indigo.600)] [--chkfg:white] transition-all duration-200 border-none outline-dashed checkbox checked:outline-none"
@@ -12,7 +12,7 @@
 
     <div class="flex flex-col w-full">
         <!-- SEARCH BAR -->
-        <div class="px-10 mb-4">
+        <div class="px-0 mb-4 lg:px-10 md:px-8">
             <!-- WITH DEBOUNCE -->
             {{-- <x-input icon="o-magnifying-glass" placeholder="Search items..." wire:model.live.debounce.500ms="search"
                 class="w-full" auto-complete="false" clearable /> --}}
@@ -25,7 +25,7 @@
             <x-loading class="text-white loading-lg" />
         </div>
 
-        <div class="grid grid-cols-1 gap-5 px-10 lg:grid-cols-4 md:grid-cols-2">
+        <div class="grid grid-cols-1 gap-5 px-0 lg:px-10 md:px-8 lg:grid-cols-4 md:grid-cols-2">
             @forelse ($items as $item)
                 <x-card title="{{ $item->name }} ({{ $item->type }})"
                     class="relative flex flex-col justify-between my-2 h-80">

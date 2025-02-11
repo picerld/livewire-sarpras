@@ -42,6 +42,10 @@
                         class=" btn-ghost btn-outline {{ $submission->status == 'pending' ? '' : 'bg-dark text-white' }}" />
                 @endscope
 
+                @scope('cell_created_at', $submission)
+                    {{ $submission->created_at->format('d M Y') }}
+                @endscope
+
                 @scope('actions', $submission)
                     <x-button icon="o-information-circle" wire:click="detailSubmissionModal({{ $submission->id }})"
                         class="text-white btn-sm btn-ghost bg-dark btn-outline" aria-label="delete item" spinner />
@@ -56,7 +60,7 @@
 
             <x-spotlight />
 
-            <x-modal wire:model="detailSubmission" class="backdrop-blur"
+            <x-modal wire:model="detailSubmission" class="backdrop-blur modal-bottom lg:modal-middle md:modal-middle"
                 box-class="w-full lg:min-w-[800px] md:min-w-[800px] max-h-[70vh]">
                 <p class="pb-5 text-sm text-black">Press `ESC` or click outside to close.</p>
                 @if (isset($item))
@@ -67,13 +71,12 @@
                         </article>
                     </div>
 
-
                     <div class="grid w-full grid-cols-1 py-4 md:grid-cols-2 lg:grid-cols-3">
                         @foreach ($item as $submission)
                             <div class="m-2">
                                 <x-card
                                     title="{{ $submission->item->name ?? $submission->custom_item }} ({{ $submission->item->type ?? 'null' }})"
-                                    class="shadow">
+                                    class="flex flex-col justify-between h-full my-2 border-2">
                                     <x-icon name="o-tag"
                                         label="{{ $submission->item->merk ?? $submission->custom_item }}" />
                                     <p class="text-sm font-semibold">

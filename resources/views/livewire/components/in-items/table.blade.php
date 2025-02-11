@@ -38,24 +38,28 @@
 
     <x-modal wire:model="inItemImage" class="backdrop-blur"
         box-class="w-full lg:min-w-[700px] md:min-w-[700px] max-h-[65vh]">
-        <p class="text-sm">Press `ESC` or click outside to close.</p>
+        <div class="flex flex-col gap-3">
+            <p class="text-sm">Press `ESC` or click outside to close.</p>
+            <!-- FIX UI FOR NOTE -->
+            {{-- <p class="text-lg font-semibold">Silahkan upload surat serah terima berita acara.</p> --}}
+        </div>
 
         <!-- FIX UX WHILE UPDATING THE IMAGE -->
 
         <x-card class="w-full">
             @if ($itemInDetail)
                 <x-form wire:submit.prevent="save" class="w-full" no-separator>
-                    {{ $itemInDetail->id }}
+                    {{-- {{ $itemInDetail->id }} --}}
 
                     @if ($itemInDetail->image)
-                    <div class="flex flex-col gap-5">
-                        <img src="{{ asset('storage/' . $itemInDetail->image) }}" class="w-full"
-                            aria-labelledby="{{ $itemInDetail->id }}" alt="{{ $itemInDetail->name }}" />
+                        <div class="flex flex-col gap-5">
+                            <img src="{{ asset('storage/' . $itemInDetail->image) }}" class="w-full"
+                                aria-labelledby="{{ $itemInDetail->id }}" alt="{{ $itemInDetail->name }}" />
 
-                        <x-file wire:model="newIncomingItem.image"
-                            accept="image/png, image/jpeg, image/jpg, image/webp">
-                        </x-file>
-                    </div>
+                            <x-file wire:model="newIncomingItem.image"
+                                accept="image/png, image/jpeg, image/jpg, image/webp">
+                            </x-file>
+                        </div>
                     @else
                         <x-file wire:model="newIncomingItem.image"
                             accept="image/png, image/jpeg, image/jpg, image/webp">

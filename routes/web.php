@@ -61,6 +61,9 @@ Route::middleware(['auth'])->group(function () {
     // Route::middleware(['can:isAdmin'])->group(function () {
     // route for admin and pengawas
     Route::resource('items', ItemController::class);
+    Route::get('/item/export', [ItemController::class, 'export'])->name('items.export');
+    Route::get('/item/import', [ItemController::class, 'import'])->name('items.import');
+
     Route::resource('out-items', OutItemController::class);
     // });
 

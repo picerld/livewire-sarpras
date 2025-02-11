@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Items;
 
+use App\Exports\ItemsExport;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ItemController extends Controller
 {
@@ -64,5 +66,10 @@ class ItemController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function export()
+    {
+        return Excel::download(new ItemsExport, 'items.xlsx');
     }
 }

@@ -2,8 +2,11 @@
 
 namespace App\Livewire\Components\Items;
 
+use App\Exports\ItemExportTemplate;
+use App\Exports\ItemsExport;
 use App\Helpers\GenerateCodeHelper;
 use App\Helpers\ImageHelper;
+use App\Imports\ItemsImport;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\Supplier;
@@ -11,10 +14,12 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Date;
 use Livewire\Attributes\Validate;
 use Mary\Traits\Toast;
 use Livewire\WithFileUploads;
+use Maatwebsite\Excel\Excel as ExcelExcel;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Table extends Component
 {
@@ -38,6 +43,9 @@ class Table extends Component
         'supplier_id' => '',
     ];
 
+    // csv
+    public $csv;
+
     // Table headers
     public $headers = [
         ['key' => 'id', 'label' => 'Kode'],
@@ -50,15 +58,16 @@ class Table extends Component
         ['key' => 'minimum_stock', 'label' => 'Stok Min', 'class' => ' text-center'],
     ];
 
-    public int $perPage = 5;
+    public int $perPage = 6;
 
     public $search = "";
-    public $sortBy = ['column' => 'name', 'direction' => 'ASC'];
+    public $sortBy = ['column' => 'created_at', 'direction' => 'DESC'];
 
     // drawer
     public bool $drawerIsOpen = false;
     // modal
     public bool $createItems = false;
+    public bool $importModal = false;
 
     // filters
     public $selectedCategory = null;
@@ -112,6 +121,11 @@ class Table extends Component
     public function createItemsModal()
     {
         $this->createItems = true;
+    }
+
+    public function openImportModal()
+    {
+        $this->importModal = true;
     }
 
     public function items(): LengthAwarePaginator
@@ -174,6 +188,36 @@ class Table extends Component
 
         $this->reset('newItem');
         $this->createItems = false;
+    }
+
+    public function exportCsv()
+    {
+        return Excel::download(new ItemsExport, 'items-' . Date::now()->format('dmYHms') . '.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        return;
+    }
+
+    public function downloadTemplate()
+    {
+        return Excel::download(new ItemExportTemplate, 'item-template-' . Date::now()->format('mY') . '.xlsx');
+    }
+
+    public function import(): void
+    {
+        $this->validate([
+            'csv' => 'required|mimes:xlsx'
+        ], [
+            'csv.required' => 'File is required',
+            'csv.mimes' => 'File must be in .xlsx format'
+        ]);
+
+        $this->importModal = false;
+        Excel::import(new ItemsImport, $this->csv);
+
+        $this->success('Items imported', 'Success!', position: 'toast-bottom');
     }
 
     public function render()
