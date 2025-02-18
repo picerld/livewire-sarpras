@@ -29,14 +29,14 @@ class UnitChart extends Component
                 'labels' => ['Total Transaction'],
                 'datasets' => [
                     [
-                        'label' => 'Incoming Items',
+                        'label' => 'Barang Masuk',
                         'data' => [$incomingItem],
                         'backgroundColor' => '#1E201E',
                         'borderRadius' => 5,
                         'barThickness' => 75,
                     ],
                     [
-                        'label' => 'Outgoing Items',
+                        'label' => 'Barang Keluar',
                         'data' => [$outgoingItem],
                         'backgroundColor' => '#5E5E5E',
                         'borderRadius' => 5,

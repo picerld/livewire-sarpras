@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Date;
 use Livewire\Attributes\Validate;
 use Mary\Traits\Toast;
 use Livewire\WithFileUploads;
-use Maatwebsite\Excel\Excel as ExcelExcel;
 use Maatwebsite\Excel\Facades\Excel;
 
 class Table extends Component
@@ -74,13 +73,20 @@ class Table extends Component
     public $fromStock = null;
     public $toStock = null;
 
+    public bool $isReport = false;
+
+    public function mount($isReport)
+    {
+        $this->isReport = $isReport;
+    }
+
     // Validation
     public function rules()
     {
         return [
             'newItem.id' => 'required|max:50|min:1',
             'newItem.name' => 'required|string|max:255|min:2',
-            'newItem.merk' => 'required|string|max:255|min:2',
+            'newItem.merk' => 'required|string|max:255|min:1',
             'newItem.color' => 'required|string|max:255|min:2',
             'newItem.type' => 'string|max:255|min:1',
             'newItem.size' => 'string|max:255|min:1',
@@ -195,14 +201,9 @@ class Table extends Component
         return Excel::download(new ItemsExport, 'items-' . Date::now()->format('dmYHms') . '.xlsx');
     }
 
-    public function exportPdf()
-    {
-        return;
-    }
-
     public function downloadTemplate()
     {
-        return Excel::download(new ItemExportTemplate, 'item-template-' . Date::now()->format('mY') . '.xlsx');
+        return Excel::download(new ItemExportTemplate, 'items-template-' . Date::now()->format('mY') . '.xlsx');
     }
 
     public function import(): void
@@ -226,6 +227,8 @@ class Table extends Component
         $categories = Category::all();
         $suppliers = Supplier::all();
 
+        $isReport = $this->isReport;
+
         $units = [
             [
                 'id' => 'Pcs',
@@ -247,7 +250,8 @@ class Table extends Component
             'suppliers' => $suppliers,
             'headers' => $this->headers,
             'sortBy' => $this->sortBy,
-            'units' => $units
+            'units' => $units,
+            'isReport' => $isReport
         ]);
     }
 }

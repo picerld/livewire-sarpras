@@ -7,6 +7,10 @@
                 autocomplete="off" />
             <x-button icon="o-funnel" class="text-black dark:text-white/80" wire:click="tableDrawer"
                 aria-label="filter submission" responsive />
+            <x-dropdown label="Export" class="text-white btn-outline bg-dark hover:opacity-90">
+                <x-menu-item title="Export Csv" icon="o-arrow-up-on-square-stack" wire:click="exportCsv" />
+                <x-menu-item title="Export Pdf" icon="o-arrow-up-on-square-stack" wire:click="requestPdfModal" />
+            </x-dropdown>
             <x-button icon-right="m-plus" label="Add" wire:click="createRequestModal"
                 class="text-white bg-dark dark:bg-slate-100 hover:bg-dark hover:opacity-90 dark:text-black" responsive
                 aria-label="create submission" />
@@ -35,8 +39,7 @@
         @endscope
 
         @scope('cell_characteristic', $request)
-            <x-badge :value="$request->characteristic ? $request->characteristic : 'none'"
-                class="text-white btn-ghost btn-outline bg-dark" />
+            <x-badge :value="$request->characteristic ? $request->characteristic : 'none'" class="text-white btn-ghost btn-outline bg-dark" />
         @endscope
 
         @scope('actions', $request)
@@ -52,6 +55,63 @@
     </x-table>
 
     <x-spotlight />
+
+    <x-modal wire:model="requestExportPdf" class="backdrop-blur modal-bottom lg:modal-middle md:modal-middle"
+        box-class="w-full lg:min-w-[400px] md:min-w-[400px] max-h-[80vh]">
+        <div class="flex flex-col gap-3">
+            <p class="text-sm">Press `ESC` or click outside to close.</p>
+
+            <!-- DATEPICKER PLUGIN -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+            <form action="{{ route('requests.export') }}" method="POST" target="_blank">
+                @csrf
+
+                <div class="flex flex-col gap-4 my-3">
+                    <x-datepicker class="cursor-pointer" label="Tanggal Mulai" name="fromDate" icon="o-calendar"
+                        hint="optional" class="cursor-pointer border-dark focus:border-dark focus:outline-black" />
+                    <x-datepicker class="cursor-pointer" label="Tanggal Selesai" name="toDate" icon="o-calendar"
+                        hint="optional" class="cursor-pointer border-dark focus:border-dark focus:outline-black" />
+                </div>
+
+                <div class="flex flex-col gap-2 my-1">
+                    <label class="w-full form-control">
+                        <div class="label">
+                            <span class="text-sm font-semibold">Unit Kerja</span>
+                        </div>
+                        <select name="nip" class="w-full border-black cursor-pointer select">
+                            <option value="">SEMUA</option>
+                            @foreach ($userNameExplode as $user)
+                                <option value="{{ $user['id'] }}">{{ $user['name'] }}</option>
+                            @endforeach
+                        </select>
+                        <div class="label">
+                            <span class="label-text-alt">optional</span>
+                        </div>
+                    </label>
+
+                    <label class="w-full form-control">
+                        <div class="label">
+                            <span class="text-sm font-semibold">Status Permintaan</span>
+                        </div>
+                        <select name="status" class="w-full border-black cursor-pointer select">
+                            <option value="">SEMUA</option>
+                            @foreach ($status as $sts)
+                                <option value="{{ $sts['id'] }}">{{ $sts['name'] }}</option>
+                            @endforeach
+                        </select>
+                        <div class="label">
+                            <span class="label-text-alt">optional</span>
+                        </div>
+                    </label>
+                </div>
+
+                <x-button label="Unduh Laporan!" class="w-full text-white btn-outline bg-dark btn"
+                    icon="o-arrow-down-on-square-stack" type="submit" />
+            </form>
+        </div>
+    </x-modal>
 
     <x-modal wire:model="createRequest" class="backdrop-blur" box-class="w-full lg:min-w-[800px] md:min-w-[800px]">
         <p class="pb-5 text-sm">Press `ESC` or click outside to close.</p>

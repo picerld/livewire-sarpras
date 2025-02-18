@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers\Items;
 
+use App\Exports\OutgoingItemExport;
 use App\Http\Controllers\Controller;
+use App\Models\OutgoingItemDetail;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OutItemController extends Controller
 {
@@ -74,5 +80,18 @@ class OutItemController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function export(Request $request)
+    {
+        $outItems = OutgoingItemDetail::query()
+            ->when($request->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $request->fromDate))
+            ->when($request->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $request->toDate))
+            ->get();
+
+        return view('exports.outItems', [
+            'outItems' => $outItems,
+            'fromDate' => $request->fromDate,
+        ]);
     }
 }

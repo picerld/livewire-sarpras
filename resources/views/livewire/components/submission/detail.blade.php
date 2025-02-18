@@ -21,9 +21,9 @@
             <div class="m-2">
                 <x-card
                     title="{{ $submission->item->name ?? $submission->custom_item }} ({{ $submission->item->type ?? 'null' }})"
-                    class="shadow">
+                    class="shadow h-96">
                     <x-icon name="o-tag" label="{{ $submission->item->merk ?? $submission->custom_item }}" />
-                    <p class="text-sm font-semibold">
+                    <p class="h-10 text-sm font-semibold">
                         {{ $submission->qty_accepted > 0 && $submission->qty_accepted !== $submission->qty ? $submission->qty_accepted : $submission->qty }}
                         {{ $submission->item->unit ?? '' }}
                     </p>

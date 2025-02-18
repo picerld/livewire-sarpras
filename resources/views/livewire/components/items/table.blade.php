@@ -1,10 +1,10 @@
 <x-card>
-    <x-header wire:model.live.debounce="search" title="Barang" class="px-3 pt-3" size="text-3xl" subtitle="Items Table"
+    <x-header wire:model.live.debounce="search" title="{{ $isReport ? 'Reports' : 'Items' }}" class="px-3 pt-3" size="text-3xl" subtitle="Items Table"
         progress-indicator separator>
         <x-slot:actions>
             <x-input wire:model="search" id="search" icon="o-magnifying-glass"
-                class="border-dark focus:outline-black focus:border-dark placeholder:font-semibold" placeholder="Search..."
-                autocomplete="off" />
+                class="border-dark focus:outline-black focus:border-dark placeholder:font-semibold"
+                placeholder="Search..." autocomplete="off" />
 
             <!-- FILTER OPTIONAL -->
             {{-- <x-button icon="o-funnel" class="text-black dark:text-white/80" wire:click="tableDrawer"
@@ -15,8 +15,10 @@
                 aria-label="filter item" responsive />
             <x-dropdown label="Export" class="text-white btn-outline bg-dark hover:opacity-90">
                 <x-menu-item title="Export Csv" icon="o-arrow-up-on-square-stack" wire:click="exportCsv" />
-                <x-menu-item title="Export Pdf" icon="o-arrow-up-on-square-stack" wire:click="exportPdf" />
+                <x-menu-item title="Export Pdf" icon="o-arrow-up-on-square-stack" link="{{ route('items.export') }}"
+                    no-wire-navigate />
             </x-dropdown>
+
             <x-button icon-right="m-plus" label="Add" wire:click="createItemsModal"
                 class="text-white bg-dark dark:bg-slate-100 hover:bg-dark hover:opacity-90 dark:text-black" responsive
                 aria-label="create item" />
@@ -24,7 +26,7 @@
     </x-header>
 
     <!-- USING TABLE -->
-    <x-table :headers="$headers" :rows="$items" :sort-by="$sortBy" link="/items/{id}"
+    <x-table :headers="$headers" :rows="$items" :sort-by="$sortBy" link="{{ $isReport ? '/reports/{id}' : '/items/{id}' }}"
         class="bg-white rounded dark:bg-dark" with-pagination per-page="perPage" :per-page-values="[6, 20, 50]">
         @scope('cell_stock', $item)
             <p>{{ $item->stock > $item->minimum_stock ? $item->stock : $item->stock . ' !!' }}</p>
@@ -90,13 +92,31 @@
 
                 <!-- IMPORT SECTION -->
                 <x-form wire:submit.prevent="import" no-separator>
-
-                    {{-- <input wire:model="csv" type="hidden" accept="" /> --}}
-                    <x-file wire:model="csv" class=""
-                        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                    <div class="file-input-wrapper">
+                        <x-file wire:model="csv" change-text="Upload"
+                            class="flex flex-col items-center justify-center w-full h-32 bg-gray-100 rounded-lg"
+                            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                            <div class="file-input-label">
+                                <span class="text-xs">
+                                    @if ($csv)
+                                        {{ $csv->getClientOriginalName() }}
+                                    @else
+                                        Click to upload | Max 1MB
+                                    @endif
+                                </span>
+                            </div>
+                        </x-file>
+                        <span class="text-sm font-semibold">
+                            @if ($csv)
+                                {{ $csv->getClientOriginalName() }}
+                            @else
+                                No file selected
+                            @endif
+                        </span>
+                    </div>
 
                     <x-button type="submit" spinner="import" label="Upload" class="btn-outline btn"
-                        icon="o-arrow-down-on-square-stack" />
+                        icon="o-arrow-up-on-square-stack" />
                 </x-form>
             </div>
         </div>

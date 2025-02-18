@@ -9,6 +9,7 @@ use App\Http\Controllers\Items\InItemController;
 use App\Http\Controllers\Items\ItemController;
 use App\Http\Controllers\Items\OutItemController;
 use App\Http\Controllers\Items\StockController;
+use App\Http\Controllers\Report\ReportController;
 use App\Http\Controllers\Request\RequestController;
 use App\Http\Controllers\Submission\SubmissionController;
 use App\Http\Controllers\Supplier\SupplierController;
@@ -44,11 +45,18 @@ Route::middleware(['auth'])->group(function () {
     // route for admin
     Route::middleware(['can:isAdmin'])->group(function () {
         Route::resource('in-items', InItemController::class);
+        Route::post('/in-item/export', [InItemController::class, 'export'])->name('in-items.export');
+
         Route::resource('category', CategoryController::class);
         Route::resource('users', UserController::class);
         Route::resource('stock', StockController::class);
         Route::resource('suppliers', SupplierController::class);
         Route::resource('employees', EmployeeController::class);
+
+        // laporan
+        Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+        Route::get('/reports/{id}', [ReportController::class, 'show'])->name('reports.show');
+        Route::post('/report/export/{id}', [ReportController::class, 'export'])->name('report.export');
     });
 
     // route for submission 'pengawas or admin'
@@ -56,7 +64,9 @@ Route::middleware(['auth'])->group(function () {
     // });
     
     Route::resource('requests', RequestController::class);
+    Route::post('/request/export', [RequestController::class, 'export'])->name('requests.export');
     Route::resource('submissions', SubmissionController::class);
+    Route::post('/submission/export', [SubmissionController::class, 'export'])->name('submissions.export');
 
     // Route::middleware(['can:isAdmin'])->group(function () {
     // route for admin and pengawas
@@ -65,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/item/import', [ItemController::class, 'import'])->name('items.import');
 
     Route::resource('out-items', OutItemController::class);
+    Route::post('/out-item/export', [OutItemController::class, 'export'])->name('out-items.export');
     // });
 
     Route::middleware(['can:isUnit'])->group(function () {

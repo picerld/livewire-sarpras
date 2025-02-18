@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components\InItems;
 
+use App\Exports\incomingItemExport;
 use App\Helpers\ImageHelper;
 use App\Models\IncomingItem;
 use App\Models\IncomingItemDetail;
@@ -10,11 +11,13 @@ use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 use Mary\Traits\Toast;
 
 class Table extends Component
@@ -55,6 +58,7 @@ class Table extends Component
     // modal
     public bool $createItems = false;
     public bool $inItemImage = false;
+    public bool $inItemExportPdf = false;
 
     // filters
     public $fromDate = null;
@@ -76,6 +80,11 @@ class Table extends Component
     {
         $this->inItemImage = true;
         $this->itemInDetail = IncomingItem::find($id);
+    }
+
+    public function inItemCsvModal()
+    {
+        $this->inItemExportPdf = true;
     }
 
     public function itemsIn(): LengthAwarePaginator
@@ -149,6 +158,11 @@ class Table extends Component
         $this->success('Item image updated', 'Good bye!', position: 'toast-bottom');
         $this->inItemImage = false;
         $this->newIncomingItem = ['image' => ""];
+    }
+
+    public function exportCsv()
+    {
+        return Excel::download(new incomingItemExport, 'incoming-items-' . Date::now()->format('dmYHms') . '.xlsx');
     }
 
     public function render()

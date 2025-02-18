@@ -32,6 +32,7 @@ class Table extends Component
 
     public bool $drawerIsOpen = false;
     public bool $createRequest = false;
+    public bool $requestExportPdf = false;
 
     // filter
     public $selectedUser = null;
@@ -47,6 +48,11 @@ class Table extends Component
     public function createRequestModal()
     {
         $this->createRequest = true;
+    }
+
+    public function requestPdfModal()
+    {
+        $this->requestExportPdf = true;
     }
 
     public function requests(): LengthAwarePaginator
@@ -100,6 +106,13 @@ class Table extends Component
             ];
         });
 
+        $userNameExplode = $users->map(function (User $user) {
+            return [
+                'id' => $user->nip,
+                'name' => strtoupper(trim(explode('@', $user->username)[0])),
+            ];
+        });
+
         $status = [
             [
                 'id' => '1',
@@ -119,6 +132,7 @@ class Table extends Component
             'headers' => $this->headers,
             'sortBy' => $this->sortBy,
             'users' => $userMap,
+            'userNameExplode' => $userNameExplode,
             'status' => $status,
             'requests' => $this->requests()
         ]);

@@ -28,7 +28,7 @@
         <div class="grid grid-cols-1 gap-5 px-0 lg:px-10 md:px-8 lg:grid-cols-4 md:grid-cols-2">
             @forelse ($items as $item)
                 <x-card title="{{ $item->name }} ({{ $item->type }})"
-                    class="relative flex flex-col justify-between my-2 h-80">
+                    class="relative flex flex-col justify-between my-2 h-96">
                     <div>
                         <h3 class="text-base font-semibold">
                             {{ $item->stock }} ({{ $item->unit }})
@@ -39,9 +39,15 @@
                     </div>
 
                     <x-slot:figure>
-                        <img src="{{ asset('/storage/' . $item->images) }}" height="200" width="230"
-                            class="object-cover w-full h-36" aria-labelledby="{{ $item->id }}"
-                            alt="{{ $item->name }}" />
+                        @if (isset($item->images))
+                            <img src="{{ asset('/storage/' . $item->images) }}" height="400" width="230"
+                                class="object-cover w-full h-40" aria-labelledby="{{ $item->id }}"
+                                alt="{{ $item->name }}" />
+                        @else
+                            <div class="flex items-center justify-center w-full bg-gray-100 rounded-lg min-h-64">
+                                <x-icon name="o-photo" class="w-20 h-20 text-gray-400" />
+                            </div>
+                        @endif
                     </x-slot:figure>
 
                     <x-badge value="{{ $item->category->aliases ?? 'null' }}"
@@ -92,6 +98,9 @@
                 <x-card title="{{ $itemDetail->name }} ({{ $itemDetail->type }})"
                     class="relative flex flex-col justify-between my-2 h-80">
                     <div>
+                        <h2 class="text-lg font-semibold">
+                            {{ $itemDetail->name }} {{ $itemDetail->size }}
+                        </h2>
                         <h3 class="text-base font-semibold">
                             {{ $itemDetail->stock }} ({{ $itemDetail->unit }})
                         </h3>
