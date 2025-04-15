@@ -32,6 +32,8 @@ class Table extends Component
 
     // drawer
     public bool $drawerIsOpen = false;
+    // modal
+    public bool $outItemExportPdf = false;
 
     // filters
     public $fromDate = null;
@@ -42,6 +44,11 @@ class Table extends Component
     public function tableDrawer()
     {
         $this->drawerIsOpen = true;
+    }
+
+    public function outItemCsvModal()
+    {
+        $this->outItemExportPdf = true;
     }
 
     public function itemsOut(): LengthAwarePaginator

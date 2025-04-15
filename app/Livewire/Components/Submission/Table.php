@@ -2,13 +2,16 @@
 
 namespace App\Livewire\Components\Submission;
 
+use App\Exports\SubmissionExport;
 use App\Models\User;
 use App\Models\Submission;
 use App\Models\SubmissionDetail;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Date;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 use Mary\Traits\Toast;
 
 class Table extends Component
@@ -33,6 +36,7 @@ class Table extends Component
     public bool $drawerIsOpen = false;
     // modal
     public bool $createSubmission = false;
+    public bool $submissionExportPdf = false;
 
     // filter
     public $selectedUser = null;
@@ -48,6 +52,11 @@ class Table extends Component
     public function createSubmissionModal()
     {
         $this->createSubmission = true;
+    }
+
+    public function submissionPdfModal()
+    {
+        $this->submissionExportPdf = true;
     }
 
     public function submissions(): LengthAwarePaginator
@@ -90,6 +99,11 @@ class Table extends Component
         $this->success("Submission with id #$submission->id successfully deleted!!", 'Good bye!', position: 'toast-bottom');
     }
 
+    public function exportCsv()
+    {
+        return Excel::download(new SubmissionExport, 'submissions-' . Date::now()->format('dmYHms') . '.xlsx');
+    }
+
     public function render()
     {
         $users = User::withAggregate('employee', 'name')->get();
@@ -101,18 +115,25 @@ class Table extends Component
             ];
         });
 
+        $userNameExplode = $users->map(function (User $user) {
+            return [
+                'id' => $user->nip,
+                'name' => strtoupper(trim(explode('@', $user->username)[0])),
+            ];
+        });
+
         $status = [
             [
                 'id' => '1',
-                'name' => 'Pending'
+                'name' => 'PENDING'
             ],
             [
                 'id' => '2',
-                'name' => 'Accepted'
+                'name' => 'ACCEPTED'
             ],
             [
                 'id' => '3',
-                'name' => 'Rejected'
+                'name' => 'REJECTED'
             ],
         ];
 
@@ -121,6 +142,7 @@ class Table extends Component
             'sortBy' => $this->sortBy,
             'users' => $userMap,
             'status' => $status,
+            'userNameExplode' => $userNameExplode,
             'submissions' => $this->submissions()
         ]);
     }

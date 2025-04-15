@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Items;
 
 use App\Http\Controllers\Controller;
+use App\Models\IncomingItemDetail;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 
 class InItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return view('pages.inItems.index');
@@ -63,5 +64,25 @@ class InItemController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function export(Request $request)
+    {
+        $inItems = IncomingItemDetail::query()
+                ->when($request->fromDate, fn(Builder $q) => $q->whereDate('created_at', '>=', $request->fromDate))
+                ->when($request->toDate, fn(Builder $q) => $q->whereDate('created_at', '<=', $request->toDate))
+                ->get();
+        
+        return view('exports.inItems', [
+            'inItems' => $inItems,
+            'fromDate' => $request->fromDate
+        ]);
+
+        // $pdf = Pdf::loadView('exports.inItems', [
+        //     'inItems' => $inItems,
+        //     'fromDate' => $request->fromDate,
+        // ]);
+
+        // return $pdf->download('Laporan Barang Masuk-' . Date::now()->format('m-Y') . '.pdf');
     }
 }

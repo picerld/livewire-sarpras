@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Request;
 
 use App\Http\Controllers\Controller;
+use App\Models\Request as ModelsRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -76,5 +77,23 @@ class RequestController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function export(Request $request)
+    {
+        $requests = ModelsRequest::select('request.*', 'users.username as user_name', 'request_detail.qty as qty_item', 'request_detail.qty_accepted as qty_approved', 'items.name as item_name')
+            ->join('request_detail', 'request.id', '=', 'request_detail.request_code')
+            ->join('items', 'request_detail.item_code', '=', 'items.id')
+            ->join('users', 'request.nip', '=', 'users.nip')
+            ->when($request->fromDate, fn($q) => $q->whereDate('request.created_at', '>=', $request->fromDate))
+            ->when($request->toDate, fn($q) => $q->whereDate('request.created_at', '<=', $request->toDate))
+            ->when($request->status, fn($q) => $q->where('request.status', $request->status))
+            ->when($request->nip, fn($q) => $q->where('request.nip', $request->nip))
+            ->get();
+
+        return view('exports.requests', [
+            'requests' => $requests,
+            'fromDate' => $request->fromDate
+        ]);
     }
 }

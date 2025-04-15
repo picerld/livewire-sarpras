@@ -2,8 +2,11 @@
 
 namespace App\Livewire\Components\Items;
 
+use App\Exports\ItemExportTemplate;
+use App\Exports\ItemsExport;
 use App\Helpers\GenerateCodeHelper;
 use App\Helpers\ImageHelper;
+use App\Imports\ItemsImport;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\Supplier;
@@ -11,10 +14,11 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Date;
 use Livewire\Attributes\Validate;
 use Mary\Traits\Toast;
 use Livewire\WithFileUploads;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Table extends Component
 {
@@ -38,6 +42,9 @@ class Table extends Component
         'supplier_id' => '',
     ];
 
+    // csv
+    public $csv;
+
     // Table headers
     public $headers = [
         ['key' => 'id', 'label' => 'Kode'],
@@ -50,20 +57,28 @@ class Table extends Component
         ['key' => 'minimum_stock', 'label' => 'Stok Min', 'class' => ' text-center'],
     ];
 
-    public int $perPage = 5;
+    public int $perPage = 6;
 
     public $search = "";
-    public $sortBy = ['column' => 'name', 'direction' => 'ASC'];
+    public $sortBy = ['column' => 'created_at', 'direction' => 'DESC'];
 
     // drawer
     public bool $drawerIsOpen = false;
     // modal
     public bool $createItems = false;
+    public bool $importModal = false;
 
     // filters
     public $selectedCategory = null;
     public $fromStock = null;
     public $toStock = null;
+
+    public bool $isReport = false;
+
+    public function mount($isReport)
+    {
+        $this->isReport = $isReport;
+    }
 
     // Validation
     public function rules()
@@ -71,7 +86,7 @@ class Table extends Component
         return [
             'newItem.id' => 'required|max:50|min:1',
             'newItem.name' => 'required|string|max:255|min:2',
-            'newItem.merk' => 'required|string|max:255|min:2',
+            'newItem.merk' => 'required|string|max:255|min:1',
             'newItem.color' => 'required|string|max:255|min:2',
             'newItem.type' => 'string|max:255|min:1',
             'newItem.size' => 'string|max:255|min:1',
@@ -112,6 +127,11 @@ class Table extends Component
     public function createItemsModal()
     {
         $this->createItems = true;
+    }
+
+    public function openImportModal()
+    {
+        $this->importModal = true;
     }
 
     public function items(): LengthAwarePaginator
@@ -176,11 +196,38 @@ class Table extends Component
         $this->createItems = false;
     }
 
+    public function exportCsv()
+    {
+        return Excel::download(new ItemsExport, 'items-' . Date::now()->format('dmYHms') . '.xlsx');
+    }
+
+    public function downloadTemplate()
+    {
+        return Excel::download(new ItemExportTemplate, 'items-template-' . Date::now()->format('mY') . '.xlsx');
+    }
+
+    public function import(): void
+    {
+        $this->validate([
+            'csv' => 'required|mimes:xlsx'
+        ], [
+            'csv.required' => 'File is required',
+            'csv.mimes' => 'File must be in .xlsx format'
+        ]);
+
+        $this->importModal = false;
+        Excel::import(new ItemsImport, $this->csv);
+
+        $this->success('Items imported', 'Success!', position: 'toast-bottom');
+    }
+
     public function render()
     {
         $items = $this->items();
         $categories = Category::all();
         $suppliers = Supplier::all();
+
+        $isReport = $this->isReport;
 
         $units = [
             [
@@ -203,7 +250,8 @@ class Table extends Component
             'suppliers' => $suppliers,
             'headers' => $this->headers,
             'sortBy' => $this->sortBy,
-            'units' => $units
+            'units' => $units,
+            'isReport' => $isReport
         ]);
     }
 }

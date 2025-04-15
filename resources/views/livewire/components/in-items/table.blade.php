@@ -3,10 +3,14 @@
         progress-indicator separator>
         <x-slot:actions>
             <x-input wire:model="search" id="search" icon="o-magnifying-glass"
-                class="border-dark focus:outline-black placeholder:font-semibold" placeholder="Search..."
-                placeholder="Search..." autocomplete="off" />
+                class="border-dark focus:outline-black placeholder:font-semibold focus:border-dark"
+                placeholder="Search..." placeholder="Search..." autocomplete="off" />
             <x-button icon="o-funnel" class="text-black dark:text-white/80" wire:click="tableDrawer"
                 aria-label="filter item" responsive />
+            <x-dropdown label="Export" class="text-white btn-outline bg-dark hover:opacity-90">
+                <x-menu-item title="Export Csv" icon="o-arrow-up-on-square-stack" wire:click="exportCsv" />
+                <x-menu-item title="Export Pdf" icon="o-arrow-up-on-square-stack" wire:click="inItemCsvModal" />
+            </x-dropdown>
             <x-button icon-right="m-plus" label="Add" wire:click="createItemsModal"
                 class="text-white bg-dark dark:bg-slate-100 hover:bg-dark hover:opacity-90 dark:text-black" responsive
                 aria-label="create item" />
@@ -36,26 +40,55 @@
 
     <x-spotlight />
 
+    <x-modal wire:model="inItemExportPdf" class="backdrop-blur"
+        box-class="w-full lg:min-w-[400px] md:min-w-[400px] max-h-[65vh]">
+        <div class="flex flex-col gap-3">
+            <p class="text-sm">Press `ESC` or click outside to close.</p>
+
+            <!-- DATEPICKER PLUGIN -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+            <form action="{{ route('in-items.export') }}" method="POST" target="_blank">
+                @csrf
+                
+                <div class="flex flex-col gap-4 my-5">
+                    <x-datepicker class="cursor-pointer" label="Tanggal Mulai" name="fromDate" icon="o-calendar"
+                        hint="optional" class="cursor-pointer border-dark focus:border-dark focus:outline-black" />
+                    <x-datepicker class="cursor-pointer" label="Tanggal Selesai" name="toDate" icon="o-calendar"
+                        hint="optional" class="cursor-pointer border-dark focus:border-dark focus:outline-black" />
+                </div>
+
+                <x-button label="Unduh Laporan!" class="w-full text-white btn-outline bg-dark btn"
+                    icon="o-arrow-down-on-square-stack" type="submit" />
+            </form>
+        </div>
+    </x-modal>
+
     <x-modal wire:model="inItemImage" class="backdrop-blur"
         box-class="w-full lg:min-w-[700px] md:min-w-[700px] max-h-[65vh]">
-        <p class="text-sm">Press `ESC` or click outside to close.</p>
+        <div class="flex flex-col gap-3">
+            <p class="text-sm">Press `ESC` or click outside to close.</p>
+            <!-- FIX UI FOR NOTE -->
+            {{-- <p class="text-lg font-semibold">Silahkan upload surat serah terima berita acara.</p> --}}
+        </div>
 
         <!-- FIX UX WHILE UPDATING THE IMAGE -->
 
         <x-card class="w-full">
             @if ($itemInDetail)
                 <x-form wire:submit.prevent="save" class="w-full" no-separator>
-                    {{ $itemInDetail->id }}
+                    {{-- {{ $itemInDetail->id }} --}}
 
                     @if ($itemInDetail->image)
-                    <div class="flex flex-col gap-5">
-                        <img src="{{ asset('storage/' . $itemInDetail->image) }}" class="w-full"
-                            aria-labelledby="{{ $itemInDetail->id }}" alt="{{ $itemInDetail->name }}" />
+                        <div class="flex flex-col gap-5">
+                            <img src="{{ asset('storage/' . $itemInDetail->image) }}" class="w-full"
+                                aria-labelledby="{{ $itemInDetail->id }}" alt="{{ $itemInDetail->name }}" />
 
-                        <x-file wire:model="newIncomingItem.image"
-                            accept="image/png, image/jpeg, image/jpg, image/webp">
-                        </x-file>
-                    </div>
+                            <x-file wire:model="newIncomingItem.image"
+                                accept="image/png, image/jpeg, image/jpg, image/webp">
+                            </x-file>
+                        </div>
                     @else
                         <x-file wire:model="newIncomingItem.image"
                             accept="image/png, image/jpeg, image/jpg, image/webp">
@@ -72,7 +105,6 @@
             @endif
         </x-card>
     </x-modal>
-
 
     <x-modal wire:model="createItems" class="backdrop-blur" box-class="w-full lg:min-w-[800px] md:min-w-[800px]">
         <p class="text-sm">Press `ESC` or click outside to close.</p>

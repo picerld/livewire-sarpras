@@ -16,7 +16,7 @@
     </x-slot>
 
     <div id="item-table" class="w-full min-h-[78vh] py-7">
-        <livewire:components.items.table />
+        <livewire:components.items.table :isReport=false />
     </div>
 
     <livewire:utils.footer />

@@ -11,6 +11,9 @@
     <meta name="keywords" content="Sarpras, Manajemen, Sarana, Prasarana, Laravel, Livewire">
     <meta name="author" content="Picerld">
 
+    <!-- Web Icon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('avatars/05.png') }}">
+
     <title>{{ $title ?? 'Laravel' }} - Sarpras</title>
 
     <!-- cdn for currency -->
@@ -46,8 +49,8 @@
         </x-slot:content>
     </x-main>
 
-    <x-spotlight shortcut="ctrl.f" search-text="Find docs, app actions or users" no-results-text="Ops! Nothing here."
-        url="{{ route('spotlight.search') }}" />
+    <x-spotlight shortcut="ctrl.f" search-text="Find App actions, Users or Items"
+        no-results-text="Ops! Nothing here." url="{{ route('spotlight.search') }}" />
 
     <x-toast />
 
