@@ -109,6 +109,7 @@
             <tr>
                 <td style="font-size: 13px; text-align: center">No</td>
                 <td style="font-size: 13px; text-align: center">BARANG</td>
+                <td style="font-size: 13px; text-align: center">SUPPLIER</td>
                 <td style="font-size: 13px; text-align: center">MERK</td>
                 <td style="font-size: 13px; text-align: center">STOK</td>
                 <td style="font-size: 13px; text-align: center">KETERANGAN</td>
@@ -120,6 +121,7 @@
                     <td style="font-size: 13px; text-align: center">{{ $index + 1 }}</td>
                     <td style="font-size: 13px; text-align: center">{{ $item->name }} {{ $item->size ?? '' }}
                         {{ $item->type }}</td>
+                    <td style="font-size: 13px; text-align: center">{{ $item->supplier->name }}</td>
                     <td style="font-size: 13px; text-align: center">{{ $item->merk }}</td>
                     <td style="font-size: 13px; text-align: center">{{ $item->stock }} {{ $item->unit }}</td>
                     <td style="font-size: 13px; text-align: center"></td>

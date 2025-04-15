@@ -73,6 +73,8 @@ class ReportController extends Controller
             ->select('items.name', 'items.unit', 'items.stock', 'items.id', 'incoming_item_detail.qty as incoming_qty', 'outgoing_item_detail.qty as outgoing_qty', 'incoming_item_detail.created_at as incoming_date', 'outgoing_item_detail.created_at as outgoing_date')
             ->join('incoming_item_detail', 'incoming_item_detail.item_code', '=', 'items.id')
             ->join('outgoing_item_detail', 'outgoing_item_detail.item_code', '=', 'items.id')
+            ->when($request->incoming_date, fn($q) => $q->whereDate('incoming_date', '==', $request->incoming_date))
+            ->when($request->outgoing_date, fn($q) => $q->whereDate('outgoing_date', '==', $request->outgoing_date))
             ->get();
 
         $formattedItems = collect();

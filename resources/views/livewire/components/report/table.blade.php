@@ -65,9 +65,9 @@
                     @csrf
 
                     <div class="flex flex-col gap-4 my-5">
-                        <x-datepicker class="cursor-pointer" label="Tanggal Mulai" name="fromDate" icon="o-calendar"
+                        <x-datepicker class="cursor-pointer" label="Tanggal Masuk" name="incomingDate" icon="o-calendar"
                             hint="optional" class="cursor-pointer border-dark focus:border-dark focus:outline-black" />
-                        <x-datepicker class="cursor-pointer" label="Tanggal Selesai" name="toDate" icon="o-calendar"
+                        <x-datepicker class="cursor-pointer" label="Tanggal Keluar" name="outgoingDate" icon="o-calendar"
                             hint="optional" class="cursor-pointer border-dark focus:border-dark focus:outline-black" />
                     </div>
 

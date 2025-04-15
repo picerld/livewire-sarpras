@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laporan Transaksi Barang - SMKN 11 Bandung</title>
+    <script>
+        window.onload = function() {
+            window.print();
+        }
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;

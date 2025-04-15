@@ -25,8 +25,6 @@
                     <x-input wire:model="search" id="search" icon="o-magnifying-glass"
                         class="border-dark focus:outline-black placeholder:font-semibold" placeholder="Search..."
                         autocomplete="off" />
-                    <x-button icon="o-funnel" class="text-black dark:text-white/80" wire:click="tableDrawer"
-                        aria-label="filter submission" responsive />
                 </x-slot:actions>
             </x-header>
 
@@ -108,25 +106,6 @@
                     </div>
                 @endif
             </x-modal>
-
-            {{-- <x-drawer title="Filter" wire:model="drawerIsOpen" class="w-1/2 lg:w-1/3" right separator with-close-button
-                close-on-escape>
-                <x-form wire:submit="submissions" no-separator>
-                    <!-- User Filter -->
-                    <x-choices-offline label="Unit Kerja" wire:model="selectedUser" :options="$users" searchable single />
-                    <x-choices-offline label="Status" wire:model="selectedStatus" :options="$status" searchable single />
-        
-                    <!-- Date Range Filter -->
-                    <x-input type="date" label="From Date" wire:model="fromDate" />
-                    <x-input type="date" label="To Date" wire:model="toDate" />
-        
-                    <x-slot:actions>
-                        <x-button label="Clear" wire:click="clear" class="btn btn-ghost btn-outline" />
-                        <x-button label="Save" class="text-white btn-primary" type="submit" icon="c-paper-airplane"
-                            spinner="submissions" />
-                    </x-slot:actions>
-                </x-form>
-            </x-drawer> --}}
         </x-card>
     </div>
 </div>

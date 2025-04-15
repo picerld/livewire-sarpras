@@ -76,7 +76,7 @@
     <div class="relative w-full mt-3 lg:mt-5 lg:ml-2 lg:w-1/3">
         <div aria-label="card" class="p-5 border rounded-lg shadow-lg bg-base-100 dark:border-none lg:sticky lg:top-24">
             <div class="flex flex-col gap-2">
-                <h1 class="text-xl font-semibold">Konfirmasi Barang</h1>
+                <h1 class="text-xl font-semibold">Ringkasan pengadaan</h1>
                 <div class="flex flex-wrap justify-between">
                     <p class="text-sm">Total items</p>
                     <div class="flex gap-3">

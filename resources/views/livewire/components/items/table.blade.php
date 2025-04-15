@@ -1,6 +1,6 @@
 <x-card>
-    <x-header wire:model.live.debounce="search" title="{{ $isReport ? 'Reports' : 'Items' }}" class="px-3 pt-3" size="text-3xl" subtitle="Items Table"
-        progress-indicator separator>
+    <x-header wire:model.live.debounce="search" title="{{ $isReport ? 'Reports' : 'Items' }}" class="px-3 pt-3"
+        size="text-3xl" subtitle="Items Table" progress-indicator separator>
         <x-slot:actions>
             <x-input wire:model="search" id="search" icon="o-magnifying-glass"
                 class="border-dark focus:outline-black focus:border-dark placeholder:font-semibold"
@@ -26,8 +26,9 @@
     </x-header>
 
     <!-- USING TABLE -->
-    <x-table :headers="$headers" :rows="$items" :sort-by="$sortBy" link="{{ $isReport ? '/reports/{id}' : '/items/{id}' }}"
-        class="bg-white rounded dark:bg-dark" with-pagination per-page="perPage" :per-page-values="[6, 20, 50]">
+    <x-table :headers="$headers" :rows="$items" :sort-by="$sortBy"
+        link="{{ $isReport ? '/reports/{id}' : '/items/{id}' }}" class="bg-white rounded dark:bg-dark" with-pagination
+        per-page="perPage" :per-page-values="[6, 20, 50]">
         @scope('cell_stock', $item)
             <p>{{ $item->stock > $item->minimum_stock ? $item->stock : $item->stock . ' !!' }}</p>
         @endscope
